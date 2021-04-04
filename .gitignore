@@ -1,3 +1,4 @@
+# Ignore node modules folder
 node_modules/**/*
 .expo/*
 npm-debug.*
@@ -9,5 +10,8 @@ npm-debug.*
 *.orig.*
 web-build/
 
-# macOS
+# Ignore all intellij .idea foler
+.idea
+
+# Ignore all MacOS system file
 .DS_Store
