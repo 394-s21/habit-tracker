@@ -1,5 +1,5 @@
-** link to Trello Ticket **
+## Trello Ticket ##
 
-** Summary **
+## Summary ##
 
-** Test plan **
+## Test plan ##
