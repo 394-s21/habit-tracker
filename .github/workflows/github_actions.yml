@@ -21,7 +21,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Install
+    - name: Install npm packages
       run: npm install
+      run: npm install -g expo-cli
     - name: Build
       run: npm run build
