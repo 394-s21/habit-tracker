@@ -24,6 +24,6 @@ jobs:
     - name: Install
       run: npm install
     - name: Expo
-      run: npm install expo-cli --global
+      run: npm install expo-cli
     - name: Build
       run: expo build:web
