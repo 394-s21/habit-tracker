@@ -27,5 +27,3 @@ jobs:
       run: sudo npm install -g expo-cli
     - name: Build
       run: npm run build
-    - name: Deploy
-      run: expo start --web
