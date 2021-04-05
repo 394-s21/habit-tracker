@@ -24,6 +24,6 @@ jobs:
     - name: Install npm
       run: npm install
     - name: Install cli
-      run: npm install -g expo-cli
+      run: sudo npm install -g expo-cli
     - name: Build
       run: npm run build
