@@ -21,8 +21,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Lint Action
+    - name: Run linters
       uses: wearerequired/lint-action@v1.9.0
+      with:
+        eslint: true
+        prettier: true
     - name: Install npm
       run: npm install
     - name: Install cli
