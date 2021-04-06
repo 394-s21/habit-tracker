@@ -14,21 +14,33 @@ jobs:
   build:
     name: build project
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Run linters
-      uses: wearerequired/lint-action@v1.9.0
-      with:
-        eslint: true
-        prettier: true
-    - name: Install npm
-      run: npm install
-    - name: Install cli
-      run: sudo npm install -g expo-cli
-    - name: Build
-      run: npm run build
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install npm
+        run: npm install
+      - name: Install cli
+        run: sudo npm install -g expo-cli
+      - name: Build
+        run: npm run build
+  deploy:
+    name: build
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist
+          path: dist
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
