@@ -15,3 +15,6 @@ web-build/
 
 # Ignore all MacOS system file
 .DS_Store
+
+# Ignore all firebase cache
+.firebase
