@@ -10,7 +10,9 @@ jobs:
       - name: Checkout the lastest version
         uses: actions/checkout@v2
       - name: Install Dependencies
-        run: npm install && sudo npm install -g expo-cli && npm run build
+        run: npm install && sudo npm install -g expo-cli
+      - name: Build
+        run:  npm run build
       - name: Deploy To Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
