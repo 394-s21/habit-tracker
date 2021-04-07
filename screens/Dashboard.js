@@ -23,7 +23,8 @@ class Dashboard extends Component {
             "id" : 2,
             "data" : 207,
           }],
-          groupMemberNames : ['Jake','Caroline','Patrick','Tony','Jipeng','Daniel','testuse','Onemore']
+          groupMemberNames : ['Jake','Caroline','Patrick','Justin','Jipeng','Daniel','testuse','Onemore'],
+          groupMemberNamesTwo :['Justin', 'Roy']
         };
     }
     render() {
@@ -39,10 +40,11 @@ class Dashboard extends Component {
             }}>
                 
             <View>
-              <Streak data = {myData[0].data > 1? myData[0].data  + " days" : myData[0].data  + " day"}/>
+              {/* <Streak data = {myData[0].data > 1? myData[0].data  + " days" : myData[0].data  + " day"}/>
               <Streak data = {myData[1].data > 1? myData[1].data  + " days" : myData[0].data  + " day"}/>
-              <CommonCompGroupUserList groupMembers={this.state.groupMemberNames}/>
-              <GroupComponentCard/>
+              <CommonCompGroupUserList groupMembers={this.state.groupMemberNames}/> */}
+              <GroupComponentCard groupName='School of Rock' goal='Practice guitar' groupMemberNames={this.state.groupMemberNamesTwo} streak={myData[0]} />
+              <GroupComponentCard groupName='Purple Team' goal='Learn React Native' groupMemberNames={this.state.groupMemberNames} streak={myData[1]}/>
             </View>
             <TouchableOpacity
                 style={styles.button}

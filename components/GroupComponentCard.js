@@ -4,24 +4,19 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements';
 import Streak from '../components/CommonCompStreak';
 import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
 
-const GroupComponentCard = () => {
-  const groupMemberNames = ['Jake','Caroline','Patrick','Tony','Jipeng','Daniel','testuse','Onemore'];
-  const StreaksData = [{ // dummy data first. TODO: replace with db call from firebase
-    "id" : 1,
-    "data" : 1,
-  }];
-  const myData = StreaksData;
+const GroupComponentCard = ({groupName, groupMemberNames, goal, streak}) => {
+  const myData = streak; //StreaksData;
 
-    return(
+  return(
   <View>
   <Card>
     <View style={styles.cardHeader}>
-      <Card.Title style={styles.groupname}>Group Name</Card.Title>
-      <Streak data = { myData[0].data  + " day"}/>
+      <Card.Title style={styles.groupname}>{groupName}</Card.Title>
+      <Streak data = {myData.data > 1? myData.data  + " days" : myData.data  + " day"}/>
     </View>
     <Card.Divider/>
     <View style={styles.body}>
-      <Text style={styles.goal}>Learn React Native</Text>
+      <Text style={styles.goal}>{goal}</Text>
       <CommonCompGroupUserList groupMembers={groupMemberNames}/>
     </View>
   </Card>
