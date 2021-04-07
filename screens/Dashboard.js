@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-//import { Container, Header, Content, Footer, FooterTab, Button, Icon } from 'native-base';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Streak from '../components/CommonCompStreak';
 import { render } from 'react-dom';
+import Streak from '../components/CommonCompStreak';
+import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
 
 
 class Dashboard extends Component {
@@ -20,7 +20,8 @@ class Dashboard extends Component {
           {
             "id" : 2,
             "data" : "207 days"
-          }]
+          }],
+          groupMemberNames : ['Jake','Caroline','Patrick','Tony','Jipeng','Daniel','testuse','Onemore']
         };
       }
     render() {
@@ -37,7 +38,7 @@ class Dashboard extends Component {
                 
             <Streak numOfStreaks = {this.state.StreaksData[0].data} />
             <Streak numOfStreaks = {this.state.StreaksData[1].data} />
-            
+            <CommonCompGroupUserList groupMembers={this.state.groupMemberNames}/>
             <TouchableOpacity
                 style={styles.button}
                 >
@@ -61,11 +62,8 @@ const styles = StyleSheet.create({
         width: 300,
         marginTop: 16,
       },
-  });
+});
 export default Dashboard;
-
-
-
 
 
 
