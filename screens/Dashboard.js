@@ -1,8 +1,9 @@
 // this is our dashboard page (TODO: implement components on it)
 import React, { Component } from 'react';
-import {Text, View} from 'react-native';
+import { View } from 'react-native';
 import Streak from '../components/CommonCompStreak';
-import { render } from 'react-dom';
+
+import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -11,12 +12,13 @@ class Dashboard extends Component {
     this.state = {
       StreaksData: [{ // dummy data first. TODO: replace with db call from firebase
         "id" : 1,
-        "data" : "3",
+        "data" : 1,
       },
       {
         "id" : 2,
-        "data" : "207",
-      }]
+        "data" : 207,
+      }],
+      groupMemberNames : ['Jake','Caroline','Patrick','Tony','Jipeng','Daniel','testuse','Onemore']
     };
   }
 
@@ -25,8 +27,9 @@ class Dashboard extends Component {
     
     return (
       <View>
-        <Streak data = {myData[0].data + " days"}/>
-        <Streak data = {myData[1].data + " days"}/>
+        <Streak data = {myData[0].data > 1? myData[0].data  + " days" : myData[0].data  + " day"}/>
+        <Streak data = {myData[1].data > 1? myData[1].data  + " days" : myData[0].data  + " day"}/>
+        <CommonCompGroupUserList groupMembers={this.state.groupMemberNames}/>
       </View>
     );
   }
