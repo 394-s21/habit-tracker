@@ -4,16 +4,6 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements';
 import Streak from '../components/CommonCompStreak';
 import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
 
-
-// implemented without image with header
-
-
-// import { Card } from 'native-base';
-//import { Card, CardItem, Body, Text, } from 'native-base';
-//import { Image, View, StyleSheet, TouchableOpacity } from 'react-native';
-
-{/* <CommonCompGroupUserList groupMembers={this.state.groupMemberNames}/> */}
-
 const GroupComponentCard = () => {
   const groupMemberNames = ['Jake','Caroline','Patrick','Tony','Jipeng','Daniel','testuse','Onemore'];
   const StreaksData = [{ // dummy data first. TODO: replace with db call from firebase
