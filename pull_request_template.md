@@ -1,5 +1,5 @@
-## Trello Ticket ##
+## Trello Ticket :ticket: ##
 
-## Summary ##
+## Summary :chart_with_upwards_trend: ##
 
-## Test plan ##
+## Test plan :clipboard: ##
