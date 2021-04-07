@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
+
 class CommonCompStreak extends Component {
   render() {
     const {data} = this.props;
@@ -39,5 +40,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white'
   }
+
 });
 export default CommonCompStreak;
