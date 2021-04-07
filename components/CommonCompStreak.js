@@ -3,8 +3,17 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-nativ
 
 const CommonCompStreak = (prop) => {
   return (
-    <button>{prop.numOfStreaks}</button>
+    <Button title={prop.numOfStreaks} style={styles.button}/>
   );
 };
-
+const styles = StyleSheet.create({
+  button: {
+      alignItems: 'center',
+      backgroundColor: '#DDDDDD',
+      borderColor: '#3DD5F4',
+      padding: 10,
+      width: 300,
+      marginTop: 16,
+    },
+});
 export default CommonCompStreak;
