@@ -7,6 +7,7 @@ import { render } from 'react-dom';
 import Streak from '../components/CommonCompStreak';
 
 import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
+import GroupComponentCard from '../components/GroupComponentCard';
 
 
 class Dashboard extends Component {
@@ -41,6 +42,7 @@ class Dashboard extends Component {
               <Streak data = {myData[0].data > 1? myData[0].data  + " days" : myData[0].data  + " day"}/>
               <Streak data = {myData[1].data > 1? myData[1].data  + " days" : myData[0].data  + " day"}/>
               <CommonCompGroupUserList groupMembers={this.state.groupMemberNames}/>
+              <GroupComponentCard/>
             </View>
             <TouchableOpacity
                 style={styles.button}
