@@ -19,7 +19,8 @@ class Dashboard extends Component {
       {
         "id" : 2,
         "data" : "207 days"
-      }]
+      }],
+      groupMemberNames : ['Jake','Caroline','Patrick','Tony','Jipeng','Daniel','testuse','Onemore']
     };
   }
 
@@ -27,7 +28,7 @@ class Dashboard extends Component {
     const myData = this.state.StreaksData[0]
     return (
       <View>
-        <CommonCompGroupUserList groupMembers={['Jake','Caroline','Patrick','Tony','Jipeng','Daniel','testuse','Onemore']}/>
+        <CommonCompGroupUserList groupMembers={this.state.groupMemberNames}/>
       </View>
     );
   }

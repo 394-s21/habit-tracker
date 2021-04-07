@@ -9,7 +9,6 @@ const CommonCompGroupUserList = ({ groupMembers }) => {
         <View>
             <ScrollView
                 horizontal={true}
-                //contentContainerStyle={{ width: `${groupMembers.length*30}%` }}
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={200}
                 decelerationRate="normal">
