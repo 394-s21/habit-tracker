@@ -1,31 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
+
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { render } from 'react-dom';
 import Streak from '../components/CommonCompStreak';
+
 import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
 
 
 class Dashboard extends Component {
-
     constructor(props) {
         super(props);
     
         this.state = {
           StreaksData: [{ // dummy data first. TODO: replace with db call from firebase
             "id" : 1,
-            "data" : "3 days"
+            "data" : 1,
           },
           {
             "id" : 2,
-            "data" : "207 days"
+            "data" : 207,
           }],
           groupMemberNames : ['Jake','Caroline','Patrick','Tony','Jipeng','Daniel','testuse','Onemore']
         };
-      }
+    }
     render() {
-        const myData = this.state.StreaksData[0]
+        const myData = this.state.StreaksData
         return (
         <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1, padding: 16 }}>
@@ -36,9 +37,11 @@ class Dashboard extends Component {
                 justifyContent: 'center',
             }}>
                 
-            <Streak numOfStreaks = {this.state.StreaksData[0].data} />
-            <Streak numOfStreaks = {this.state.StreaksData[1].data} />
-            <CommonCompGroupUserList groupMembers={this.state.groupMemberNames}/>
+            <View>
+              <Streak data = {myData[0].data > 1? myData[0].data  + " days" : myData[0].data  + " day"}/>
+              <Streak data = {myData[1].data > 1? myData[1].data  + " days" : myData[0].data  + " day"}/>
+              <CommonCompGroupUserList groupMembers={this.state.groupMemberNames}/>
+            </View>
             <TouchableOpacity
                 style={styles.button}
                 >
@@ -64,6 +67,5 @@ const styles = StyleSheet.create({
       },
 });
 export default Dashboard;
-
 
 
