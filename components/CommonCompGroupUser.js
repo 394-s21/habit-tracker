@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const GroupUser = ({groupUserName}) => (
+const CommonCompGroupUser = ({memberUserName}) => (
     <TouchableOpacity style={styles.userButton}>
       <Text style={styles.userText}>
-        {groupUserName}
+        {memberUserName}
       </Text>
     </TouchableOpacity>
 );
@@ -15,11 +15,9 @@ const styles = StyleSheet.create({
       borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 10,
-      height: 60,
+      margin: 5,
+      height: 27,
       padding: 10,
-      minWidth: 90,
-      maxWidth: 90,
       backgroundColor: '#E9E9E9',
     },
     userText:{
@@ -29,4 +27,4 @@ const styles = StyleSheet.create({
     },
   });
 
-  export default GroupUser;
+  export default CommonCompGroupUser;

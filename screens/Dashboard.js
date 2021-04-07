@@ -1,8 +1,11 @@
 // this is our dashboard page (TODO: implement components on it)
 import React, { Component } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import {Text} from 'react-native';
 import Streak from '../components/CommonCompStreak';
 import { render } from 'react-dom';
+
+import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -23,10 +26,9 @@ class Dashboard extends Component {
   render() {
     const myData = this.state.StreaksData[0]
     return (
-      <view>
-        <Streak numOfStreaks = {this.state.StreaksData[0].data} />
-        <Streak numOfStreaks = {this.state.StreaksData[1].data} />
-      </view>
+      <View>
+        <CommonCompGroupUserList groupMembers={['Jake','Caroline','Patrick','Tony','Jipeng','Daniel','testuse','Onemore']}/>
+      </View>
     );
   }
 }
