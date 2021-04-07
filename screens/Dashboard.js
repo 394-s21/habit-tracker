@@ -11,21 +11,22 @@ class Dashboard extends Component {
     this.state = {
       StreaksData: [{ // dummy data first. TODO: replace with db call from firebase
         "id" : 1,
-        "data" : "3 days",
+        "data" : "3",
       },
       {
         "id" : 2,
-        "data" : "207 days",
+        "data" : "207",
       }]
     };
   }
 
   render() {
     const myData = this.state.StreaksData
+    
     return (
       <View>
-        <Streak data = {myData[0].data}/>
-        <Streak data = {myData[1].data}/>
+        <Streak data = {myData[0].data + " days"}/>
+        <Streak data = {myData[1].data + " days"}/>
       </View>
     );
   }
