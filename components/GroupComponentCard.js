@@ -6,9 +6,13 @@ import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
 
 const GroupComponentCard = () => {
   const groupMemberNames = ['Jake','Caroline','Patrick','Tony','Jipeng','Daniel','testuse','Onemore'];
+  const groupMemberNames2 = ['Joe', "Adam", "Steve", "Megan", "Claire"];
   const StreaksData = [{ // dummy data first. TODO: replace with db call from firebase
     "id" : 1,
-    "data" : 1,
+    "data" : 3,
+  }, {
+    "id" : 2,
+    "data" : 207,
   }];
   const myData = StreaksData;
 
@@ -16,13 +20,24 @@ const GroupComponentCard = () => {
   <View>
   <Card>
     <View style={styles.cardHeader}>
-      <Card.Title style={styles.groupname}>Group Name</Card.Title>
-      <Streak data = { myData[0].data  + " day"}/>
+      <Card.Title style={styles.groupname}>Purple Group</Card.Title>
+      <Streak data = { myData[0].data  + " days"}/>
     </View>
     <Card.Divider/>
     <View style={styles.body}>
       <Text style={styles.goal}>Learn React Native</Text>
       <CommonCompGroupUserList groupMembers={groupMemberNames}/>
+    </View>
+  </Card>
+  <Card>
+    <View style={styles.cardHeader}>
+      <Card.Title style={styles.groupname}>Green Group</Card.Title>
+      <Streak data = { myData[1].data  + " days"}/>
+    </View>
+    <Card.Divider/>
+    <View style={styles.body}>
+      <Text style={styles.goal}>Learn React Native</Text>
+      <CommonCompGroupUserList groupMembers={groupMemberNames2}/>
     </View>
   </Card>
   </View>

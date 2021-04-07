@@ -39,9 +39,6 @@ class Dashboard extends Component {
             }}>
                 
             <View>
-              <Streak data = {myData[0].data > 1? myData[0].data  + " days" : myData[0].data  + " day"}/>
-              <Streak data = {myData[1].data > 1? myData[1].data  + " days" : myData[0].data  + " day"}/>
-              <CommonCompGroupUserList groupMembers={this.state.groupMemberNames}/>
               <GroupComponentCard/>
             </View>
             <TouchableOpacity
