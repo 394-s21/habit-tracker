@@ -69,6 +69,20 @@ export default function App() {
           activeTintColor: '#3DD5F4',
         }}>
         <Tab.Screen
+          name="ProfileStack"
+          component={DashboardStack}
+          options={{
+            tabBarLabel: 'Profile',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="face-profile"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
           name="DashboardStack"
           component={DashboardStack}
           options={{
