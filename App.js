@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 function DashboardStack() {
   return (
     <Stack.Navigator
-      initialRouteName="CreateGroup"
+      initialRouteName="Dashboard"
       screenOptions={{
         headerStyle: { backgroundColor: '#3DD5F4' },
         headerTintColor: '#fff',
