@@ -3,10 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {Image} from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from './screens/Dashboard';
 import CreateGroup from './screens/CreateGroup';
+import profilePic from './assets/profilePic.jpg';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,12 +25,18 @@ function DashboardStack() {
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
-        options={{ title: 'CoSava Dashboard' }}
+        options={{ title: '',
+        headerLeft: () => (<View><Text style={{fontWeight:'bold', fontSize: 30, color: 'white', paddingLeft: 10}}>CoSava</Text> 
+                                <Text style={{color:'white',fontSize: 18, paddingLeft: 10}}>Dashboard</Text></View>),
+                  headerRight: () => (<View style={{paddingRight:10}}><Image source={{uri: profilePic}} style={{width:40,height:40}}/> </View>)}}
       />
       <Stack.Screen
         name="CreateGroup"
         component={CreateGroup}
-        options={{ title: 'Create Group' }}
+        options={{ title: '',
+        headerLeft: () => (<View><Text style={{fontWeight:'bold', fontSize: 30, color: 'white', paddingLeft: 10}}>CoSava</Text> 
+                                <Text style={{color:'white',fontSize: 18, paddingLeft: 10}}>Create Group</Text></View>),
+                  headerRight: () => (<View style={{paddingRight:10}}><Image source={{uri: profilePic}} style={{width:40,height:40}}/> </View>) }}
       />
     </Stack.Navigator>
   );
@@ -61,7 +69,7 @@ export default function App() {
           activeTintColor: '#3DD5F4',
         }}>
         <Tab.Screen
-          name="Dashboardtack"
+          name="DashboardStack"
           component={DashboardStack}
           options={{
             tabBarLabel: 'Dashboard',
