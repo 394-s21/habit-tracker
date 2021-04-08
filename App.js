@@ -6,7 +6,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from './screens/Dashboard';
-
+import CreateGroup from './screens/CreateGroup';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,6 +24,11 @@ function DashboardStack() {
         name="Dashboard"
         component={Dashboard}
         options={{ title: 'CoSava Dashboard' }}
+      />
+      <Stack.Screen
+        name="CreateGroup"
+        component={CreateGroup}
+        options={{ title: 'Create Group' }}
       />
     </Stack.Navigator>
   );

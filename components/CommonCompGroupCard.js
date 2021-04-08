@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { Card, ListItem, Button, Icon } from 'react-native-elements';
-import Streak from '../components/CommonCompStreak';
-import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
+import Streak from './CommonCompStreak';
+import CommonCompGroupUserList from './CommonCompGroupUserList';
 
-const GroupComponentCard = ({groupName, groupMemberNames, goal, streak}) => {
+const CommonCompGroupCard = ({groupName, groupMemberNames, goal, streak}) => {
   const myData = streak; //StreaksData;
 
   return(
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default GroupComponentCard;
+export default CommonCompGroupCard;
