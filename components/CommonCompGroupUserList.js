@@ -2,9 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import CommonCompGroupUser from './CommonCompGroupUser';
 
-
 const CommonCompGroupUserList = ({ groupMembers }) => {
-
     return (
         <View>
             <ScrollView

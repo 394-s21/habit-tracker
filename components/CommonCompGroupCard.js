@@ -33,12 +33,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'flex-box',
+    alignItems: 'center',
     bottom: '5%',
   },
   body: {
     flexDirection: 'column',
-    alignItems: 'flex-box',
+    alignItems: 'center',
   },
   goal: {
     fontSize: 17,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     paddingBottom: '5%',
   },
   card: {
-    borderWidthLeft: 5,    
+    marginLeft: 5,    
   },
   groupname: {
     paddingLeft: 10,

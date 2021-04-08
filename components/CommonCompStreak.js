@@ -8,9 +8,6 @@ class CommonCompStreak extends Component {
     return (
       <TouchableOpacity>
           <View style = {styles.button}>
-            <script>
-              styles.button.backgroundColor = color;
-            </script>
             <Text style = {styles.buttonText}>{data}</Text>
           </View>
       </TouchableOpacity>
@@ -33,9 +30,7 @@ const styles = StyleSheet.create({
   buttonText: {
     width: 100,
     height: 15,
-    fontFamily: 'Inter',
     fontStyle: 'normal',
-    fontWeight: 300,
     fontSize: 16,
     textAlign: 'center',
     color: 'white'

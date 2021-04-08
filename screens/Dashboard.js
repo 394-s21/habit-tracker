@@ -16,7 +16,7 @@ class Dashboard extends Component {
           "data" : 1,
         },
         {
-          "id" : 2,
+          "id" : 3,
           "data" : 207,
         }],
         groupMemberNames : ['Jake','Caroline','Patrick','Justin','Jipeng','Daniel','testuse','Onemore'],
