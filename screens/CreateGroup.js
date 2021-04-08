@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, Button, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Alert, View} from 'react-native';
+import {Card, Button} from 'react-native-elements';
 import CommonCompTextInput from '../components/CommonCompTextInput';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { Icon } from 'react-native-elements'
 
 class CreateGroup extends Component {
 
@@ -11,11 +11,11 @@ class CreateGroup extends Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <Card>
         <CommonCompTextInput placeHolderText = "Group Name"></CommonCompTextInput> 
         <CommonCompTextInput placeHolderText = "What is your personal habit goal?"></CommonCompTextInput> 
-        <Text>I will complete this habit every</Text>
-        <DropDownPicker
+        <Text style={styles.text}>I will complete this habit every</Text>
+        <DropDownPicker style={styles.dateDropdown}
           items={[
               {label: 'day', value: 'Day'},
               {label: 'other day', value: 'Other day'},
@@ -23,11 +23,11 @@ class CreateGroup extends Component {
               {label: 'month', value: 'month'},
           ]}
           defaultIndex={0}
-          containerStyle={{height: 40}}
+          containerStyle={{height: 40, textAlign: 'center', color:'#FFFFFF'}}
           onChangeItem={item => console.log(item.label, item.value)}
         />
-        <Text>Group Color</Text>
-        <DropDownPicker
+        <Text style={styles.text}>Group Color</Text>
+        <DropDownPicker style={styles.dateDropdown}
           items={[
               {label: 'Blue', value: 'Blue'},
               {label: 'Purple', value: 'Purple'},
@@ -35,24 +35,47 @@ class CreateGroup extends Component {
               {label: 'Green', value: 'Green'},
           ]}
           defaultIndex={0}
-          containerStyle={{height: 40}}
+          containerStyle={{height: 40, textAlign: 'center', color:'#FF9893'}}
           onChangeItem={item => console.log(item.label, item.value)}
         />
-        <Text>Member</Text>
-        <Icon name='rowing'/>
-        <Button title={"Create Group"}></Button>
-        <Button title={"Cancel"} onPress={this.gotTodashboard}></Button>
-      </SafeAreaView>
+        <Button style={styles.button} title={"Add People To Your Group"}></Button>
+        <Button style={styles.button} title={"Save"}></Button>
+        <Button style={styles.button} title={"Cancel"} onPress={this.gotTodashboard}></Button>
+      </Card>
     );
   }
 }
 const styles = StyleSheet.create({
-  areaView: {
-      alignItems: 'center',
-      backgroundColor: '#DDDDDD',
-      padding: 10,
-      width: 300,
-      marginTop: 16,
-    },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  },
+  button : {
+    margin: 2,
+    fontSize: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    height: 50,
+    margin: 12,
+    fontSize: 18,
+    fontFamily: "Inter",
+    color: "#FF9893",
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  dateDropdown: {
+    height: 50,
+    margin: 12,
+    fontSize: 18,
+    fontFamily: "Inter",
+    color: "#FFFFFF",
+    fontWeight: 'bold',
+    textAlign: 'center',
+  }
 });
 export default CreateGroup;
