@@ -14,6 +14,9 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function DashboardStack() {
+  const headerLeft = () => {
+
+  }
   return (
     <Stack.Navigator
       initialRouteName="CreateGroup"
@@ -25,18 +28,20 @@ function DashboardStack() {
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
-        options={{ title: '',
-        headerLeft: () => (<View><Text style={{fontWeight:'bold', fontSize: 30, color: 'white', paddingLeft: 10}}>CoSava</Text> 
-                                <Text style={{color:'white',fontSize: 18, paddingLeft: 10}}>Dashboard</Text></View>),
-                  headerRight: () => (<View style={{paddingRight:10}}><Image source={{uri: profilePic}} style={{width:40,height:40}}/> </View>)}}
+        // TODO: fix this as it causes a text component exception on IOS
+        // options={{ title: '',
+        // headerLeft: () => (<View><Text style={{fontWeight:'bold', fontSize: 30, color: 'white', paddingLeft: 10}}>CoSava</Text> 
+        //                         <Text style={{color:'white',fontSize: 18, paddingLeft: 10}}>Dashboard</Text></View>),
+        //           headerRight: () => (<View style={{paddingRight:10}}><Image source={{uri: profilePic}} style={{width:40,height:40}}/> </View>)}}
       />
       <Stack.Screen
         name="CreateGroup"
         component={CreateGroup}
-        options={{ title: '',
-        headerLeft: () => (<View><Text style={{fontWeight:'bold', fontSize: 30, color: 'white', paddingLeft: 10}}>CoSava</Text> 
-                                <Text style={{color:'white',fontSize: 18, paddingLeft: 10}}>Create Group</Text></View>),
-                  headerRight: () => (<View style={{paddingRight:10}}><Image source={{uri: profilePic}} style={{width:40,height:40}}/> </View>) }}
+        // TODO: fix this as it causes a text component exception on IOS
+        // options={{ title: '',
+        // headerLeft: () => (<View><Text style={{fontWeight:'bold', fontSize: 30, color: 'white', paddingLeft: 10}}>CoSava</Text> 
+        //                         <Text style={{color:'white',fontSize: 18, paddingLeft: 10}}>Create Group</Text></View>),
+        //           headerRight: () => (<View style={{paddingRight:10}}><Image source={{uri: profilePic}} style={{width:40,height:40}}/> </View>) }}
       />
     </Stack.Navigator>
   );
