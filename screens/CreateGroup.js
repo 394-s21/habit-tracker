@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     height: 50,
     margin: 12,
     fontSize: 18,
-    fontFamily: "Inter",
+    // TODO: ADD a fontFamily later
     color: "#FF9893",
     fontWeight: 'bold',
     textAlign: 'center',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     height: 50,
     margin: 12,
     fontSize: 18,
-    fontFamily: "Inter",
+    // TODO: ADD a fontFamily later
     color: "#FFFFFF",
     fontWeight: 'bold',
     textAlign: 'center',

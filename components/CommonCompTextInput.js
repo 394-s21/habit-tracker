@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     fontSize: 36,
-    fontFamily: "Inter",
+    //TODO: add a FONT family later
     color: "#FF9893",
     fontStyle: 'italic',
   },
