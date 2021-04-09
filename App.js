@@ -9,61 +9,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from './screens/Dashboard';
 import CreateGroup from './screens/CreateGroup';
 import profilePic from './assets/profilePic.jpg';
+import DashboardStack from './navigations/dashboardStack';
 
-const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
-function DashboardStack() {
-  const headerLeft = () => {
-
-  }
-  return (
-    <Stack.Navigator
-      initialRouteName="CreateGroup"
-      screenOptions={{
-        headerStyle: { backgroundColor: '#3DD5F4' },
-        headerTintColor: '#fff',
-        headerTitleStyle: { fontWeight: 'bold' },
-      }}>
-      <Stack.Screen
-        name="Dashboard"
-        component={Dashboard}
-        // TODO: fix this as it causes a text component exception on IOS
-        // options={{ title: '',
-        // headerLeft: () => (<View><Text style={{fontWeight:'bold', fontSize: 30, color: 'white', paddingLeft: 10}}>CoSava</Text> 
-        //                         <Text style={{color:'white',fontSize: 18, paddingLeft: 10}}>Dashboard</Text></View>),
-        //           headerRight: () => (<View style={{paddingRight:10}}><Image source={{uri: profilePic}} style={{width:40,height:40}}/> </View>)}}
-      />
-      <Stack.Screen
-        name="CreateGroup"
-        component={CreateGroup}
-        // TODO: fix this as it causes a text component exception on IOS
-        // options={{ title: '',
-        // headerLeft: () => (<View><Text style={{fontWeight:'bold', fontSize: 30, color: 'white', paddingLeft: 10}}>CoSava</Text> 
-        //                         <Text style={{color:'white',fontSize: 18, paddingLeft: 10}}>Create Group</Text></View>),
-        //           headerRight: () => (<View style={{paddingRight:10}}><Image source={{uri: profilePic}} style={{width:40,height:40}}/> </View>) }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-/*function SettingsStack() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Settings"
-      screenOptions={{
-        headerStyle: { backgroundColor: '#3DD5F4' },
-        headerTintColor: '#fff',
-        headerTitleStyle: { fontWeight: 'bold' },
-      }}>
-      <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{ title: 'Setting Page' }}
-      />
-    </Stack.Navigator>
-  );
-}*/
 
 export default function App() {
   return (
