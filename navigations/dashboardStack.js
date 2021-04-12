@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 export default function DashboardStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Create Group"
+      initialRouteName="View Group"
       screenOptions={{
         headerStyle: { backgroundColor: '#3DD5F4' },
         headerTintColor: '#fff',
@@ -43,7 +43,7 @@ export default function DashboardStack() {
       <Stack.Screen 
       name="Join Group"
       component={JoinGroup}/>
-      
+
       <Stack.Screen 
       name="View Group"
       component={GroupInfo}/>
