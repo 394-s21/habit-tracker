@@ -24,7 +24,8 @@ class Dashboard extends Component {
       };
     }
     
-    creatGroup = () => {this.props.navigation.navigate('CreateGroup')}
+    creatGroup = () => {this.props.navigation.navigate('Create Group')}
+    joinGroup = () => {this.props.navigation.navigate('Join Group')}
 
     render() {
       const myData = this.state.StreaksData
@@ -37,14 +38,17 @@ class Dashboard extends Component {
                 flex: 1,
             }}>
                 
-            <View>
+            <ScrollView>
               <GroupComponentCard groupName='School of Rock' goal='Practice guitar' groupMemberNames={this.state.groupMemberNamesTwo} streak={myData[0]} />
               <GroupComponentCard groupName='Purple Team' goal='Learn React Native' groupMemberNames={this.state.groupMemberNames} streak={myData[1]}/>
-            </View>
-            <TouchableOpacity style={styles.button} onPress = {this.creatGroup}>
-                <Text>Create New Group <MaterialCommunityIcons name="plus" /></Text>
-            </TouchableOpacity>
             
+              <TouchableOpacity style={styles.button} onPress = {this.creatGroup}>
+                  <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress = {this.joinGroup}>
+                  <Text style={{textAlign: 'center'}}>Join Existing Group </Text>
+              </TouchableOpacity>
+            </ScrollView>
             </View>
           </View>
         </SafeAreaView>
@@ -55,10 +59,11 @@ class Dashboard extends Component {
 
 const styles = StyleSheet.create({
   button: {
-      alignItems: 'center',
+      alignSelf: 'center',
+      justifyContent: 'center',
       backgroundColor: '#DDDDDD',
       padding: 10,
-      width: 300,
+      width: 175,
       marginTop: 16,
     },
 });
