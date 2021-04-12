@@ -5,21 +5,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DashboardStack from './navigations/dashboardStack';
 import LoginStack from './navigations/LoginStack';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import LoadingScreen from './screens/Loading';
-import LoginScreen from './screens/Login';
-import DashboardScreen from './screens/Dashboard';
 
-const AppSwitchNavigation = createSwitchNavigator({
-  LoadingScreen: LoadingScreen,
-  LoginScreen: LoginScreen,
-  DashboardScreen: DashboardScreen
-
-})
 
 const Tab = createBottomTabNavigator();
-const AppNavigator =  createAppContainer(AppSwitchNavigation)
-export default function App() {
+
+export default function HomeTab() {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -58,7 +48,7 @@ export default function App() {
             tabBarLabel: 'Settings',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
-                name="wrench" color={color}size={size}
+                name="wrench" color={color} size={size}
               />
             ),
           }}

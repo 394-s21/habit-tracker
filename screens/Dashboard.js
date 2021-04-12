@@ -16,7 +16,7 @@ class Dashboard extends Component {
           "data" : 1,
         },
         {
-          "id" : 3,
+          "id" : 2,
           "data" : 207,
         }],
         groupMemberNames : ['Jake','Caroline','Patrick','Justin','Jipeng','Daniel','testuse','Onemore'],
@@ -35,6 +35,8 @@ class Dashboard extends Component {
             <View
             style={{
                 flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
             }}>
                 
             <View>
