@@ -7,15 +7,14 @@ import {Image} from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from '../screens/Dashboard';
-import CreateGroup from '../screens/CreateGroup';
-import JoinGroup from '../screens/JoinGroup';
+import Login from '../screens/Login';
 
 const Stack = createStackNavigator();
 
-export default function DashboardStack() {
+export default function LoginStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Create Group"
+      initialRouteName="Login"
       screenOptions={{
         headerStyle: { backgroundColor: '#3DD5F4' },
         headerTintColor: '#fff',
@@ -26,12 +25,9 @@ export default function DashboardStack() {
         component={Dashboard}
       />
       <Stack.Screen
-        name="CreateGroup"
-        component={CreateGroup}
+        name="Login"
+        component={Login}
       />
-      <Stack.Screen 
-      name="JoinGroup"
-      component={JoinGroup}/>
     </Stack.Navigator>
   );
 }
