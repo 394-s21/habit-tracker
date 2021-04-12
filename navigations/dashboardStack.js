@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from '../screens/Dashboard';
 import CreateGroup from '../screens/CreateGroup';
 import JoinGroup from '../screens/JoinGroup';
+import GroupInfo from "../screens/GroupInfo";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,10 @@ export default function DashboardStack() {
       <Stack.Screen 
       name="Join Group"
       component={JoinGroup}/>
+      
+      <Stack.Screen 
+      name="View Group"
+      component={GroupInfo}/>
     </Stack.Navigator>
   );
 }
