@@ -25,6 +25,7 @@ class Dashboard extends Component {
     }
     
     creatGroup = () => {this.props.navigation.navigate('Create Group')}
+    joinGroup = () => {this.props.navigation.navigate('Join Group')}
 
     render() {
       const myData = this.state.StreaksData
@@ -43,6 +44,9 @@ class Dashboard extends Component {
             
               <TouchableOpacity style={styles.button} onPress = {this.creatGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress = {this.joinGroup}>
+                  <Text style={{textAlign: 'center'}}>Join Existing Group </Text>
               </TouchableOpacity>
             </ScrollView>
             </View>
