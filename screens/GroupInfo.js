@@ -28,27 +28,25 @@ class GroupInfo extends Component {
       return (
         <SafeAreaView style={styles.container}>
           <ScrollView>
+            <Text style={styles.title}>Purple Group</Text>
+            <Text style={styles.smolerText}>Learn React Native</Text>
             <View style={{flexDirection:"row"}}>
              <Card style={styles.card}>
                <Card.Content>
                  <Subheading style={styles.subheading}>Group status:</Subheading>
-                   <View style={styles.bigNum}>
-                     <Text>{this.state.streak}</Text>
-                   </View>
-                 <Subheading styles={styles.smolerText}>{this.state.frequency} Streak</Subheading>   
+                    <Text style={styles.bigNum}>{this.state.streak}</Text>
+                 <Text style={styles.smolerText}>{this.state.frequency} Streak</Text>   
                </Card.Content>
              </Card>
 
             <Card style={styles.card}>
              <Card.Content>
                 <Subheading style={styles.subheading}>Personal Goal:</Subheading>
-                <View style={styles.colorText}>
-                 <Text>{this.state.personalGoals} {this.state.frequency}</Text>
-                </View>
+                
+                 <Text style={styles.colorText}>{this.state.personalGoals}{this.state.frequency}</Text>
+              
                 <Subheading style={styles.subheading}>Needs:</Subheading>
-                <View style={styles.colorText}>
-                <Text>{this.state.verifyNumber} people to verify</Text>
-                </View>
+                <Text style={styles.colorText}>{this.state.verifyNumber} people to verify</Text>
               </Card.Content>
             </Card>
             </View>
@@ -69,37 +67,55 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#ecf0f1'
       },
+    title: {
+      alignSelf: 'center',
+      marginTop: 15,
+      marginBottom: 0,  
+      justifyContent: 'center',  
+        height: 60,
+        fontSize: 30,
+        fontWeight: "bold",
+        color: "#3DD5F4"
+    },
     button: {
       alignSelf: 'center',
       justifyContent: 'center',
-      backgroundColor: '#DDDDDD',
+      backgroundColor: '#3DD5F4',
       padding: 10,
       width: 350,
       marginTop: 16,
     },
     bigNum: {
+      textAlign: "center",  
         height: 60,
-        color: "#DDDDDD"
+        fontSize: 50,
+        fontWeight: "bold",
+        color: "#3DD5F4"
     },
     card: {
-        marginTop: 15,
+        marginTop: 0,
         backgroundColor:'white',
         marginHorizontal: 10,
         width: 180
       },
     smolerText: {
+        textAlign: "center",
         fontWeight: "100",
-        height: 15,
+        marginBottom: 20
     },
     subheading: {
+        textAlign: "center",
+        //alignSelf: 'center',
+        //justifyContent: 'center', 
         fontWeight: "600",
         height: 35,
-        width: 350,
       },
     colorText: {
-        fontFamily: "Inter",
+        //fontFamily: "Inter",
+        alignSelf: 'center',
+        justifyContent: 'center',  
         fontStyle: "italic",
-        color: '#DDDDDD'
+        color: '#3DD5F4'
     }
 });
 export default GroupInfo;
