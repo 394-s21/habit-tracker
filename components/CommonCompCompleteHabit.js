@@ -5,10 +5,9 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 const CompleteHabit = ({ completed, select }) => {
     //TODO: Change this to updating database
     const [completed, setCompleted] = useState(false);
-    const select = course => setCompleted(!completed);
 
     return (
-        <TouchableOpacity onPress={() => { select(completed); }}>
+        <TouchableOpacity onPress={() => { setCompleted(!completed); }}>
             <Text style={styles.courseText}>
                 {completed ? 'Habit Completed!' : 'Completed Habit?'}
             </Text>
