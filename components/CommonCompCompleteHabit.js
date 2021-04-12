@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 
-const CompleteHabit = ({ completed, select }) => {
+const CompleteHabit = ({ initcompleted, select }) => {
     //TODO: Change this to updating database
-    const [completed, setCompleted] = useState(false);
+    const [completed, setCompleted] = useState(initcompleted);
 
     return (
         <TouchableOpacity onPress={() => { setCompleted(!completed); }}>
