@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, View, SafeAreaView, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import GroupComponentCard from '../components/CommonCompGroupCard';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Subheading } from 'react-native-paper';
-
+import { Text, Subheading,Card, Button } from 'react-native-paper';
 
 class GroupInfo extends Component {
     constructor(props) {
@@ -34,9 +33,9 @@ class GroupInfo extends Component {
                <Card.Content>
                  <Subheading style={styles.subheading}>Group status:</Subheading>
                    <View style={styles.bigNum}>
-                     {this.streak}
+                     <Text>{this.state.streak}</Text>
                    </View>
-                 <Subheading styles={styles.smolerText}>{this.frequency} Streak</Subheading>   
+                 <Subheading styles={styles.smolerText}>{this.state.frequency} Streak</Subheading>   
                </Card.Content>
              </Card>
 
@@ -44,17 +43,17 @@ class GroupInfo extends Component {
              <Card.Content>
                 <Subheading style={styles.subheading}>Personal Goal:</Subheading>
                 <View style={styles.colorText}>
-                 {this.personalGoals} {this.streak}
+                 <Text>{this.state.personalGoals} {this.state.frequency}</Text>
                 </View>
                 <Subheading style={styles.subheading}>Needs:</Subheading>
                 <View style={styles.colorText}>
-                 {this.verifyNumber} people to verify
+                <Text>{this.state.verifyNumber} people to verify</Text>
                 </View>
               </Card.Content>
             </Card>
             </View>
             <Button mode="contained" dark="true" onPress={this.completeDay} style={styles.button}>
-              Completed today{this.complete}
+              Completed today{this.state.complete}
             </Button>
           </ScrollView>
         </SafeAreaView>
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       backgroundColor: '#DDDDDD',
       padding: 10,
-      width: 175,
+      width: 350,
       marginTop: 16,
     },
     bigNum: {
@@ -85,7 +84,8 @@ const styles = StyleSheet.create({
     card: {
         marginTop: 15,
         backgroundColor:'white',
-        width: 160
+        marginHorizontal: 10,
+        width: 180
       },
     smolerText: {
         fontWeight: "100",

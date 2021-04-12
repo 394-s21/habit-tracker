@@ -24,7 +24,7 @@ class Dashboard extends Component {
       };
     }
     
-    creatGroup = () => {this.props.navigation.navigate('Create Group')}
+    createGroup = () => {this.props.navigation.navigate('Create Group')}
     joinGroup = () => {this.props.navigation.navigate('Join Group')}
     viewGroup = () => {this.props.navigation.navigate('View Group')}
 
@@ -45,7 +45,7 @@ class Dashboard extends Component {
               </TouchableOpacity>
               <GroupComponentCard groupName='Purple Team' goal='Learn React Native' groupMemberNames={this.state.groupMemberNames} streak={myData[1]}/>
             
-              <TouchableOpacity style={styles.button} onPress = {this.creatGroup}>
+              <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress = {this.joinGroup}>
