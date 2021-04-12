@@ -40,6 +40,7 @@ export default function DashboardStack() {
         //                         <Text style={{color:'white',fontSize: 18, paddingLeft: 10}}>Create Group</Text></View>),
         //           headerRight: () => (<View style={{paddingRight:10}}><Image source={{uri: profilePic}} style={{width:40,height:40}}/> </View>) }}
       />
+      
       <Stack.Screen 
       name="Join Group"
       component={JoinGroup}/>
@@ -47,6 +48,7 @@ export default function DashboardStack() {
       <Stack.Screen 
       name="View Group"
       component={GroupInfo}/>
+
     </Stack.Navigator>
   );
 }
