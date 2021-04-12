@@ -46,7 +46,7 @@ class Dashboard extends Component {
               <TouchableOpacity style={styles.button} onPress = {this.creatGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress = {this.viewGroup}>
+              <TouchableOpacity style={styles.button} onPress = {this.joinGroup}>
                   <Text style={{textAlign: 'center'}}>Join Existing Group </Text>
               </TouchableOpacity>
             </ScrollView>
