@@ -8,13 +8,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from '../screens/Dashboard';
 import CreateGroup from '../screens/CreateGroup';
+import JoinGroup from '../screens/JoinGroup';
 
 const Stack = createStackNavigator();
 
 export default function DashboardStack() {
   return (
     <Stack.Navigator
-      initialRouteName="CreateGroup"
+      initialRouteName="Create Group"
       screenOptions={{
         headerStyle: { backgroundColor: '#3DD5F4' },
         headerTintColor: '#fff',
@@ -28,6 +29,9 @@ export default function DashboardStack() {
         name="CreateGroup"
         component={CreateGroup}
       />
+      <Stack.Screen 
+      name="JoinGroup"
+      component={JoinGroup}/>
     </Stack.Navigator>
   );
 }

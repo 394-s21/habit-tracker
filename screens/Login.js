@@ -90,14 +90,14 @@ class Login extends Component {
       const result = await Google.logInAsync({
         behavior: 'web',
         iosClientId: "547778785940-v0n3uo175femd29eg82ktjfmtpkqiqol.apps.googleusercontent.com",
-        androidClientId: "547778785940-gchc1n3eojn9i0oa6b61gp23vc643ftb.apps.googleusercontent.com",
+        
         scopes: ['profile', 'email']
       });
 
       if (result.type === 'success') {
         this.onSignIn(result);
         console.log("successful sign in")
-        this.props.navigation.navigate('CreateGroup');
+        this.props.navigation.replace('Dashboard'); // We use replace to disable user to go back
         return result.accessToken;
       } else {
         console.log("cancelled sign in")
@@ -122,12 +122,4 @@ class Login extends Component {
     </SafeAreaView>);
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
 export default Login;

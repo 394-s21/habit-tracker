@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import LoginScreen from './screens/Login';
-import CreateGroup from './screens/CreateGroup';
+import Login from './screens/Login';
+import Dashboard from './screens/Dashboard';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -10,14 +10,14 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginScreen">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
-          name="CreateGroup"
-          component={CreateGroup}
+          name="Dashboard"
+          component={Dashboard}
         />
         <Stack.Screen
-          name="LoginScreen"
-          component={LoginScreen}
+          name="Login"
+          component={Login}
         />
       </Stack.Navigator>
     </NavigationContainer>)}

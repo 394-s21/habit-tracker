@@ -18,22 +18,15 @@ class CreateGroup extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      groupName: "",
-      groupHabit: "",
-      groupFreq: "daily",
-      groupColor: "red",
-      groupID: null
+      newGroupID: null
     }
   }
 
   gotTodashboard = () => {this.props.navigation.navigate('Dashboard')}
 
   handleSubmit = () => {
-    console.log('will validate input, upload to firebase, generate group ID here');
-    console.log('group Name: ',this.state.groupName);
-    console.log('group habit: ',this.state.groupHabit);
-    console.log('group freq: ',this.state.groupFreq);
-    console.log('group color', this.state.groupColor);
+    console.log('will validate group ID, add person to group if it matches, add group/habit to person profile');
+    console.log('group ID: ',this.state.newGroupID)
     this.props.navigation.navigate('Dashboard');
   }
 
@@ -43,63 +36,15 @@ class CreateGroup extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <TextInput label='Group Name' 
-                      value={this.state.groupName} 
+          <TextInput label='Group ID' 
+                      value={this.state.newGroupID} 
                       type="outlined"
                       
                       style={styles.field}
-                      onChangeText={text => this.setState({groupName:text})} />
-          <TextInput label='What habit are you working toward?' 
-                      value={this.state.groupHabit} 
-                      type="outlined"
-                      
-                      style={styles.field}
-                      onChangeText={text => this.setState({groupHabit:text})} /> 
-          <Card style={styles.card}>
-            <Card.Content>
-              <Subheading style={styles.subheading}>I want to complete this habit...</Subheading>
-              <RadioButton.Group onValueChange={newValue => this.setState({groupFreq:newValue})}
-                                  value={this.state.groupFreq}>
-                <View style={styles.row}>
-                  <RadioButton value="daily"/>
-                  <Text style={styles.options}>Daily</Text>
-                  <RadioButton value="weekly"/>
-                  <Text style={styles.options}>Weekly</Text>
-                  <RadioButton value="monthly"/>
-                  <Text style={styles.options}>Monthly</Text>
-                  
-                </View>
-                </RadioButton.Group>     
-            </Card.Content>
-          </Card>  
-          <Card style={styles.card}>
-            <Card.Content>
-              <Subheading style={styles.subheading}>My group color will be...</Subheading>
-              <RadioButton.Group onValueChange={newValue => this.setState({groupColor:newValue})}
-                                  value={this.state.groupColor}>
-                <View style={styles.row}>
-                  <RadioButton value="red"/>
-                  <Text style={styles.options}>Red</Text>
-                  <RadioButton value="yellow"/>
-                  <Text style={styles.options}>Yellow</Text>
-                  <RadioButton value="green"/>
-                  <Text style={styles.options}>Green</Text>
-                  
-                </View>
-                <View style={styles.row}>
-                  <RadioButton value="blue"/>
-                  <Text style={styles.options}>Blue</Text>
-                  <RadioButton value="purple"/>
-                  <Text style={styles.options}>Purple</Text>
-                  <RadioButton value="pink"/>
-                  <Text style={styles.options}>Pink</Text>
-                  
-                </View>
-                </RadioButton.Group>     
-            </Card.Content>
-          </Card>
+                      onChangeText={text => this.setState({newGroupID:text})} />
+          
           <Button mode="contained" dark="true" onPress={this.handleSubmit} style={styles.button}>
-            SAVE
+            JOIN
           </Button>
           <Button mode="contained" dark="true" onPress={this.gotTodashboard} style={styles.button}>
             CANCEL
