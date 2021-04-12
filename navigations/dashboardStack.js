@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 export default function DashboardStack() {
   return (
     <Stack.Navigator
-      initialRouteName="CreateGroup"
+      initialRouteName="Create Group"
       screenOptions={{
         headerStyle: { backgroundColor: '#3DD5F4' },
         headerTintColor: '#fff',
@@ -30,7 +30,7 @@ export default function DashboardStack() {
         //           headerRight: () => (<View style={{paddingRight:10}}><Image source={{uri: profilePic}} style={{width:40,height:40}}/> </View>)}}
       />
       <Stack.Screen
-        name="CreateGroup"
+        name="Create Group"
         component={CreateGroup}
         // TODO: fix this as it causes a text component exception on IOS
         // options={{ title: '',
