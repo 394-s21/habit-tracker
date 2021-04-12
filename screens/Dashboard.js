@@ -41,7 +41,7 @@ class Dashboard extends Component {
                 
             <ScrollView>
               <TouchableOpacity onPress = {this.viewGroup}>
-              <GroupComponentCard onClick={this.viewGroup} groupName='School of Rock' goal='Practice guitar' groupMemberNames={this.state.groupMemberNamesTwo} streak={myData[0]} />
+              <GroupComponentCard groupName='School of Rock' goal='Practice guitar' groupMemberNames={this.state.groupMemberNamesTwo} streak={myData[0]} />
               </TouchableOpacity>
               <GroupComponentCard groupName='Purple Team' goal='Learn React Native' groupMemberNames={this.state.groupMemberNames} streak={myData[1]}/>
             
