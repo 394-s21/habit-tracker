@@ -26,11 +26,11 @@ export default function DashboardStack() {
         component={Dashboard}
       />
       <Stack.Screen
-        name="CreateGroup"
+        name="Create Group"
         component={CreateGroup}
       />
       <Stack.Screen 
-      name="JoinGroup"
+      name="Join Group"
       component={JoinGroup}/>
     </Stack.Navigator>
   );
