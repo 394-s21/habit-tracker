@@ -22,7 +22,15 @@ class CreateGroup extends Component {
       groupHabit: "",
       groupFreq: "daily",
       groupColor: "red",
-      groupID: null
+      groupID: null,
+      groups: [{'groupName': 'School of Rock',
+      'goal': 'Practice Guitar',
+      'groupMemberNames': ['Justin','Roy'],
+      'streak': 4,
+      'groupColor': 'purple',
+      'groupFreq': 'weekly',
+      'groupID': 15781}],
+      idCount: 15782
     }
   }
 
@@ -34,7 +42,20 @@ class CreateGroup extends Component {
     console.log('group habit: ',this.state.groupHabit);
     console.log('group freq: ',this.state.groupFreq);
     console.log('group color', this.state.groupColor);
-    this.props.navigation.navigate('Dashboard');
+    newGroup = {'groupName': this.state.groupName,
+                'goal': this.state.groupHabit,
+                'groupMemberNames': [],
+                'streak': 0,
+                'groupColor': this.state.groupColor,
+                'groupFreq': this.state.groupFreq,
+                'groupID': this.state.idCount};
+    this.setState(
+      {groups: [...this.state.groups, newGroup]}
+    );
+    this.setState((state, props) => {
+      return {idCount: this.state.idCount + 1};
+    });
+    this.props.navigation.navigate('Dashboard',{params: {groups: this.state.groups}});
   }
 
   render() {
@@ -167,6 +188,7 @@ const styles = StyleSheet.create({
   }
 });
 
+export default CreateGroup;
 
 /*
 
@@ -211,4 +233,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });*/
-export default CreateGroup;

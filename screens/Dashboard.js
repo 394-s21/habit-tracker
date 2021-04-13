@@ -11,6 +11,13 @@ class Dashboard extends Component {
       super(props);
   
       this.state = {
+        groups: [{'groupName': 'School of Rock',
+      'goal': 'Practice Guitar',
+      'groupMemberNames': ['Justin','Roy'],
+      'streak': 4,
+      'groupColor': 'purple',
+      'groupFreq': 'weekly',
+      'groupID': 15781}],
         StreaksData: [{ // dummy data first. TODO: replace with db call from firebase
           "id" : 1,
           "data" : 1,
@@ -24,12 +31,14 @@ class Dashboard extends Component {
       };
     }
     
-    creatGroup = () => {this.props.navigation.navigate('Create Group')}
+    creatGroup = () => {this.props.navigation.navigate("Create Group")}
     joinGroup = () => {this.props.navigation.navigate('Join Group')}
 
     render() {
       const myData = this.state.StreaksData
       const stack = createStackNavigator()
+      console.log('this.props: ',this.props);
+      const groups = this.state.groups;
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={{ flex: 1, padding: 16 }}>
@@ -41,9 +50,11 @@ class Dashboard extends Component {
             }}>
                 
             <ScrollView>
-              <GroupComponentCard groupName='School of Rock' goal='Practice guitar' groupMemberNames={this.state.groupMemberNamesTwo} streak={myData[0]} />
-              <GroupComponentCard groupName='Purple Team' goal='Learn React Native' groupMemberNames={this.state.groupMemberNames} streak={myData[1]}/>
-            
+              {groups.map(group => <GroupComponentCard groupName={group.groupName}
+                                              goal={group.goal}
+                                              groupMemberNames={group.groupMemberNames}
+                                              streak={group.streak}/>)}
+           
               <TouchableOpacity style={styles.button} onPress = {this.creatGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
               </TouchableOpacity>
@@ -72,3 +83,5 @@ const styles = StyleSheet.create({
 export default Dashboard;
 
 
+/*<GroupComponentCard groupName='School of Rock' goal='Practice guitar' groupMemberNames={this.state.groupMemberNamesTwo} streak={myData[0]} />
+              <GroupComponentCard groupName='Purple Team' goal='Learn React Native' groupMemberNames={this.state.groupMemberNames} streak={myData[1]}/> */
