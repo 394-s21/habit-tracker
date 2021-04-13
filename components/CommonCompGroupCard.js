@@ -4,7 +4,7 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements';
 import Streak from './CommonCompStreak';
 import CommonCompGroupUserList from './CommonCompGroupUserList';
 
-const CommonCompGroupCard = ({groupName, groupMemberNames, goal, streak}) => {
+const CommonCompGroupCard = ({groupName, groupMemberNames, goal, streak, groupID}) => {
   const myData = streak; //StreaksData;
 
   return(
@@ -12,11 +12,12 @@ const CommonCompGroupCard = ({groupName, groupMemberNames, goal, streak}) => {
   <Card>
     <View style={styles.cardHeader}>
       <Card.Title style={styles.groupname}>{groupName}</Card.Title>
-      <Streak data = {myData.data > 1? myData.data  + " days" : myData.data  + " day"}/>
+      <Streak data = {myData > 1? myData  + " days" : myData  + " day"}/>
     </View>
     <Card.Divider/>
     <View style={styles.body}>
       <Text style={styles.goal}>{goal}</Text>
+      <Text style={styles.goal}>Group Code: {groupID}</Text>
       <CommonCompGroupUserList groupMembers={groupMemberNames}/>
     </View>
   </Card>
