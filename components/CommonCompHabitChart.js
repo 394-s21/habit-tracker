@@ -2,10 +2,6 @@ import * as React from 'react';
 import {ScrollView, Text, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 
-const grid = [{'name': 'jake', 'recent': []},{},{},{}]
-const testarr = [1,0,0,1,1,0,1]
-const testarr2 = [0,1,0,1,1,1,0]
-
 const createSquares = arr => (arr.map(done => (
         <View style={styles.[done ? 'doneSquare': 'whiteSquare']}></View>
     )));
@@ -34,7 +30,6 @@ export default function App() {
 
   const recentHabit = [{'name': 'jake', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,   1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
 
-  const recentData1 = [{'name': 'test2', 'recent': [1]}, {'name': 'jake', 'recent': [0]}, {'name': 'johnathon', 'recent': [1]}];
   return (
     <View>
     <ScrollView
