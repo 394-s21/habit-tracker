@@ -12,7 +12,6 @@ class JoinGroup extends Component {
       newGroupID: null
     }
   }
-  goTodashboard = () => {this.props.navigation.replace('Dashboard')}
 
   groupIdNotFoundAlert = () =>
     alert(
@@ -25,9 +24,9 @@ class JoinGroup extends Component {
   joinGroupSuccessfulAlert = () =>
   alert(
     "Join Group Successful.",
-    "You have now joined the group.",
+    "View your group in your dashboard",
     [
-      { text: "OK"} // TODO:  onPress: () => this.goTodashboard()
+      { text: "OK"}
     ]
   );
   handleSubmit = () => {
@@ -60,9 +59,6 @@ class JoinGroup extends Component {
           
           <Button mode="contained" dark="true" onPress={this.handleSubmit} style={styles.button} title="JOIN">
             JOIN
-          </Button>
-          <Button mode="contained" dark="true" onPress={this.goTodashboard} style={styles.button} title="CANCEL">
-            CANCEL
           </Button>
         </ScrollView>
       </SafeAreaView>
