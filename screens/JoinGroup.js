@@ -13,6 +13,7 @@ class JoinGroup extends Component {
     }
   }
   goTodashboard = () => {this.props.navigation.replace('Dashboard')}
+
   groupIdNotFoundAlert = () =>
     alert(
       "Group ID not found.",
@@ -26,7 +27,7 @@ class JoinGroup extends Component {
     "Join Group Successful.",
     "You have now joined the group.",
     [
-      { text: "OK", onPress: () => this.goTodashboard()}
+      { text: "OK"} // TODO:  onPress: () => this.goTodashboard()
     ]
   );
   handleSubmit = () => {
