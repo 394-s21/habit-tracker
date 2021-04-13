@@ -13,8 +13,6 @@ import { TextInput, RadioButton,Text, Subheading,Card, Button } from 'react-nati
 
 
 class CreateGroup extends Component {
-
-
   constructor(props) {
     super(props);
     this.state= {
