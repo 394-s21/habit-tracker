@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-
+import GroupInfo from "../screens/GroupInfo";
 
 class CommonCompStreak extends Component {
   render() {
