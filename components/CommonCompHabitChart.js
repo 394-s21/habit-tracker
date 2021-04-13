@@ -10,24 +10,29 @@ const createSquares = arr => (arr.map(done => (
         <View style={styles.[done ? 'doneSquare': 'whiteSquare']}></View>
     )));
 
-const gridRow = (name, row) => {
+const gridRow = (row) => {
   return (
     <View style={styles.horizontalContainer}>
-      <Text style={styles.paragraph}>
-      {name}
-      </Text>
       {createSquares(row)}
     </View>
   );
 };
 
-const mapUsers = users => (users.map(user => (
-        gridRow(user['name'], user['recent'])
+const mapUserData = users => (users.map(user => (
+        gridRow( user['recent'])
     )));
+
+const mapUserNames = users => (users.map(user => (
+    <View style={styles.textContainer}>
+      <Text style={styles.paragraph}>
+      {user['name']}
+      </Text>
+    </View>
+)));
 
 export default function App() {
 
-  const recentData = [{'name': 'test', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,   1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
+  const recentHabit = [{'name': 'jake', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,   1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
 
   const recentData1 = [{'name': 'test2', 'recent': [1]}, {'name': 'jake', 'recent': [0]}, {'name': 'johnathon', 'recent': [1]}];
   return (
@@ -37,9 +42,14 @@ export default function App() {
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={200}
                 decelerationRate="normal">
-      <View style={styles.container}>
-        {mapUsers(recentData)}
-      </View>
+      <View style={styles.horizontalContainer}>
+        <View style={styles.container}>
+          {mapUserNames(recentHabit)}
+        </View>
+        <View style={styles.container}>
+          {mapUserData(recentHabit)}
+        </View>
+    </View>
     </ScrollView>
     </View>
   );
@@ -63,16 +73,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
     marginTop: 25,
-    backgroundColor: 'black',
-    padding: 8,
+    backgroundColor: 'white',
+    padding: 0,
   },
   paragraph: {
-    width: 50,
     fontSize: 14,
-    marginRight: 20,
+    marginRight: 15,
+    marginLeft:10,
     textAlign: 'center',
-    color: 'white',
+    color: 'black',
   },
+  textContainer: {borderColor: 'black',
+  borderBottomWidth: 1,
+   borderTopWidth: 1,
+    marginLeft:20},
   doneSquare: {
     ...gridSquareBase,
     backgroundColor: 'purple',
