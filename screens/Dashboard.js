@@ -26,6 +26,7 @@ class Dashboard extends Component {
       };
     }
     
+
     createGroup = () => {this.props.navigation.navigate('Create Group')};
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
     viewGroup = () => {this.props.navigation.navigate('View Group')}
@@ -43,6 +44,7 @@ class Dashboard extends Component {
       
     }
 
+
     render() {
       const myData = this.state.StreaksData
       const stack = createStackNavigator();
@@ -59,12 +61,13 @@ class Dashboard extends Component {
             }}>
                 
             <ScrollView>
-              
+
               {groups.map(group => <TouchableOpacity onPress={this.viewGroup}><GroupComponentCard groupName={group.groupName}
                                               goal={group.goal}
                                               groupMemberNames={group.groupMemberNames.split(',')}
                                               streak={group.streak}
                                               groupID={group.groupID}/> </TouchableOpacity>)}
+
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
               </TouchableOpacity>
