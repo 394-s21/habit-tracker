@@ -17,8 +17,6 @@ import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 const db = firebase.database().ref()
 
 class CreateGroup extends Component {
-
-
   constructor(props) {
     super(props);
     this.state= {

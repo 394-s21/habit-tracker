@@ -41,13 +41,9 @@ class Dashboard extends Component {
       });
       console.log('groupArray: ',groupArray);
       this.setState({groups: groupArray});
-      
     }
 
-
     render() {
-      const myData = this.state.StreaksData
-      const stack = createStackNavigator();
       const groups = this.state.groups;
       console.log('groups: ',groups);
       return (

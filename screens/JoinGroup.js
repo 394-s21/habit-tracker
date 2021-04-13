@@ -1,36 +1,52 @@
 import { Component } from 'react';
 import React from "react";
-import { SafeAreaView, StyleSheet, Alert, View, ScrollView} from 'react-native';
-//import {Card, Button} from 'react-native-elements';
-import CommonCompTextInput from '../components/CommonCompTextInput';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { TextInput, RadioButton,Text, Subheading,Card, Button } from 'react-native-paper';
-//import { useFormik } from 'formik';
-//import * as yup from 'yup';
-//import Form from '../components/Form';
-//import { makeStyles } from '@material-ui/core/styles';
-//import TextField from '@material-ui/core/TextField';
-
-
-class CreateGroup extends Component {
+import { SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import { TextInput, Button, Text } from 'react-native-paper';
+import alert from '../components/CommonCompAlert';
+import {firebase} from '../utils/firebase';
+import 'firebase/database';
+class JoinGroup extends Component {
   constructor(props) {
     super(props);
     this.state= {
       newGroupID: null
     }
   }
-
-  gotTodashboard = () => {this.props.navigation.navigate('Dashboard')}
-
+  goTodashboard = () => {this.props.navigation.replace('Dashboard')}
+  groupIdNotFoundAlert = () =>
+    alert(
+      "Group ID not found.",
+      "Please make sure to enter the correct group ID.",
+      [
+        { text: "OK"}
+      ]
+  );
+  joinGroupSuccessfulAlert = () =>
+  alert(
+    "Join Group Successful.",
+    "You have now joined the group.",
+    [
+      { text: "OK", onPress: () => this.goTodashboard()}
+    ]
+  );
   handleSubmit = () => {
-    console.log('will validate group ID, add person to group if it matches, add group/habit to person profile');
+    // validate group ID
+    const groupItems = firebase.database().ref('/groups') // initialize firebase to read groups data
+
+    groupItems.on("value", datasnap => {
+      var groupIds = Object.keys(datasnap.val())
+      console.log(groupIds)
+      if(groupIds.includes(this.state.newGroupID)){
+        this.joinGroupSuccessfulAlert()
+      } else{
+        this.groupIdNotFoundAlert()
+      }
+    })
+    //TODO: Add person to group if it matches, add group/habit to person profile'
     console.log('group ID: ',this.state.newGroupID)
-    this.props.navigation.navigate('Dashboard');
   }
 
   render() {
-    
-
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
@@ -41,22 +57,17 @@ class CreateGroup extends Component {
                       style={styles.field}
                       onChangeText={text => this.setState({newGroupID:text})} />
           
-          <Button mode="contained" dark="true" onPress={this.handleSubmit} style={styles.button}>
+          <Button mode="contained" dark="true" onPress={this.handleSubmit} style={styles.button} title="JOIN">
             JOIN
           </Button>
-          <Button mode="contained" dark="true" onPress={this.gotTodashboard} style={styles.button}>
+          <Button mode="contained" dark="true" onPress={this.goTodashboard} style={styles.button} title="CANCEL">
             CANCEL
           </Button>
         </ScrollView>
       </SafeAreaView>
-      
-      
-
     );
   }
 }
-
-
 const styles = StyleSheet.create({
   button: {
     marginTop: 15,
@@ -109,49 +120,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   }
 });
-
-
-/*
-
-<RadioButton.Item label="Daily" value="daily" style={styles.options}/>
-              <RadioButton.Item label="Weekly" value="weekly" style={styles.options}/>
-              <RadioButton.Item label="Monthly" value="monthly" style={styles.options}/>
-
-
-
-
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
-  button : {
-    margin: 2,
-    fontSize: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    height: 50,
-    margin: 12,
-    fontSize: 18,
-    // TODO: ADD a fontFamily later
-    color: "#FF9893",
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  dateDropdown: {
-    height: 50,
-    margin: 12,
-    fontSize: 18,
-    // TODO: ADD a fontFamily later
-    color: "#FFFFFF",
-    fontWeight: 'bold',
-    textAlign: 'center',
-  }
-});*/
-export default CreateGroup;
+export default JoinGroup;
