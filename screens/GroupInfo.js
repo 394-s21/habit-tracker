@@ -5,37 +5,73 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import GroupComponentCard from '../components/CommonCompGroupCard';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text, Subheading,Card, Button } from 'react-native-paper';
+import { TabRouter } from 'react-navigation';
+import {firebase} from '../utils/firebase';
+import 'firebase/database';
+
 
 class GroupInfo extends Component {
+  
     constructor(props) {
       super(props);
   
       this.state = {
+        group: [],
         streak : 1,
-        personalGoals : "1 Lesson per ",
+        personalGoals : "1 Lesson ",
         frequency : "Day",
-        verifyNumber : "2",
+        verifyNumber : "1",
         groupMemberNames : ['Jake','Caroline','Patrick','Justin','Jipeng','Daniel','testuse','Onemore'],
-        complete : "?"
+        complete : "?",
+        groupID: this.props.route.params.groupID
     };
     }
     
     returnHome = () => {this.props.navigation.navigate("Dashboard")}
-    completeDay = () => {this.setState({streak : 2, complete : "!"})}
-
+    completeDay = () => {
+      const groupID = this.state.group[3];
+      const db = firebase.database().ref('/groups/'+groupID);
+      db.child('/streak').set(this.state.streak+1);
+      this.setState((state, props) => {
+        return {streak: this.state.streak + 1,
+                complete: '!'};
+      });}
+    componentDidMount() {
+      console.log('this.props.route.params',this.props.route.params);
+      console.log('this.state.groupID', this.state.groupID);
+      const groupArray  = [];
+      const groupID = this.state.groupID;
+      firebase.database().ref('/groups/'+groupID).on('value', function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+          groupArray.push(childSnapshot.toJSON());
+        });
+      });
+      console.log('groupArray: ',groupArray);
+      this.setState({group: groupArray});
+      this.setState({streak: groupArray[6]});
+      
+    }
     render() {
       const stack = createStackNavigator()
+      
+      const group = this.state.group;
+      console.log(group);
+      const groupName = group[5];
+      const streak = this.state.streak; 
+      const goal = group[0];
+      const freq = group[2];
+      console.log(groupName);
       return (
         <SafeAreaView style={styles.container}>
           <ScrollView>
-            <Text style={styles.title}>Purple Group</Text>
-            <Text style={styles.smolerText}>Learn React Native</Text>
+            <Text style={styles.title}>{groupName}</Text>
+            <Text style={styles.smolerText}>{goal}</Text>
             <View style={{flexDirection:"row"}}>
              <Card style={styles.card}>
                <Card.Content>
                  <Subheading style={styles.subheading}>Group status:</Subheading>
-                    <Text style={styles.bigNum}>{this.state.streak}</Text>
-                 <Text style={styles.smolerText}>{this.state.frequency} Streak</Text>   
+                    <Text style={styles.bigNum}>{streak}</Text>
+                 <Text style={styles.smolerText}>{freq} Streak</Text>   
                </Card.Content>
              </Card>
 
@@ -43,10 +79,10 @@ class GroupInfo extends Component {
              <Card.Content>
                 <Subheading style={styles.subheading}>Personal Goal:</Subheading>
                 
-                 <Text style={styles.colorText}>{this.state.personalGoals}{this.state.frequency}</Text>
+                 <Text style={styles.colorText}>{this.state.personalGoals}{freq}</Text>
               
                 <Subheading style={styles.subheading}>Needs:</Subheading>
-                <Text style={styles.colorText}>{this.state.verifyNumber} people to verify</Text>
+                <Text style={styles.colorText}>{this.state.verifyNumber} person to verify</Text>
               </Card.Content>
             </Card>
             </View>

@@ -29,7 +29,7 @@ class Dashboard extends Component {
 
     createGroup = () => {this.props.navigation.navigate('Create Group')};
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
-    viewGroup = () => {this.props.navigation.navigate('View Group')}
+    viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
     
     
     componentDidMount() {
@@ -62,7 +62,7 @@ class Dashboard extends Component {
                 
             <ScrollView>
 
-              {groups.map(group => <TouchableOpacity onPress={this.viewGroup}><GroupComponentCard groupName={group.groupName}
+              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><GroupComponentCard groupName={group.groupName}
                                               goal={group.goal}
                                               groupMemberNames={group.groupMemberNames.split(',')}
                                               streak={group.streak}
