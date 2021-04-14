@@ -1,99 +1,61 @@
-import React, {Component} from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, Image, useWindowDimensions} from 'react-native';
 import Streak from './CommonCompStreak';
 import CommonCompGroupUserList from './CommonCompGroupUserList';
+import Constants from 'expo-constants';
+import { Card } from 'react-native-paper';
 
-const ExperimentalGroupCard = ({groupName, ratio, streak, color}) => {
-    const completed = "Completed: ".concat({ratio});
-    return(
-    <Card>
-        <View>
-            <Text>{groupName}</Text>
-            <Text>{streak}</Text>
-        </View>
-        <Text>Completed: {ratio}</Text>
-      {/* <Card.Title style={{borderWidth: 5}}title={groupName} subtitle={ratio}/> */}
-      {/* <Card.Content>
-        <Title>Card title</Title>
-        <Paragraph>Card content</Paragraph>
-      </Card.Content> */}
-    </Card>
-    );
+//const windowWidth = useWindowDimensions().width;
+//const cardWidth = windowWidth;
+//const windowHeight = useWindowDimensions().height;
+const RightContent = () => <Text style={styles.streak}>4</Text>
+
+class ExperimentalGroupCard extends Component {
+  
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+          streak: 1,
+          ratio: "2/6",
+          personalGoals: "1 Lesson ",
     };
+    }
+
+    render() {
+        return (
+        <View style={styles.container}>
+            <Card style={styles.card}>
+                <Card.Title title="LEARN REACT NATIVE" subtitle="Completed: 1/6" right={RightContent}/> 
+            </Card>
+        </View>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
-    cardHeader: {
-        justifyContent: 'space-between',
-        flex: 1,
-        flexDirection: 'row',
-        //alignItems: 'flex-box',
-        bottom: '5%',
-      },
-    card: {
-        //color: {color},
-        justifyContent: "space-between",
-        flexDirection: "row",
-        borderWidth: 5,
-    },
-
-})
-  
-//   export default MyComponent;
-
-// const ExperimentalGroupCard = ({goal, streak, completed}) => {
-//   const myData = streak; //StreaksData;
-
-//   return(
-//   <View>
-//   <Card>
-//     <View style={styles.cardHeader}>
-//       <Card.Title style={styles.groupname}>{groupName}</Card.Title>
-//       <Streak data = {myData.data > 1? myData.data  + " days" : myData.data  + " day"}/>
-//     </View>
-//     <Card.Divider/>
-//     <View style={styles.body}>
-//       <Text style={styles.goal}>{goal}</Text>
-//       <CommonCompGroupUserList groupMembers={groupMemberNames}/>
-//     </View>
-//   </Card>
-//   </View>
-//     );
-
-// };
-
-// const styles = StyleSheet.create({
-//   streak: {
-//     paddingRight: 5,
-//   },
-//   cardHeader: {
-//     justifyContent: 'space-between',
-//     flex: 1,
-//     flexDirection: 'row',
-//     //alignItems: 'flex-box',
-//     bottom: '5%',
-//   },
-//   body: {
-//     flexDirection: 'column',
-//     //alignItems: 'flex-box',
-//   },
-//   goal: {
-//     fontSize: 17,
-//     fontWeight: 'bold',
-//     color: 'gray',
-//     opacity: 0.6,
-//     paddingBottom: '5%',
-//   },
-//   // card: {
-//   //   //borderLeftWidth: 5,    
-//   // },
-//   groupname: {
-//     paddingLeft: 10,
-//     marginLeft: -10,
-//     fontSize: 30,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-// })
+  card: {
+    backgroundColor: '#FFEFD5',
+  },
+  streak: {
+    fontSize: 18,
+    paddingRight: '5%',
+  },
+  container: {
+    flex: 1,
+    //justifyContent: 'center',
+    //paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+    //width: {width}*0.85,
+    //borderWidth:5,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
 
 export default ExperimentalGroupCard;

@@ -6,6 +6,7 @@ import GroupComponentCard from '../components/CommonCompGroupCard';
 import { createStackNavigator } from '@react-navigation/stack';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
+import ExperimentalGroupCard from '../components/ExperimentalGroupCard';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -57,6 +58,7 @@ class Dashboard extends Component {
             }}>
                 
             <ScrollView>
+              <ExperimentalGroupCard/>
 
               {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><GroupComponentCard groupName={group.groupName}
                                               goal={group.goal}
