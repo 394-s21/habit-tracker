@@ -4,17 +4,19 @@ import { SafeAreaView, StyleSheet, Alert, View, ScrollView} from 'react-native';
 //import {Card, Button} from 'react-native-elements';
 import CommonCompTextInput from '../components/CommonCompTextInput';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { TextInput, RadioButton,Text, Subheading,Card, Button } from 'react-native-paper';
+import { Provider, TextInput, RadioButton,Text, Subheading,Card, Button,Paragraph, Dialog, Portal } from 'react-native-paper';
 //import { useFormik } from 'formik';
 //import * as yup from 'yup';
 //import Form from '../components/Form';
 //import { makeStyles } from '@material-ui/core/styles';
 //import TextField from '@material-ui/core/TextField';
+import {firebase} from '../utils/firebase';
+import 'firebase/database';
+import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
+const db = firebase.database().ref()
 
 class CreateGroup extends Component {
-
-
   constructor(props) {
     super(props);
     this.state= {
@@ -22,19 +24,73 @@ class CreateGroup extends Component {
       groupHabit: "",
       groupFreq: "daily",
       groupColor: "red",
-      groupID: null
+      groupID: null,
+      groups: [],
+      idCount: null,
+      visible: false
     }
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.showDialog = this.showDialog.bind(this);
+    this.hideDialog = this.hideDialog.bind(this);
   }
 
   gotTodashboard = () => {this.props.navigation.navigate('Dashboard')}
 
+  showDialog = () => this.setState({visible: true});
+  hideDialog = () => {
+    this.setState({visible: false});
+    this.props.navigation.navigate('Dashboard');
+  }
   handleSubmit = () => {
     console.log('will validate input, upload to firebase, generate group ID here');
     console.log('group Name: ',this.state.groupName);
     console.log('group habit: ',this.state.groupHabit);
     console.log('group freq: ',this.state.groupFreq);
     console.log('group color', this.state.groupColor);
-    this.props.navigation.navigate('Dashboard');
+
+    const groupName = this.state.groupName;
+    const groupHabit = this.state.groupHabit;
+    const groupFreq = this.state.groupFreq;
+    const groupColor = this.state.groupColor;
+    const groupID = this.state.idCount;
+    
+    const db = firebase.database().ref();
+    db.child('/idCount').set(this.state.idCount+1);
+    db.child('/groups/'+groupID).once("value")
+      .then(snapshot => {
+        if(!snapshot.val()) {
+          db.child('/groups/'+groupID+'/groupName').set(groupName);
+          db.child('/groups/'+groupID+'/goal').set(groupHabit);
+          db.child('/groups/'+groupID+'/groupColor').set(groupColor);
+          db.child('/groups/'+groupID+'/groupFreq').set(groupFreq);
+          db.child('/groups/'+groupID+'/groupID').set(groupID);
+          db.child('/groups/'+groupID+'/streak').set(0);
+          db.child('/groups/'+groupID+'/groupMemberNames').set('You');
+          }
+      })
+      .then(
+        this.props.navigation.navigate('Dashboard')
+      )
+      
+
+    
+  }
+
+  componentDidMount() {
+    const groupArray  = [];
+    firebase.database().ref('/groups').on('value', function (snapshot) {
+      snapshot.forEach(function (childSnapshot) {
+        groupArray.push(childSnapshot.toJSON());
+      });
+    });
+    this.setState({groups: groupArray});
+    firebase.database().ref('/idCount').once('value')
+            .then(snapshot => {
+                this.setState({idCount: snapshot.val()})
+                console.log('state var idcount: ', this.state.idcount);
+                //idNum = snapshot.val();
+                console.log('id from firebase: ', snapshot.val());
+            });
   }
 
   render() {
@@ -43,6 +99,19 @@ class CreateGroup extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
+          <Provider>
+          <Portal>
+            <Dialog visible={this.state.visible} onDismiss={this.hideDialog}>
+              <Dialog.Title>Group successfully created!</Dialog.Title>
+              <Dialog.Content>
+                <Paragraph>Your Group ID is {this.state.groupID}. Share it with your friends so you can meet your goals together!</Paragraph>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button onPress={this.hideDialog}>Done</Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+          </Provider>
           <TextInput label='Group Name' 
                       value={this.state.groupName} 
                       type="outlined"

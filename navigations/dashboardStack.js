@@ -9,13 +9,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from '../screens/Dashboard';
 import CreateGroup from '../screens/CreateGroup';
 import JoinGroup from '../screens/JoinGroup';
+import GroupInfo from "../screens/GroupInfo";
 
 const Stack = createStackNavigator();
 
 export default function DashboardStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Create Group"
+      initialRouteName="Dashboard"
       screenOptions={{
         headerStyle: { backgroundColor: '#3DD5F4' },
         headerTintColor: '#fff',
@@ -26,12 +27,18 @@ export default function DashboardStack() {
         component={Dashboard}
       />
       <Stack.Screen
-        name="CreateGroup"
+        name="Create Group"
         component={CreateGroup}
       />
+      
       <Stack.Screen 
-      name="JoinGroup"
+      name="Join Group"
       component={JoinGroup}/>
+
+      <Stack.Screen 
+      name="View Group"
+      component={GroupInfo}/>
+
     </Stack.Navigator>
   );
 }
