@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-
-import { StyleSheet, View, SafeAreaView, TouchableOpacity, ScrollView, FlatList } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import GroupComponentCard from '../components/CommonCompGroupCard';
+import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text, Subheading,Card, Button } from 'react-native-paper';
-import { TabRouter } from 'react-navigation';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 

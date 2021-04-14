@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import firebase from 'firebase';
@@ -8,7 +9,6 @@ import * as Google from 'expo-google-app-auth';
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig)
 }
-// firebase.initializeApp(firebaseConfig)
 class Login extends Component {
   isUserEqual = (googleUser, firebaseUser) => {
     if (firebaseUser) {
@@ -66,16 +66,6 @@ class Login extends Component {
                     last_logged_in: Date.now()
                   });
               }
-            })
-            .catch(function(error) {
-              // Handle Errors here.
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              // The email of the user's account used.
-              var email = error.email;
-              // The firebase.auth.AuthCredential type that was used.
-              var credential = error.credential;
-              // ...
             });
         } else {
           console.log('User already signed-in Firebase.');
@@ -89,8 +79,8 @@ class Login extends Component {
       console.log("attemp to sign in with google")
       const result = await Google.logInAsync({
         behavior: 'web',
-        iosClientId: "547778785940-v0n3uo175femd29eg82ktjfmtpkqiqol.apps.googleusercontent.com",
-        
+        iosClientId: "547778785940-p85qgnoq304ihoc6m9kf3ntaoob30rdn.apps.googleusercontent.com",
+        androidClientId: "547778785940-c4auvl9ajnaba4omhbgrqgkp7aaun0uh.apps.googleusercontent.com",
         scopes: ['profile', 'email']
       });
 
@@ -109,6 +99,7 @@ class Login extends Component {
       return { error: true };
     }
   };
+
   render() {
     return (
     <SafeAreaView style={{ flex: 1 }}>

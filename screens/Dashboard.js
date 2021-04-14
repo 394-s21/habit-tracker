@@ -3,7 +3,6 @@ import React, { useContext, useState, useEffect, Component } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import GroupComponentCard from '../components/CommonCompGroupCard';
-import { createStackNavigator } from '@react-navigation/stack';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 
