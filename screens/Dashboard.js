@@ -14,16 +14,6 @@ class Dashboard extends Component {
   
       this.state = {
         groups: [],
-        StreaksData: [{ // dummy data first. TODO: replace with db call from firebase
-          "id" : 1,
-          "data" : 1,
-        },
-        {
-          "id" : 2,
-          "data" : 207,
-        }],
-        groupMemberNames : ['Jake','Caroline','Patrick','Justin','Jipeng','Daniel','testuse','Onemore'],
-        groupMemberNamesTwo :['Justin', 'Roy']
       };
     }
     
@@ -33,7 +23,7 @@ class Dashboard extends Component {
     viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
     
     
-    componentDidMount() {
+    componentWillMount() {
       const groupArray  = [];
       firebase.database().ref('/groups').on('value', function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
@@ -46,7 +36,7 @@ class Dashboard extends Component {
 
     render() {
       const groups = this.state.groups;
-      console.log('groups: ',groups);
+      console.log('groups: ', this.state.groups);
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={{ flex: 1, padding: 16 }}>
@@ -58,13 +48,10 @@ class Dashboard extends Component {
             }}>
                 
             <ScrollView>
-              <ExperimentalGroupCard/>
-
-              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><GroupComponentCard groupName={group.groupName}
+              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><GroupComponentCard
                                               goal={group.goal}
-                                              groupMemberNames={group.groupMemberNames.split(',')}
-                                              streak={group.streak}
-                                              groupID={group.groupID}/> </TouchableOpacity>)}
+                                              streak={group.streak}/> </TouchableOpacity>)}
+              
 
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>

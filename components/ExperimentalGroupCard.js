@@ -4,6 +4,8 @@ import Streak from './CommonCompStreak';
 import CommonCompGroupUserList from './CommonCompGroupUserList';
 import Constants from 'expo-constants';
 import { Card } from 'react-native-paper';
+import {firebase} from '../utils/firebase';
+import 'firebase/database';
 
 //const windowWidth = useWindowDimensions().width;
 //const cardWidth = windowWidth;
@@ -21,6 +23,7 @@ class ExperimentalGroupCard extends Component {
           personalGoals: "1 Lesson ",
     };
     }
+
 
     render() {
         return (
@@ -45,9 +48,8 @@ const styles = StyleSheet.create({
     flex: 1,
     //justifyContent: 'center',
     //paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
     padding: 8,
-    //width: {width}*0.85,
+    width: 350,
     //borderWidth:5,
   },
   paragraph: {
