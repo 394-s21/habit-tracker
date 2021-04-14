@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
+import { ListItem, Button, Icon } from 'react-native-elements';
+import { Card } from 'react-native-paper';
 import Streak from './CommonCompStreak';
 import CommonCompGroupUserList from './CommonCompGroupUserList';
 
