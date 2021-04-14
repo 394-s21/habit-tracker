@@ -56,7 +56,11 @@ class Dashboard extends Component {
                 
             <ScrollView>
 
-              {groups.map(group => <TouchableOpacity style={styles.button} />)}
+              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><GroupComponentCard groupName={group.groupName}
+                                              goal={group.goal}
+                                              groupMemberNames={group.groupMemberNames.split(',')}
+                                              streak={group.streak}
+                                              groupID={group.groupID}/> </TouchableOpacity>)}
 
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
