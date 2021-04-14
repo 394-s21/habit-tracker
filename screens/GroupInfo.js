@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Text, Subheading,Card, Button } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
+import CommonCompHabitChart from '../components/CommonCompHabitChart';
 
 
 class GroupInfo extends Component {
@@ -49,7 +50,7 @@ class GroupInfo extends Component {
     }
     render() {
       const stack = createStackNavigator()
-      
+      const recentHabit = [{'name': 'test0', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
       const group = this.state.group;
       console.log(group);
       const groupName = group[5];
@@ -82,6 +83,7 @@ class GroupInfo extends Component {
               </Card.Content>
             </Card>
             </View>
+            <CommonCompHabitChart groupMembersData = {recentHabit}/>
             <Button mode="contained" dark="true" onPress={this.completeDay} style={styles.button}>
               Completed today{this.state.complete}
             </Button>
