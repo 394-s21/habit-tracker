@@ -30,16 +30,15 @@ class Dashboard extends Component {
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
     viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
     
-    
     componentDidMount() {
       const groupArray  = [];
-      firebase.database().ref('/groups').on('value', function (snapshot) {
+      firebase.database().ref('/groups').on('value', (snapshot) => {
         snapshot.forEach(function (childSnapshot) {
           groupArray.push(childSnapshot.toJSON());
         });
+        this.setState({groups: groupArray});
+        //console.log(groupArray);
       });
-      console.log('groupArray: ',groupArray);
-      this.setState({groups: groupArray});
     }
 
     render() {
@@ -57,11 +56,7 @@ class Dashboard extends Component {
                 
             <ScrollView>
 
-              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><GroupComponentCard groupName={group.groupName}
-                                              goal={group.goal}
-                                              groupMemberNames={group.groupMemberNames.split(',')}
-                                              streak={group.streak}
-                                              groupID={group.groupID}/> </TouchableOpacity>)}
+              {groups.map(group => <TouchableOpacity style={styles.button} />)}
 
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
