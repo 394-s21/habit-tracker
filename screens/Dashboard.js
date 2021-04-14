@@ -30,16 +30,15 @@ class Dashboard extends Component {
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
     viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
     
-    
     componentDidMount() {
       const groupArray  = [];
-      firebase.database().ref('/groups').on('value', function (snapshot) {
+      firebase.database().ref('/groups').on('value', (snapshot) => {
         snapshot.forEach(function (childSnapshot) {
           groupArray.push(childSnapshot.toJSON());
         });
+        this.setState({groups: groupArray});
+        //console.log(groupArray);
       });
-      console.log('groupArray: ',groupArray);
-      this.setState({groups: groupArray});
     }
 
     render() {
