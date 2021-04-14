@@ -12,24 +12,14 @@ class Dashboard extends Component {
   
       this.state = {
         groups: [{
-            "goal" : "Learn React Native",
-            "groupColor" : "purple",
-            "groupFreq" : "daily",
-            "groupID" : 17901,
-            "groupMemberNames" : "You",
-            "groupName" : "Purple Group",
-            "streak" : 4
-          }],
-        StreaksData: [{ // dummy data first. TODO: replace with db call from firebase
-          "id" : 1,
-          "data" : 1,
-        },
-        {
-          "id" : 2,
-          "data" : 207,
-        }],
-        groupMemberNames : ['Jake','Caroline','Patrick','Justin','Jipeng','Daniel','testuse','Onemore'],
-        groupMemberNamesTwo :['Justin', 'Roy']
+            "goal" : "",
+            "groupColor" : "",
+            "groupFreq" : "",
+            "groupID" : 0,
+            "groupMemberNames" : "",
+            "groupName" : "",
+            "streak" : 0
+          }]
       };
     }
     

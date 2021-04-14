@@ -50,6 +50,7 @@ class GroupInfo extends Component {
     }
     render() {
       const stack = createStackNavigator()
+      //TODO get data from firebase
       const recentHabit = [{'name': 'test0', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
       const group = this.state.group;
       console.log(group);
