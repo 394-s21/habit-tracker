@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, Component } from 'react';
 
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import GroupComponentCard from '../components/CommonCompGroupCard';
+import CommonCompGroupCard from '../components/CommonCompGroupCard';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 
@@ -11,17 +11,15 @@ class Dashboard extends Component {
       super(props);
   
       this.state = {
-        groups: [],
-        StreaksData: [{ // dummy data first. TODO: replace with db call from firebase
-          "id" : 1,
-          "data" : 1,
-        },
-        {
-          "id" : 2,
-          "data" : 207,
-        }],
-        groupMemberNames : ['Jake','Caroline','Patrick','Justin','Jipeng','Daniel','testuse','Onemore'],
-        groupMemberNamesTwo :['Justin', 'Roy']
+        groups: [{
+            "goal" : "",
+            "groupColor" : "",
+            "groupFreq" : "",
+            "groupID" : 0,
+            "groupMemberNames" : "",
+            "groupName" : "",
+            "streak" : 0
+          }]
       };
     }
     
@@ -31,6 +29,7 @@ class Dashboard extends Component {
     viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
     
     componentDidMount() {
+      this.setState({groups: []});
       const groupArray  = [];
       firebase.database().ref('/groups').on('value', (snapshot) => {
         snapshot.forEach(function (childSnapshot) {
@@ -46,7 +45,7 @@ class Dashboard extends Component {
       console.log('groups: ',groups);
       return (
         <SafeAreaView style={{ flex: 1 }}>
-          <View style={{ flex: 1, padding: 16 }}>
+          <View style={{ flex: 1, padding: 0 }}>
             <View
             style={{
                 flex: 1,
@@ -54,13 +53,15 @@ class Dashboard extends Component {
                 justifyContent: 'center',
             }}>
                 
-            <ScrollView>
+            <ScrollView style={{
+                alignSelf: 'stretch',
+            }}>
 
-              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><GroupComponentCard groupName={group.groupName}
+              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} key={groups.groupID}><CommonCompGroupCard groupName={group.groupName}
                                               goal={group.goal}
                                               groupMemberNames={group.groupMemberNames.split(',')}
                                               streak={group.streak}
-                                              groupID={group.groupID}/> </TouchableOpacity>)}
+                                              groupID={group.groupID}/></TouchableOpacity>)}
 
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
