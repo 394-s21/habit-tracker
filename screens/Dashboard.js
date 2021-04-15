@@ -70,7 +70,7 @@ class Dashboard extends Component {
             <ScrollView style={{
                 alignSelf: 'stretch',
             }}>
-              {loading && <div>Loading...</div>}
+              {loading && <Text>Loading...</Text>}
 
               {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} key={groups.groupID}><CommonCompGroupCard groupName={group.groupName}
                                               goal={group.goal}
