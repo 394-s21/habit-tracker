@@ -2,6 +2,7 @@
   "expo": {
     "name": "habit-tracker",
     "slug": "habit-tracker",
+    "scheme": "habit-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +19,12 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "habit-tracker"
+      "bundleIdentifier": "habit-tracker",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.547778785940-p85qgnoq304ihoc6m9kf3ntaoob30rdn"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {

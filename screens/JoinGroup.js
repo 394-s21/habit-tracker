@@ -18,7 +18,8 @@ class JoinGroup extends Component {
       "Group ID not found.",
       "Please make sure to enter the correct group ID.",
       [
-        { text: "OK"}
+        { text: "ok"},
+        { text: "cancel"}
       ]
   );
   joinGroupSuccessfulAlert = () =>
@@ -26,7 +27,8 @@ class JoinGroup extends Component {
     "Join Group Successful.",
     "View your group in your dashboard",
     [
-      { text: "OK"}
+      { text: "ok"},
+      { text: "cancel"}
     ]
   );
   handleSubmit = () => {

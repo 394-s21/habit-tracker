@@ -2,8 +2,7 @@ import React, { useContext, useState, useEffect, Component } from 'react';
 
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import GroupComponentCard from '../components/CommonCompGroupCard';
-import { createStackNavigator } from '@react-navigation/stack';
+import CommonCompGroupCard from '../components/CommonCompGroupCard';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 import ExperimentalGroupCard from '../components/ExperimentalGroupCard';
@@ -13,7 +12,15 @@ class Dashboard extends Component {
       super(props);
   
       this.state = {
-        groups: [],
+        groups: [{
+            "goal" : "",
+            "groupColor" : "",
+            "groupFreq" : "",
+            "groupID" : 0,
+            "groupMemberNames" : "",
+            "groupName" : "",
+            "streak" : 0
+          }]
       };
     }
     
@@ -22,16 +29,16 @@ class Dashboard extends Component {
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
     viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
     
-    
-    componentWillMount() {
+    componentDidMount() {
+      this.setState({groups: []});
       const groupArray  = [];
-      firebase.database().ref('/groups').on('value', function (snapshot) {
+      firebase.database().ref('/groups').on('value', (snapshot) => {
         snapshot.forEach(function (childSnapshot) {
           groupArray.push(childSnapshot.toJSON());
         });
+        this.setState({groups: groupArray});
+        //console.log(groupArray);
       });
-      console.log('groupArray: ',groupArray);
-      this.setState({groups: groupArray});
     }
 
     render() {
@@ -39,7 +46,7 @@ class Dashboard extends Component {
       console.log('groups: ', this.state.groups);
       return (
         <SafeAreaView style={{ flex: 1 }}>
-          <View style={{ flex: 1, padding: 16 }}>
+          <View style={{ flex: 1, padding: 0 }}>
             <View
             style={{
                 flex: 1,
@@ -47,11 +54,13 @@ class Dashboard extends Component {
                 justifyContent: 'center',
             }}>
                 
-            <ScrollView>
-              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><GroupComponentCard
+            <ScrollView style={{
+                alignSelf: 'stretch',
+            }}>
+              
+              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><CommonCompGroupCard 
                                               goal={group.goal}
                                               streak={group.streak}/> </TouchableOpacity>)}
-              
 
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
