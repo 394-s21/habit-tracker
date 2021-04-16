@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CommonCompGroupCard from '../components/CommonCompGroupCard';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
+import { useCardAnimation } from '@react-navigation/stack';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -16,7 +17,7 @@ class Dashboard extends Component {
             "groupColor" : "",
             "groupFreq" : "",
             "groupID" : 0,
-            "groupMemberNames" : "",
+            "groupMemberIds" : {},
             "groupName" : "",
             "streak" : 0
           }]
@@ -31,18 +32,22 @@ class Dashboard extends Component {
     componentDidMount() {
       this.setState({groups: []});
       const groupArray  = [];
+      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
       firebase.database().ref('/groups').on('value', (snapshot) => {
         snapshot.forEach(function (childSnapshot) {
-          groupArray.push(childSnapshot.toJSON());
+          // only display groups that the user is in
+          const groupMemberIdJson = childSnapshot.toJSON().groupMemberIds
+          if (groupMemberIdJson && groupMemberIdJson.hasOwnProperty(userId)){
+            groupArray.push(childSnapshot.toJSON());
+          }
         });
+        console.log("group member Id is ", groupArray)
         this.setState({groups: groupArray});
-        //console.log(groupArray);
       });
     }
 
     render() {
       const groups = this.state.groups;
-      console.log('groups: ',groups);
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={{ flex: 1, padding: 0 }}>
@@ -59,7 +64,7 @@ class Dashboard extends Component {
 
               {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} key={groups.groupID}><CommonCompGroupCard groupName={group.groupName}
                                               goal={group.goal}
-                                              groupMemberNames={group.groupMemberNames.split(',')}
+                                              // groupMemberNames={group.groupMemberIds} // TODO: add method to fetch first names
                                               streak={group.streak}
                                               groupID={group.groupID}/></TouchableOpacity>)}
 
