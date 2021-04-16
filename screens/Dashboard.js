@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CommonCompGroupCard from '../components/CommonCompGroupCard';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
-import ExperimentalGroupCard from '../components/ExperimentalGroupCard';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -60,7 +59,7 @@ class Dashboard extends Component {
               
               {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><CommonCompGroupCard 
                                               goal={group.goal}
-                                              streak={group.streak}/> </TouchableOpacity>)}
+                                              streak={group.streak}/></TouchableOpacity>)}
 
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
