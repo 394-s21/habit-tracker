@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {ScrollView, Text, View, StyleSheet } from 'react-native';
 
 const createSquares = arr => (arr.map(done => (
-        <View style={styles[done ? 'doneSquare': 'whiteSquare']}></View>
+        <View style={styles[parseInt(done) ? 'doneSquare': 'whiteSquare']}></View>
     )));
 
 const gridRow = (row) => {
+    console.log(row);
   return (
     <View style={styles.horizontalContainer}>
       {createSquares(row)}

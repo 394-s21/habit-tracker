@@ -66,6 +66,7 @@ class CreateGroup extends Component {
           db.child('/groups/'+groupID+'/groupID').set(groupID);
           db.child('/groups/'+groupID+'/streak').set(0);
           db.child('/groups/'+groupID+'/groupMemberNames').set('You');
+          //db.child('/groups/'+groupID+'/habitChart/You').set('0');
           }
       })
       .then(
