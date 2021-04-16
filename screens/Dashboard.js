@@ -10,17 +10,11 @@ import { useCardAnimation } from '@react-navigation/stack';
 class Dashboard extends Component {
     constructor(props) {
       super(props);
-  
+
       this.state = {
-        groups: [{
-            "goal" : "",
-            "groupColor" : "",
-            "groupFreq" : "",
-            "groupID" : 0,
-            "groupMemberIds" : {},
-            "groupName" : "",
-            "streak" : 0
-          }]
+        groups: [],
+        loading: false
+
       };
     }
     
@@ -30,10 +24,12 @@ class Dashboard extends Component {
     viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
     
     componentDidMount() {
+      
+      this.setState({loading: true});
       this.setState({groups: []});
-      const groupArray  = [];
       const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
       firebase.database().ref('/groups').on('value', (snapshot) => {
+        const groupArray = []
         snapshot.forEach(function (childSnapshot) {
           // only display groups that the user is in
           const groupMemberIdJson = childSnapshot.toJSON().groupMemberIds
@@ -42,12 +38,15 @@ class Dashboard extends Component {
           }
         });
         console.log("group member Id is ", groupArray)
+        this.setState({loading: false})
         this.setState({groups: groupArray});
       });
     }
 
     render() {
       const groups = this.state.groups;
+      const loading = this.state.loading;
+
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={{ flex: 1, padding: 0 }}>
@@ -61,6 +60,7 @@ class Dashboard extends Component {
             <ScrollView style={{
                 alignSelf: 'stretch',
             }}>
+              {loading && <Text>Loading...</Text>}
 
               {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} key={groups.groupID}><CommonCompGroupCard groupName={group.groupName}
                                               goal={group.goal}
