@@ -27,7 +27,7 @@ class CreateGroup extends Component {
       groupID: null,
       groups: [],
       idCount: null,
-      visible: false
+      visible: false, 
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.showDialog = this.showDialog.bind(this);
@@ -48,32 +48,26 @@ class CreateGroup extends Component {
     console.log('group freq: ',this.state.groupFreq);
     console.log('group color', this.state.groupColor);
 
-    const groupName = this.state.groupName;
-    const groupHabit = this.state.groupHabit;
-    const groupFreq = this.state.groupFreq;
-    const groupColor = this.state.groupColor;
     const groupID = this.state.idCount;
-    
+     // backdoor token if userId is not authenticated (only during development)
+    const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
     const db = firebase.database().ref();
     db.child('/idCount').set(this.state.idCount+1);
     db.child('/groups/'+groupID).once("value")
       .then(snapshot => {
         if(!snapshot.val()) {
-          db.child('/groups/'+groupID+'/groupName').set(groupName);
-          db.child('/groups/'+groupID+'/goal').set(groupHabit);
-          db.child('/groups/'+groupID+'/groupColor').set(groupColor);
-          db.child('/groups/'+groupID+'/groupFreq').set(groupFreq);
+          db.child('/groups/'+groupID+'/groupName').set(this.state.groupName);
+          db.child('/groups/'+groupID+'/goal').set(this.state.groupHabit);
+          db.child('/groups/'+groupID+'/groupColor').set(this.state.groupColor);
+          db.child('/groups/'+groupID+'/groupFreq').set(this.state.groupFreq);
           db.child('/groups/'+groupID+'/groupID').set(groupID);
           db.child('/groups/'+groupID+'/streak').set(0);
-          db.child('/groups/'+groupID+'/groupMemberNames').set('You');
-          }
-      })
-      .then(
+          // create a memberId references
+          db.child('/groups/'+groupID+'/groupMemberIds/'+ userId).set(true);
+        }
+      }).then(
         this.props.navigation.navigate('Dashboard')
       )
-      
-
-    
   }
 
   componentDidMount() {
