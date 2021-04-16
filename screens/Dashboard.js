@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CommonCompGroupCard from '../components/CommonCompGroupCard';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
+import { useCardAnimation } from '@react-navigation/stack';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class Dashboard extends Component {
       this.state = {
         groups: [],
         loading: false
+
       };
     }
     
@@ -22,41 +24,29 @@ class Dashboard extends Component {
     viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
     
     componentDidMount() {
+      
       this.setState({loading: true});
       this.setState({groups: []});
-      
-
-      firebase.database().ref('/groups').on('value', snapshot => {
-        const groupArray =[];
-        //console.log(snapshot.toJSON());
-        //console.log('groupArray pre childSnapshot: ',groupArray);
-        snapshot.forEach((childSnapshot) => {
-          //console.log(childSnapshot.toJSON());
-          const dict = childSnapshot.toJSON();
-          console.log('dict: ',dict);
-          if (dict.hasOwnProperty("goal") &&
-          dict.hasOwnProperty("groupColor") &&
-          dict.hasOwnProperty("groupFreq") &&
-          dict.hasOwnProperty("groupID") &&
-          dict.hasOwnProperty("groupMemberNames") &&
-          dict.hasOwnProperty("groupName") &&
-          dict.hasOwnProperty("streak") && 
-          !groupArray.includes(dict)) {
-            //console.log('adding to groupArray');
-            groupArray.push(dict);
-            //console.log('groupArray: ',groupArray);
+      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
+      firebase.database().ref('/groups').on('value', (snapshot) => {
+        const groupArray = []
+        snapshot.forEach(function (childSnapshot) {
+          // only display groups that the user is in
+          const groupMemberIdJson = childSnapshot.toJSON().groupMemberIds
+          if (groupMemberIdJson && groupMemberIdJson.hasOwnProperty(userId)){
+            groupArray.push(childSnapshot.toJSON());
           }
         });
+        console.log("group member Id is ", groupArray)
         this.setState({loading: false})
-        //console.log('groupArray: ',groupArray);
-        this.setState({groups: groupArray})
+        this.setState({groups: groupArray});
       });
     }
 
     render() {
       const groups = this.state.groups;
       const loading = this.state.loading;
-      //console.log('groups: ',groups);
+
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={{ flex: 1, padding: 0 }}>
@@ -74,7 +64,7 @@ class Dashboard extends Component {
 
               {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} key={groups.groupID}><CommonCompGroupCard groupName={group.groupName}
                                               goal={group.goal}
-                                              groupMemberNames={group.groupMemberNames.split(',')}
+                                              // groupMemberNames={group.groupMemberIds} // TODO: add method to fetch first names
                                               streak={group.streak}
                                               groupID={group.groupID}/></TouchableOpacity>)}
 
