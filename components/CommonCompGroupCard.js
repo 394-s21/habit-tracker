@@ -17,7 +17,7 @@ const CommonCompGroupCard = ({ groupName, groupMemberNames, goal, streak, groupI
             <View style={styles.body}>
                 <Text style={styles.goal}>{goal}</Text>
                 <Text style={styles.goal}>Group Code: {groupID}</Text>
-                <CommonCompGroupUserList groupMembers={groupMemberNames} />
+                {/* <CommonCompGroupUserList groupMembers={groupMemberNames} /> */}
             </View>
         </View>
     );
