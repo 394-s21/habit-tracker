@@ -60,32 +60,32 @@ class GroupInfo extends Component {
       const freq = group[2];
       console.log(groupName);
       return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={this.styles.container}>
           <ScrollView>
-            <Text style={styles.title}>{groupName}</Text>
-            <Text style={styles.smolerText}>{goal}</Text>
+            <Text style={this.styles.title}>{groupName}</Text>
+            <Text style={this.styles.smolerText}>{goal}</Text>
             <View style={{flexDirection:"row"}}>
-             <Card style={styles.card}>
+             <Card style={this.styles.card}>
                <Card.Content>
-                 <Subheading style={styles.subheading}>Group status:</Subheading>
-                    <Text style={styles.bigNum}>{streak}</Text>
-                 <Text style={styles.smolerText}>{freq} Streak</Text>   
+                 <Subheading style={this.styles.subheading}>Group status:</Subheading>
+                    <Text style={this.styles.bigNum}>{streak}</Text>
+                 <Text style={this.styles.smolerText}>{freq} Streak</Text>   
                </Card.Content>
              </Card>
 
-            <Card style={styles.card}>
+            <Card style={this.styles.card}>
              <Card.Content>
-                <Subheading style={styles.subheading}>Personal Goal:</Subheading>
+                <Subheading style={this.styles.subheading}>Personal Goal:</Subheading>
                 
-                 <Text style={styles.colorText}>{this.state.personalGoals}{freq}</Text>
+                 <Text style={this.styles.colorText}>{this.state.personalGoals}{freq}</Text>
               
-                <Subheading style={styles.subheading}>Needs:</Subheading>
-                <Text style={styles.colorText}>{this.state.verifyNumber} person to verify</Text>
+                <Subheading style={this.styles.subheading}>Needs:</Subheading>
+                <Text style={this.styles.colorText}>{this.state.verifyNumber} person to verify</Text>
               </Card.Content>
             </Card>
             </View>
-            <CommonCompHabitChart groupMembersData = {recentHabit}/>
-            <Button mode="contained" dark="true" onPress={this.completeDay} style={styles.button}>
+            <CommonCompHabitChart groupMembersData = {recentHabit} groupColor={this.props.route.params.groupColor}/>
+            <Button mode="contained" dark="true" onPress={this.completeDay} style={this.styles.button}>
               Completed today{this.state.complete}
             </Button>
           </ScrollView>
@@ -93,66 +93,67 @@ class GroupInfo extends Component {
       );
     }
     
+
+    styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#ecf0f1'
+          },
+        title: {
+          alignSelf: 'center',
+          marginTop: 15,
+          marginBottom: 0,  
+          justifyContent: 'center',  
+            height: 60,
+            fontSize: 30,
+            fontWeight: "bold",
+            color: this.props.route.params.groupColor
+        },
+        button: {
+          alignSelf: 'center',
+          justifyContent: 'center',
+          backgroundColor: this.props.route.params.groupColor,
+          padding: 10,
+          width: 350,
+          marginTop: 16,
+        },
+        bigNum: {
+          textAlign: "center",  
+            height: 60,
+            fontSize: 50,
+            fontWeight: "bold",
+            color: this.props.route.params.groupColor
+        },
+        card: {
+            marginTop: 0,
+            backgroundColor:'white',
+            marginHorizontal: 10,
+            width: 180
+          },
+        smolerText: {
+            textAlign: "center",
+            fontWeight: "100",
+            marginBottom: 20
+        },
+        subheading: {
+            textAlign: "center",
+            //alignSelf: 'center',
+            //justifyContent: 'center', 
+            fontWeight: "600",
+            height: 35,
+          },
+        colorText: {
+            //fontFamily: "Inter",
+            alignSelf: 'center',
+            justifyContent: 'center',  
+            fontStyle: "italic",
+            color: this.props.route.params.groupColor
+        }
+    });
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#ecf0f1'
-      },
-    title: {
-      alignSelf: 'center',
-      marginTop: 15,
-      marginBottom: 0,  
-      justifyContent: 'center',  
-        height: 60,
-        fontSize: 30,
-        fontWeight: "bold",
-        color: "#3DD5F4"
-    },
-    button: {
-      alignSelf: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#3DD5F4',
-      padding: 10,
-      width: 350,
-      marginTop: 16,
-    },
-    bigNum: {
-      textAlign: "center",  
-        height: 60,
-        fontSize: 50,
-        fontWeight: "bold",
-        color: "#3DD5F4"
-    },
-    card: {
-        marginTop: 0,
-        backgroundColor:'white',
-        marginHorizontal: 10,
-        width: 180
-      },
-    smolerText: {
-        textAlign: "center",
-        fontWeight: "100",
-        marginBottom: 20
-    },
-    subheading: {
-        textAlign: "center",
-        //alignSelf: 'center',
-        //justifyContent: 'center', 
-        fontWeight: "600",
-        height: 35,
-      },
-    colorText: {
-        //fontFamily: "Inter",
-        alignSelf: 'center',
-        justifyContent: 'center',  
-        fontStyle: "italic",
-        color: '#3DD5F4'
-    }
-});
 export default GroupInfo;
 
 

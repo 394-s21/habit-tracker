@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import {ScrollView, Text, View, StyleSheet } from 'react-native';
+import GroupInfo from '../screens/GroupInfo';
 
-const createSquares = arr => (arr.map(done => (
-        <View style={styles.[done ? 'doneSquare': 'whiteSquare']}></View>
-    )));
+const createSquares = (arr, clr) => (arr.map(done => {
+        const squareStyles = StyleSheet.create({
+            doneSquare: {
+                ...gridSquareBase,
+                backgroundColor: clr,
+              },
+              whiteSquare: {
+                ...gridSquareBase,
+                backgroundColor: 'white',
+              }
+        });
+        return(
+        <View style={squareStyles[done ? 'doneSquare': 'whiteSquare']}></View>
+        );
+}));
 
-const gridRow = (row) => {
+const gridRow = (row, clr) => {
   return (
     <View style={styles.horizontalContainer}>
-      {createSquares(row)}
+      {createSquares(row, clr)}
     </View>
   );
 };
 
-const mapUserData = users => (users.map(user => (
-        gridRow( user['recent'])
+const mapUserData = (users, clr) => (users.map(user => (
+        gridRow( user['recent'], clr)
     )));
 
 const mapUserNames = users => (users.map(user => (
@@ -25,7 +38,7 @@ const mapUserNames = users => (users.map(user => (
     </View>
 )));
 
-const CommonCompHabitChart = ({ groupMembersData }) => {
+const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
 
   //const recentHabit = [{'name': 'test0', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,   1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
 
@@ -43,7 +56,7 @@ const CommonCompHabitChart = ({ groupMembersData }) => {
           {mapUserNames(groupMembersData)}
         </View>
         <View style={styles.container}>
-          {mapUserData(groupMembersData)}
+          {mapUserData(groupMembersData, groupColor)}
         </View>
     </View>
     </ScrollView>
@@ -94,14 +107,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 10,
   },
-  doneSquare: {
-    ...gridSquareBase,
-    backgroundColor: '#3DD5F4',
-  },
-  whiteSquare: {
-    ...gridSquareBase,
-    backgroundColor: 'white',
-  }
 });
 
 export default CommonCompHabitChart;

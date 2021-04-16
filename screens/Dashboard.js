@@ -26,7 +26,7 @@ class Dashboard extends Component {
 
     createGroup = () => {this.props.navigation.navigate('Create Group')};
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
-    viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
+    viewGroup = (val, clr) => {this.props.navigation.navigate('View Group',{groupID: val, groupColor: clr})}
     
     componentDidMount() {
       this.setState({groups: []});
@@ -57,9 +57,10 @@ class Dashboard extends Component {
                 alignSelf: 'stretch',
             }}>
               
-              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><CommonCompGroupCard 
+              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID, group.groupColor)}} value={groups.groupID} key={groups.groupID}><CommonCompGroupCard 
                                               goal={group.goal}
-                                              streak={group.streak}/></TouchableOpacity>)}
+                                              streak={group.streak}
+                                              groupColor={group.groupColor}/></TouchableOpacity>)}
 
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
