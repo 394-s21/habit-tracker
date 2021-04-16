@@ -43,15 +43,16 @@ class GroupInfo extends Component {
           groupArray.push(childSnapshot.toJSON());
         });
       });
-      console.log('groupArray: ',groupArray);
+      console.log('groupArray: ', groupArray);
       this.setState({group: groupArray});
-      this.setState({streak: groupArray[6]});
+      this.setState({streak: groupArray[7]});
       
     }
     render() {
       const stack = createStackNavigator()
       //TODO get data from firebase
       const recentHabit = [{'name': 'test0', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
+      const recentHabit2 = {'You': '1,0,1,0,0,0,1,1,0,0', 'Roy': '1,0,0,1,1,0,1,0,1,1', 'Justin': '1,0,0,1,1,0,0,1,1,1'};
       const group = this.state.group;
       console.log(group);
       const groupName = group[5];
@@ -84,7 +85,7 @@ class GroupInfo extends Component {
               </Card.Content>
             </Card>
             </View>
-            <CommonCompHabitChart groupMembersData = {recentHabit}/>
+            <CommonCompHabitChart groupMembersData = {recentHabit2}/>
             <Button mode="contained" dark="true" onPress={this.completeDay} style={styles.button}>
               Completed today{this.state.complete}
             </Button>

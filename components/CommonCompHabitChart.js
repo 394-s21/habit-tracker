@@ -14,20 +14,26 @@ const gridRow = (row) => {
 };
 
 const mapUserData = users => (users.map(user => (
-        gridRow( user['recent'])
+        gridRow(user.split(','))
     )));
 
 const mapUserNames = users => (users.map(user => (
     <View style={styles.textContainer}>
       <Text style={styles.paragraph}>
-      {user['name']}
+      {user}
       </Text>
     </View>
 )));
 
 const CommonCompHabitChart = ({ groupMembersData }) => {
-
-  //const recentHabit = [{'name': 'test0', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,   1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
+    const nameList = [];
+    const dataList = [];
+    for (var key in groupMembersData) {
+        if (groupMembersData.hasOwnProperty(key)) {     
+            nameList.push(key);
+            dataList.push(groupMembersData[key]);     
+        }
+    }
 
   return (
     <View style={styles.header}>
@@ -40,10 +46,10 @@ const CommonCompHabitChart = ({ groupMembersData }) => {
                 decelerationRate="normal">
       <View style={styles.horizontalContainer}>
         <View style={styles.container}>
-          {mapUserNames(groupMembersData)}
+          {mapUserNames(nameList)}
         </View>
         <View style={styles.container}>
-          {mapUserData(groupMembersData)}
+          {mapUserData(dataList)}
         </View>
     </View>
     </ScrollView>

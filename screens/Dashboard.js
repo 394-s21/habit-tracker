@@ -16,7 +16,7 @@ class Dashboard extends Component {
             "groupColor" : "",
             "groupFreq" : "",
             "groupID" : 0,
-            "groupMemberNames" : "",
+            "groupMemberNames" : " ",
             "groupName" : "",
             "streak" : 0
           }]
@@ -59,7 +59,7 @@ class Dashboard extends Component {
 
               {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} key={groups.groupID}><CommonCompGroupCard groupName={group.groupName}
                                               goal={group.goal}
-                                              groupMemberNames={group.groupMemberNames.split(',')}
+                                              groupMemberNames={['jake']}
                                               streak={group.streak}
                                               groupID={group.groupID}/></TouchableOpacity>)}
 
