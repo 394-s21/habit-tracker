@@ -5,21 +5,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CommonCompGroupCard from '../components/CommonCompGroupCard';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
+import { useCardAnimation } from '@react-navigation/stack';
 
 class Dashboard extends Component {
     constructor(props) {
       super(props);
-  
+
       this.state = {
-        groups: [{
-            "goal" : "",
-            "groupColor" : "",
-            "groupFreq" : "",
-            "groupID" : 0,
-            "groupMemberNames" : "",
-            "groupName" : "",
-            "streak" : 0
-          }]
+        groups: [],
+        loading: false
+
       };
     }
     
@@ -29,20 +24,29 @@ class Dashboard extends Component {
     viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
     
     componentDidMount() {
+      
+      this.setState({loading: true});
       this.setState({groups: []});
-      const groupArray  = [];
+      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
       firebase.database().ref('/groups').on('value', (snapshot) => {
+        const groupArray = []
         snapshot.forEach(function (childSnapshot) {
-          groupArray.push(childSnapshot.toJSON());
+          // only display groups that the user is in
+          const groupMemberIdJson = childSnapshot.toJSON().groupMemberIds
+          if (groupMemberIdJson && groupMemberIdJson.hasOwnProperty(userId)){
+            groupArray.push(childSnapshot.toJSON());
+          }
         });
+        console.log("group member Id is ", groupArray)
+        this.setState({loading: false})
         this.setState({groups: groupArray});
-        //console.log(groupArray);
       });
     }
 
     render() {
       const groups = this.state.groups;
-      console.log('groups: ', this.state.groups);
+      const loading = this.state.loading;
+
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={{ flex: 1, padding: 0 }}>
@@ -56,10 +60,13 @@ class Dashboard extends Component {
             <ScrollView style={{
                 alignSelf: 'stretch',
             }}>
-              
-              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} value={groups.groupID}><CommonCompGroupCard 
+              {loading && <Text>Loading...</Text>}
+
+              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} key={groups.groupID}><CommonCompGroupCard groupName={group.groupName}
                                               goal={group.goal}
-                                              streak={group.streak}/></TouchableOpacity>)}
+                                              // groupMemberNames={group.groupMemberIds} // TODO: add method to fetch first names
+                                              streak={group.streak}
+                                              groupID={group.groupID}/></TouchableOpacity>)}
 
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>

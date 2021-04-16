@@ -5,13 +5,27 @@ import { Card } from 'react-native-paper';
 const CommonCompGroupCard = ({goal, streak}) => {
   const RightContent = () => <Text style={styles.streak}>{streak}</Text>
 
-
   return(
       <View style={styles.container}>
           <Card style={styles.card}>
               <Card.Title title={goal} subtitle="Completed: 1/6" right={RightContent}/> 
           </Card>
       </View>
+     
+    //More complex card
+    //return (
+    //    <View style={styles.card}>
+    //        <View style={styles.cardHeader}>
+    //            <Text style={styles.groupname}>{groupName}</Text>
+    //            <Streak data={myData > 1 ? myData + " days" : myData + " day"} />
+    //        </View>
+    //        <Card.Divider />
+    //        <View style={styles.body}>
+    //            <Text style={styles.goal}>{goal}</Text>
+    //            <Text style={styles.goal}>Group Code: {groupID}</Text>
+    //            {/* <CommonCompGroupUserList groupMembers={groupMemberNames} /> */}
+    //        </View>
+    //    </View>
     );
 
 };
