@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 export default function DashboardStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Dashboard"
+      initialRouteName="Create Group"
       screenOptions={{
         headerStyle: { backgroundColor: '#3DD5F4' },
         headerTintColor: '#fff',

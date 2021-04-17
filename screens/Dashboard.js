@@ -37,7 +37,7 @@ class Dashboard extends Component {
             groupArray.push(childSnapshot.toJSON());
           }
         });
-        console.log("group member Id is ", groupArray)
+        // console.log("group member Id is ", groupArray)
         this.setState({loading: false})
         this.setState({groups: groupArray});
       });
