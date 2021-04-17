@@ -21,7 +21,7 @@ class Dashboard extends Component {
 
     createGroup = () => {this.props.navigation.navigate('Create Group')};
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
-    viewGroup = (val) => {this.props.navigation.navigate('View Group',{groupID: val})}
+    viewGroup = (val, clr) => {this.props.navigation.navigate('View Group',{groupID: val, groupColor: clr})}
     
     componentDidMount() {
       
