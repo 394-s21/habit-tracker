@@ -48,7 +48,7 @@ class CreateGroup extends Component {
     const db = firebase.database().ref();
     // create a string of DD/MM/YYYY
     const moment = require('moment')
-    const today = moment().format('DD/MM/YYYY').replaceAll("/",",")
+    const today = moment().format('YYYY/MM/DD').replaceAll("/",",")
     const dateDict = {}
     dateDict[today] = 0
     console.log(`today's date is ${today}`)
@@ -82,7 +82,6 @@ class CreateGroup extends Component {
             .then(snapshot => {
                 this.setState({idCount: snapshot.val()})
                 console.log('state var idcount: ', this.state.idcount);
-                //idNum = snapshot.val();
                 console.log('id from firebase: ', snapshot.val());
             });
   }
