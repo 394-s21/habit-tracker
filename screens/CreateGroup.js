@@ -1,18 +1,10 @@
 import { Component } from 'react';
 import React from "react";
 import { SafeAreaView, StyleSheet, Alert, View, ScrollView} from 'react-native';
-//import {Card, Button} from 'react-native-elements';
-import CommonCompTextInput from '../components/CommonCompTextInput';
-import DropDownPicker from 'react-native-dropdown-picker';
+import moment from 'moment';
 import { Provider, TextInput, RadioButton,Text, Subheading,Card, Button,Paragraph, Dialog, Portal } from 'react-native-paper';
-//import { useFormik } from 'formik';
-//import * as yup from 'yup';
-//import Form from '../components/Form';
-//import { makeStyles } from '@material-ui/core/styles';
-//import TextField from '@material-ui/core/TextField';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
 const db = firebase.database().ref()
 
@@ -37,10 +29,12 @@ class CreateGroup extends Component {
   gotTodashboard = () => {this.props.navigation.navigate('Dashboard')}
 
   showDialog = () => this.setState({visible: true});
+
   hideDialog = () => {
     this.setState({visible: false});
     this.props.navigation.navigate('Dashboard');
   }
+
   handleSubmit = () => {
     console.log('will validate input, upload to firebase, generate group ID here');
     console.log('group Name: ',this.state.groupName);
@@ -49,10 +43,16 @@ class CreateGroup extends Component {
     console.log('group color', this.state.groupColor);
 
     const groupID = this.state.idCount;
-     // backdoor token if userId is not authenticated (only during development)
+    // backdoor token if userId is not authenticated (only during development)
     const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
     const db = firebase.database().ref();
-    db.child('/idCount').set(this.state.idCount+1);
+    // create a string of DD/MM/YYYY
+    const moment = require('moment')
+    const today = moment().format('YYYY/MM/DD').replaceAll("/",",")
+    const dateDict = {}
+    dateDict[today] = 0
+    console.log(`today's date is ${today}`)
+    db.child('/idCount').set(this.state.idCount+1) //TODO: replace this with 6 random letter/digits
     db.child('/groups/'+groupID).once("value")
       .then(snapshot => {
         if(!snapshot.val()) {
@@ -62,8 +62,8 @@ class CreateGroup extends Component {
           db.child('/groups/'+groupID+'/groupFreq').set(this.state.groupFreq);
           db.child('/groups/'+groupID+'/groupID').set(groupID);
           db.child('/groups/'+groupID+'/streak').set(0);
-          // create a memberId references
-          db.child('/groups/'+groupID+'/groupMemberIds/'+ userId).set(true);
+          // create a userId reference to a list of dates
+          db.child('/groups/'+groupID+'/groupMemberIds/'+ userId).set(dateDict);
         }
       }).then(
         this.props.navigation.navigate('Dashboard')
@@ -82,7 +82,6 @@ class CreateGroup extends Component {
             .then(snapshot => {
                 this.setState({idCount: snapshot.val()})
                 console.log('state var idcount: ', this.state.idcount);
-                //idNum = snapshot.val();
                 console.log('id from firebase: ', snapshot.val());
             });
   }
