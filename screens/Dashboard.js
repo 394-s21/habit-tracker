@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CommonCompGroupCard from '../components/CommonCompGroupCard';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
-import { useCardAnimation } from '@react-navigation/stack';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -17,14 +16,12 @@ class Dashboard extends Component {
 
       };
     }
-    
-
+  
     createGroup = () => {this.props.navigation.navigate('Create Group')};
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
     viewGroup = (val, clr) => {this.props.navigation.navigate('View Group',{groupID: val, groupColor: clr})}
     
     componentDidMount() {
-      
       this.setState({loading: true});
       this.setState({groups: []});
       const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
@@ -37,7 +34,6 @@ class Dashboard extends Component {
             groupArray.push(childSnapshot.toJSON());
           }
         });
-        // console.log("group member Id is ", groupArray)
         this.setState({loading: false})
         this.setState({groups: groupArray});
       });
@@ -62,11 +58,15 @@ class Dashboard extends Component {
             }}>
               {loading && <Text>Loading...</Text>}
 
-              {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} key={groups.groupID}><CommonCompGroupCard groupName={group.groupName}
-                                              goal={group.goal}
-                                              // groupMemberNames={group.groupMemberIds} // TODO: add method to fetch first names
-                                              streak={group.streak}
-                                              groupID={group.groupID}/></TouchableOpacity>)}
+              {groups.map(group => 
+              <TouchableOpacity onPress={() => {this.viewGroup(group.groupID, group.groupColor)}} key={groups.groupID}>
+                <CommonCompGroupCard 
+                  groupColor={group.groupColor}
+                  goal={group.goal}
+                  groupMemberNames={Object.keys(group.groupMemberIds)} // TODO: add method to fetch first names
+                  streak={group.streak}
+                  />
+              </TouchableOpacity>)}
 
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
@@ -94,6 +94,3 @@ const styles = StyleSheet.create({
     },
 });
 export default Dashboard;
-
-/*<GroupComponentCard groupName='School of Rock' goal='Practice guitar' groupMemberNames={this.state.groupMemberNamesTwo} streak={myData[0]} />
-              <GroupComponentCard groupName='Purple Team' goal='Learn React Native' groupMemberNames={this.state.groupMemberNames} streak={myData[1]}/> */

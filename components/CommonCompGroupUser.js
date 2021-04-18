@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 5,
     height: 27,
-    padding: 10,
+    padding: 3,
     backgroundColor: '#E9E9E9',
   },
   userText:{
