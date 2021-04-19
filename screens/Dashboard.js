@@ -6,6 +6,7 @@ import CommonCompGroupCard from '../components/CommonCompGroupCard';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 import { useCardAnimation } from '@react-navigation/stack';
+import { Provider, TextInput, RadioButton, Subheading,Card, Button,Paragraph, Dialog, Portal } from 'react-native-paper';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -61,19 +62,20 @@ class Dashboard extends Component {
                 alignSelf: 'stretch',
             }}>
               {loading && <Text>Loading...</Text>}
-
+              <View style={styles.row}>
+                <Button mode="contained" dark="true" onPress={this.createGroup} style={styles.button}>
+                  CREATE GROUP
+                </Button>
+                <Button mode="contained" dark="true" onPress={this.joinGroup} style={styles.button}>
+                  JOIN GROUP
+                </Button>
+              </View>
               {groups.map(group => <TouchableOpacity onPress={() => {this.viewGroup(group.groupID)}} key={groups.groupID}><CommonCompGroupCard groupName={group.groupName}
                                               goal={group.goal}
                                               // groupMemberNames={group.groupMemberIds} // TODO: add method to fetch first names
                                               streak={group.streak}
                                               groupID={group.groupID}/></TouchableOpacity>)}
-
-              <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
-                  <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress = {this.joinGroup}>
-                  <Text style={{textAlign: 'center'}}>Join Existing Group </Text>
-              </TouchableOpacity>
+              
             </ScrollView>
             </View>
           </View>
@@ -85,12 +87,19 @@ class Dashboard extends Component {
 
 const styles = StyleSheet.create({
   button: {
-      alignSelf: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#DDDDDD',
-      padding: 10,
-      width: 175,
+      backgroundColor: '#3DD5F4',
       marginTop: 16,
+      width: "47%",
+      marginLeft: 5,
+      marginRight: 5
+    },
+    row: {
+      marginLeft: 8,
+      marginRight: 8,
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
 });
 export default Dashboard;
