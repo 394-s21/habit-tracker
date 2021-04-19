@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
-import { Card } from 'react-native-paper';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
+import {Card, Button} from 'react-native-paper';
 import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
 import colorMap from '../utils/color';
 import {firebase} from '../utils/firebase';
@@ -58,7 +56,15 @@ class Dashboard extends Component {
             <ScrollView style={{
                 alignSelf: 'stretch',
             }}>
-              {loading && <Text>Loading...</Text>}
+              <View style={styles.row}>
+                <Button mode="contained" dark="true" onPress={this.createGroup} style={styles.button}>
+                  CREATE GROUP
+                </Button>
+                <Button mode="contained" dark="true" onPress={this.joinGroup} style={styles.button}>
+                  JOIN GROUP
+                </Button>
+              </View>
+
               {groups.map(group => 
                 <View style={styles.container}>
                   <Card 
@@ -71,14 +77,6 @@ class Dashboard extends Component {
                     <CommonCompGroupUserList groupMembers={Object.keys(group.groupMemberIds)} />
                   </Card>
                 </View>)}
-
-              <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
-                  <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity style={styles.button} onPress = {this.joinGroup}>
-                  <Text style={{textAlign: 'center'}}>Join Existing Group </Text>
-              </TouchableOpacity>
             </ScrollView>
             </View>
           </View>
@@ -95,12 +93,20 @@ const styles = StyleSheet.create({
   },
 
   button: {
-      alignSelf: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#DDDDDD',
-      padding: 10,
-      width: 175,
+      backgroundColor: '#3DD5F4',
       marginTop: 16,
+      width: "47%",
+      marginLeft: 5,
+      marginRight: 5
     },
+
+  row: {
+    marginLeft: 8,
+    marginRight: 8,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 export default Dashboard;
