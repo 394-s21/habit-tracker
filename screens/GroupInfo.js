@@ -6,9 +6,7 @@ import {firebase} from '../utils/firebase';
 import 'firebase/database';
 import CommonCompHabitChart from '../components/CommonCompHabitChart';
 
-
 class GroupInfo extends Component {
-  
     constructor(props) {
       super(props);
   
@@ -18,10 +16,11 @@ class GroupInfo extends Component {
         personalGoals : "1 Lesson ",
         frequency : "Day",
         verifyNumber : "1",
-        groupMemberNames : ['Jake','Caroline','Patrick','Justin','Jipeng','Daniel','testuse','Onemore'],
+        groupMemberNames : [],
         complete : "?",
-        groupID: this.props.route.params.groupID
-    };
+        groupID: this.props.route.params.groupID,
+        groupColor: this.props.route.params.groupColor
+      };
     }
     
     returnHome = () => {this.props.navigation.navigate("Dashboard")}
