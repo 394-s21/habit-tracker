@@ -1,8 +1,10 @@
-import React, { useContext, useState, useEffect, Component } from 'react';
+import React, { Component } from 'react';
 
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { Card } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import CommonCompGroupCard from '../components/CommonCompGroupCard';
+import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
+import colorMap from '../utils/color';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 
@@ -42,7 +44,7 @@ class Dashboard extends Component {
     render() {
       const groups = this.state.groups;
       const loading = this.state.loading;
-
+      // const RightContent = () => <Text style={styles.streak}>{streak}</Text>
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={{ flex: 1, padding: 0 }}>
@@ -57,20 +59,23 @@ class Dashboard extends Component {
                 alignSelf: 'stretch',
             }}>
               {loading && <Text>Loading...</Text>}
-
               {groups.map(group => 
-              <TouchableOpacity onPress={() => {this.viewGroup(group.groupID, group.groupColor)}} key={groups.groupID}>
-                <CommonCompGroupCard 
-                  groupColor={group.groupColor}
-                  goal={group.goal}
-                  groupMemberNames={Object.keys(group.groupMemberIds)} // TODO: add method to fetch first names
-                  streak={group.streak}
-                  />
-              </TouchableOpacity>)}
+                <View style={styles.container}>
+                  <Card 
+                    style={{backgroundColor: colorMap[group.groupColor]}} 
+                    onPress={() => {this.viewGroup(group.groupID, group.groupColor)}}
+                    key={group.groupID}>
+                    <Card.Title 
+                      title={group.goal} 
+                      subtitle="Completed: 1/6" right={() => <Text>{group.streak}</Text>}/> 
+                    <CommonCompGroupUserList groupMembers={Object.keys(group.groupMemberIds)} />
+                  </Card>
+                </View>)}
 
               <TouchableOpacity style={styles.button} onPress = {this.createGroup}>
                   <Text style={{textAlign: 'center'}}>Create New Group <MaterialCommunityIcons name="plus" /></Text>
               </TouchableOpacity>
+              
               <TouchableOpacity style={styles.button} onPress = {this.joinGroup}>
                   <Text style={{textAlign: 'center'}}>Join Existing Group </Text>
               </TouchableOpacity>
@@ -84,6 +89,11 @@ class Dashboard extends Component {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+
   button: {
       alignSelf: 'center',
       justifyContent: 'center',

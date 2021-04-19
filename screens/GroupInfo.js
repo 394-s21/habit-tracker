@@ -16,7 +16,7 @@ class GroupInfo extends Component {
         personalGoals : "1 Lesson ",
         frequency : "Day",
         verifyNumber : "1",
-        groupMemberNames : ['Jake','Caroline','Patrick','Justin','Jipeng','Daniel','testuse','Onemore'],
+        groupMemberNames : [],
         complete : "?",
         groupID: this.props.route.params.groupID,
         groupColor: this.props.route.params.groupColor
