@@ -65,7 +65,7 @@ class Dashboard extends Component {
               </View>
 
               {groups.map(group => 
-                <View style={styles.container}>
+                <View style={styles.container} key={group.groupID}>
                   <Card 
                     style={{backgroundColor: colorMap[group.groupColor]}} 
                     onPress={() => {this.viewGroup(group.groupID, group.groupColor)}}

@@ -44,7 +44,7 @@ class GroupInfo extends Component {
       });
       console.log('groupArray: ', groupArray);
       this.setState({group: groupArray});
-      this.setState({streak: groupArray[7]});
+      this.setState({streak: groupArray[6]});
       
     }
     render() {
@@ -52,6 +52,7 @@ class GroupInfo extends Component {
       //TODO get data from firebase
       const recentHabit = [{'name': 'test0', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
       const recentHabit2 = {'You': '1,0,1,0,0,0,1,1,0,0', 'Roy': '1,0,0,1,1,0,1,0,1,1', 'Justin': '1,0,0,1,1,0,0,1,1,1'};
+      const recentHabit3 = {'You': {'2021,04,18':0, '2021,04,19': 1, '2021,04,20': 1}, 'Roy': {'2021,04,18':0, '2021,04,19': 1, '2021,04,20': 0}}
       const group = this.state.group;
       console.log(group);
       const groupName = group[5];

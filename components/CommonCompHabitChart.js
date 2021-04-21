@@ -13,7 +13,6 @@ const createSquares = (arr, clr) => (arr.map(done => {
                 backgroundColor: 'white',
               }
         });
-        console.log(done)
         return(
         <View style={squareStyles[parseInt(done) ? 'doneSquare': 'whiteSquare']}></View>
         );
@@ -32,7 +31,7 @@ const mapUserData = (users, clr) => (users.map(user => (
     )));
 
 const mapUserNames = users => (users.map(user => (
-    <View style={styles.textContainer}>
+    <View style={styles.textContainer} key={user}>
       <Text style={styles.paragraph}>
       {user}
       </Text>
