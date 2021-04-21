@@ -40,7 +40,7 @@ const mapUserNames = users => (users.map(user => (
 )));
 
 const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
-    const recentHabit3 = {'You': {20210418:0, 20210419: 1, 20210420: 1}, 'Roy': {20210418:0, 20210419: 1, 20210420: 0}};
+    const recentHabit3 = {'You': {20210418:0, 20210419: 1, 20210420: 1, 20210401: 1, 20210402:1}, 'Roy': {20210418:0, 20210419: 1, 20210420: 0, 20210411:1}};
     const nameList = [];
     const dataList = [];
     const dataList1 = [];
@@ -54,21 +54,38 @@ const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
             dataList.push(recentHabit3[key]);
         }
     }
+    const moment = require('moment')
+
     //This starts the habit chart at the earliest date any of the users completed the habit
     let firstDay = ''+Math.min(...startingDates);
-    const moment = require('moment')
-    firstDay = (new Date(firstDay.substring(0,4), firstDay.substring(4,6), firstDay.substring(6)));
-    const today = moment().format('YYYY/MM/DD').replaceAll("/",",")
-    let day = moment(firstDay).format('YYYY/MM/DD').replaceAll("/","")
-    const datesSinceFirstDay = [day];
-    let count = 100;
+    firstDay = (new Date(firstDay.substring(0,4), parseInt(firstDay.substring(4,6))-1, firstDay.substring(6)));
+    let day = moment(firstDay).format('YYYY/MM/DD')
+    const today = moment().format('YYYY/MM/DD')
+
+    //datesSinceFirstDay is an array that holds all the dates since the earliest date recorded
+    const datesSinceFirstDay = [day.split('/').join('')];
+    let count = 0;
     while(today !== day && count < 100){
-        moment(day).add(1, 'days').format('YYYY/MM/DD').replaceAll("/","");
-        datesSinceFirstDay.push(day)
-        console.log(day)
+        day = moment(day).add(1, 'days').format('YYYY/MM/DD');
+        datesSinceFirstDay.push(day.split('/').join(''))
         count = count + 1;
     }
-    currentDate = 0;
+    
+    //Outer loops through the users
+    //inner loops through all dates and checks if user completed habit on that date
+    const userDataList = []
+    for(var usrData in dataList){
+        let oneUsersData = []
+        for(var date in datesSinceFirstDay) {
+            if (dataList[usrData].hasOwnProperty(datesSinceFirstDay[date])) {
+                oneUsersData.push(dataList[usrData][datesSinceFirstDay[date]])
+            } else {
+                oneUsersData.push(0)
+            }
+        }
+        userDataList.push(oneUsersData)
+    }
+    //console.log(userDataList)
 
 
 
@@ -89,7 +106,7 @@ const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
           {mapUserNames(nameList)}
         </View>
         <View style={styles.container}>
-          {mapUserData(dataList1, groupColor)}
+          {mapUserData(userDataList, groupColor)}
         </View>
     </View>
     </ScrollView>
