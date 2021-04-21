@@ -13,8 +13,9 @@ const createSquares = (arr, clr) => (arr.map(done => {
                 backgroundColor: 'white',
               }
         });
+        console.log(done)
         return(
-        <View style={squareStyles[done ? 'doneSquare': 'whiteSquare']}></View>
+        <View style={squareStyles[parseInt(done) ? 'doneSquare': 'whiteSquare']}></View>
         );
 }));
 
@@ -27,7 +28,7 @@ const gridRow = (row, clr) => {
 };
 
 const mapUserData = (users, clr) => (users.map(user => (
-        gridRow( user['recent'], clr)
+        gridRow( user.split(','), clr)
     )));
 
 const mapUserNames = users => (users.map(user => (
