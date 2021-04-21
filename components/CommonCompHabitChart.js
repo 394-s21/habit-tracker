@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import {ScrollView, Text, View, StyleSheet } from 'react-native';
+import GroupInfo from '../screens/GroupInfo';
 
-const createSquares = arr => (arr.map(done => (
-        <View style={styles[parseInt(done) ? 'doneSquare': 'whiteSquare']}></View>
-    )));
+const createSquares = (arr, clr) => (arr.map(done => {
+        const squareStyles = StyleSheet.create({
+            doneSquare: {
+                ...gridSquareBase,
+                backgroundColor: clr,
+              },
+              whiteSquare: {
+                ...gridSquareBase,
+                backgroundColor: 'white',
+              }
+        });
+        return(
+        <View style={squareStyles[done ? 'doneSquare': 'whiteSquare']}></View>
+        );
+}));
 
-const gridRow = (row) => {
-    console.log(row);
+const gridRow = (row, clr) => {
   return (
     <View style={styles.horizontalContainer}>
-      {createSquares(row)}
+      {createSquares(row, clr)}
     </View>
   );
 };
 
-const mapUserData = users => (users.map(user => (
-        gridRow(user.split(','))
+const mapUserData = (users, clr) => (users.map(user => (
+        gridRow( user['recent'], clr)
     )));
 
 const mapUserNames = users => (users.map(user => (
@@ -26,7 +38,7 @@ const mapUserNames = users => (users.map(user => (
     </View>
 )));
 
-const CommonCompHabitChart = ({ groupMembersData }) => {
+const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
     const nameList = [];
     const dataList = [];
     for (var key in groupMembersData) {
@@ -35,6 +47,8 @@ const CommonCompHabitChart = ({ groupMembersData }) => {
             dataList.push(groupMembersData[key]);     
         }
     }
+
+  //const recentHabit = [{'name': 'test0', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,   1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
 
   return (
     <View style={styles.header}>
@@ -50,7 +64,7 @@ const CommonCompHabitChart = ({ groupMembersData }) => {
           {mapUserNames(nameList)}
         </View>
         <View style={styles.container}>
-          {mapUserData(dataList)}
+          {mapUserData(dataList, groupColor)}
         </View>
     </View>
     </ScrollView>
@@ -101,14 +115,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 10,
   },
-  doneSquare: {
-    ...gridSquareBase,
-    backgroundColor: '#3DD5F4',
-  },
-  whiteSquare: {
-    ...gridSquareBase,
-    backgroundColor: 'white',
-  }
 });
 
 export default CommonCompHabitChart;
