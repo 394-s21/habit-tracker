@@ -15,7 +15,7 @@ const createSquares = (arr, clr) => (arr.map(done => {
               }
         });
         return(
-        <View style={squareStyles[parseInt(done) ? 'doneSquare': 'whiteSquare']}></View>
+        <View style={squareStyles[done ? 'doneSquare': 'whiteSquare']}></View>
         );
 }));
 
