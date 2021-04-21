@@ -42,8 +42,8 @@ class GroupInfo extends Component {
 
       firebase.database().ref('/').on('value', (snapshot) => {
         const jsonSnap = snapshot.toJSON();
+        usersArray = []
         for (var user in jsonSnap.groups[groupID].groupMemberIds){
-            usersArray = []
             if (jsonSnap.users.hasOwnProperty(user)) {   
                 usersArray.push(jsonSnap.users[user].first_name);
             }
