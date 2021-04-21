@@ -39,19 +39,16 @@ const mapUserNames = users => (users.map(user => (
     </View>
 )));
 
-const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
-    const recentHabit3 = {'You': {20210418:0, 20210419: 1, 20210420: 1, 20210401: 1, 20210402:1}, 'Roy': {20210418:0, 20210419: 1, 20210420: 0, 20210411:1}};
-    const nameList = [];
+const CommonCompHabitChart = ({ groupMembersData, groupMembersNames, groupColor }) => {
+    const nameList = groupMembersNames;
     const dataList = [];
-    const dataList1 = [];
     const startingDates = [];
-    for (var key in recentHabit3) {
-        if (recentHabit3.hasOwnProperty(key)) {     
-            nameList.push(key);
-            dataList1.push(Object.values(recentHabit3[key])); 
+    for (var key in groupMembersData) {
+        if (groupMembersData.hasOwnProperty(key)) {     
+            //nameList.push(key);
 
-            startingDates.push(Math.min(...Object.keys(recentHabit3[key])));
-            dataList.push(recentHabit3[key]);
+            startingDates.push(Math.min(...Object.keys(groupMembersData[key])));
+            dataList.push(groupMembersData[key]);
         }
     }
     const moment = require('moment')
@@ -86,11 +83,6 @@ const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
         userDataList.push(oneUsersData)
     }
     //console.log(userDataList)
-
-
-
-
-  //const recentHabit = [{'name': 'test0', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,   1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
 
   return (
     <View style={styles.header}>

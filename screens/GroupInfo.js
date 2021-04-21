@@ -16,50 +16,54 @@ class GroupInfo extends Component {
         personalGoals : "1 Lesson ",
         frequency : "Day",
         verifyNumber : "1",
-        groupMemberNames : [],
+        groupMemberIds : {},
         complete : "?",
         groupID: this.props.route.params.groupID,
-        groupColor: this.props.route.params.groupColor
+        groupColor: this.props.route.params.groupColor,
+        usernames: ['loading']
       };
     }
     
     returnHome = () => {this.props.navigation.navigate("Dashboard")}
     completeDay = () => {
-      const groupID = this.state.group[3];
+      const groupID = this.state.group.groupID;
       const db = firebase.database().ref('/groups/'+groupID);
-      db.child('/streak').set(this.state.streak+1);
+      db.child('/streak').set(this.state.group.streak+1);
       this.setState((state, props) => {
         return {streak: this.state.streak + 1,
                 complete: '!'};
       });}
+
     componentDidMount() {
-      console.log('this.props.route.params',this.props.route.params);
-      console.log('this.state.groupID', this.state.groupID);
       const groupArray  = [];
+      var usersArray = [];
       const groupID = this.state.groupID;
-      firebase.database().ref('/groups/'+groupID).on('value', function (snapshot) {
-        snapshot.forEach(function (childSnapshot) {
-          groupArray.push(childSnapshot.toJSON());
-        });
+      this.setState({usernames: []})
+
+      firebase.database().ref('/').on('value', (snapshot) => {
+        const jsonSnap = snapshot.toJSON();
+        for (var user in jsonSnap.groups[groupID].groupMemberIds){
+            usersArray = []
+            if (jsonSnap.users.hasOwnProperty(user)) {   
+                usersArray.push(jsonSnap.users[user].first_name);
+            }
+        }
+        this.setState({usernames: usersArray});
+        this.setState({group: jsonSnap.groups[groupID]});
       });
-      console.log('groupArray: ', groupArray);
-      this.setState({group: groupArray});
-      this.setState({streak: groupArray[6]});
+      
       
     }
     render() {
       const stack = createStackNavigator()
       //TODO get data from firebase
-      const recentHabit = [{'name': 'test0', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
-      const recentHabit2 = {'You': '1,0,1,0,0,0,1,1,0,0', 'Roy': '1,0,0,1,1,0,1,0,1,1', 'Justin': '1,0,0,1,1,0,0,1,1,1'};
-      const recentHabit3 = {'You': {'2021,04,18':0, '2021,04,19': 1, '2021,04,20': 1}, 'Roy': {'2021,04,18':0, '2021,04,19': 1, '2021,04,20': 0}}
       const group = this.state.group;
-      console.log(group);
-      const groupName = group[5];
-      const streak = this.state.streak; 
-      const goal = group[0];
-      const freq = group[2];
-      console.log(groupName);
+      const recentHabits = group.groupMemberIds;
+      const groupName = group.groupName;
+      const streak = group.streak; 
+      const goal = group.goal;
+      const freq = group.groupFreq;
+      const usernames = this.state.usernames;
       return (
         <SafeAreaView style={this.styles.container}>
           <ScrollView>
@@ -86,7 +90,7 @@ class GroupInfo extends Component {
             </Card>
             </View>
 
-            <CommonCompHabitChart groupMembersData = {recentHabit3} groupColor={this.props.route.params.groupColor}/>
+            <CommonCompHabitChart groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={this.props.route.params.groupColor}/>
             <Button mode="contained" dark="true" onPress={this.completeDay} style={this.styles.button}>
               Completed today{this.state.complete}
             </Button>
