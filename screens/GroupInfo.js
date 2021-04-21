@@ -86,7 +86,7 @@ class GroupInfo extends Component {
             </Card>
             </View>
 
-            <CommonCompHabitChart groupMembersData = {recentHabit2} groupColor={this.props.route.params.groupColor}/>
+            <CommonCompHabitChart groupMembersData = {recentHabit3} groupColor={this.props.route.params.groupColor}/>
             <Button mode="contained" dark="true" onPress={this.completeDay} style={this.styles.button}>
               Completed today{this.state.complete}
             </Button>

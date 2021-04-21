@@ -27,7 +27,7 @@ const gridRow = (row, clr) => {
 };
 
 const mapUserData = (users, clr) => (users.map(user => (
-        gridRow( user.split(','), clr)
+        gridRow( user, clr)
     )));
 
 const mapUserNames = users => (users.map(user => (
@@ -39,12 +39,13 @@ const mapUserNames = users => (users.map(user => (
 )));
 
 const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
+    //const recentHabit3 = {'You': {'2021,04,18':0, '2021,04,19': 1, '2021,04,20': 1}, 'Roy': {'2021,04,18':0, '2021,04,19': 1, '2021,04,20': 0}}
     const nameList = [];
     const dataList = [];
     for (var key in groupMembersData) {
         if (groupMembersData.hasOwnProperty(key)) {     
             nameList.push(key);
-            dataList.push(groupMembersData[key]);     
+            dataList.push(Object.values(groupMembersData[key]));     
         }
     }
 
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
   },
   horizontalContainer: {
     flexDirection: 'row',
-    backgroundColor: 'black',
+    backgroundColor: 'grey',
   },
     container: {
     justifyContent: 'center',
