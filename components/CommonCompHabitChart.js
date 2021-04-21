@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {ScrollView, Text, View, StyleSheet } from 'react-native';
 import GroupInfo from '../screens/GroupInfo';
+import moment from 'moment';
 
 const createSquares = (arr, clr) => (arr.map(done => {
         const squareStyles = StyleSheet.create({
@@ -55,7 +56,19 @@ const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
     }
     //This starts the habit chart at the earliest date any of the users completed the habit
     let firstDay = ''+Math.min(...startingDates);
+    const moment = require('moment')
     firstDay = (new Date(firstDay.substring(0,4), firstDay.substring(4,6), firstDay.substring(6)));
+    const today = moment().format('YYYY/MM/DD').replaceAll("/",",")
+    let day = moment(firstDay).format('YYYY/MM/DD').replaceAll("/","")
+    const datesSinceFirstDay = [day];
+    let count = 100;
+    while(today !== day && count < 100){
+        moment(day).add(1, 'days').format('YYYY/MM/DD').replaceAll("/","");
+        datesSinceFirstDay.push(day)
+        console.log(day)
+        count = count + 1;
+    }
+    currentDate = 0;
 
 
 
