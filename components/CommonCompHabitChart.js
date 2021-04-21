@@ -39,15 +39,26 @@ const mapUserNames = users => (users.map(user => (
 )));
 
 const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
-    //const recentHabit3 = {'You': {'2021,04,18':0, '2021,04,19': 1, '2021,04,20': 1}, 'Roy': {'2021,04,18':0, '2021,04,19': 1, '2021,04,20': 0}}
+    const recentHabit3 = {'You': {20210418:0, 20210419: 1, 20210420: 1}, 'Roy': {20210418:0, 20210419: 1, 20210420: 0}};
     const nameList = [];
     const dataList = [];
-    for (var key in groupMembersData) {
-        if (groupMembersData.hasOwnProperty(key)) {     
+    const dataList1 = [];
+    const startingDates = [];
+    for (var key in recentHabit3) {
+        if (recentHabit3.hasOwnProperty(key)) {     
             nameList.push(key);
-            dataList.push(Object.values(groupMembersData[key]));     
+            dataList1.push(Object.values(recentHabit3[key])); 
+
+            startingDates.push(Math.min(...Object.keys(recentHabit3[key])));
+            dataList.push(recentHabit3[key]);
         }
     }
+    //This starts the habit chart at the earliest date any of the users completed the habit
+    let firstDay = ''+Math.min(...startingDates);
+    firstDay = (new Date(firstDay.substring(0,4), firstDay.substring(4,6), firstDay.substring(6)));
+
+
+
 
   //const recentHabit = [{'name': 'test0', 'recent': [1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0]}, {'name': 'test1', 'recent': [1,0,0,1,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,   1,0,0]}, {'name': 'test2', 'recent': [1,1,1,1,0,1,0,1,0,0,1,1,1,0,0,1,1,0,0,1,1,1]}];
 
@@ -65,7 +76,7 @@ const CommonCompHabitChart = ({ groupMembersData, groupColor }) => {
           {mapUserNames(nameList)}
         </View>
         <View style={styles.container}>
-          {mapUserData(dataList, groupColor)}
+          {mapUserData(dataList1, groupColor)}
         </View>
     </View>
     </ScrollView>
