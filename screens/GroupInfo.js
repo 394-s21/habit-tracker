@@ -18,7 +18,7 @@ class GroupInfo extends Component {
         frequency : "Day",
         verifyNumber : "1",
         groupMemberIds : {},
-        complete : "?",
+        complete : 0,
         groupID: this.props.route.params.groupID,
         groupColor: this.props.route.params.groupColor,
         usernames: ['loading']
@@ -28,21 +28,40 @@ class GroupInfo extends Component {
     returnHome = () => {this.props.navigation.navigate("Dashboard")}
     completeDay = () => {
       const groupID = this.state.group.groupID;
-      const userId = firebase.auth().currentUser;
+      const userId = this.state.userID
       const db = firebase.database().ref('/groups/'+groupID+'/groupMemberIds/'+userId);
       const moment = require('moment');
-      const today = moment().format('YYYY/MM/DD');
+      let today = moment().format('YYYY/MM/DD');
+      today = today.split('/').join('');
       db.child('/'+ today).set(1);
       this.setState((state, props) => {
         return {streak: this.state.streak + 1,
-                complete: '!'};
+                complete: 1};
       });}
+
+    undoCompleteDay = () => {
+        const groupID = this.state.group.groupID;
+        const userId = this.state.userID
+        const db = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
+        const moment = require('moment');
+        let today = moment().format('YYYY/MM/DD');
+        today = today.split('/').join('');
+        db.child('/' + today).set(0);
+        this.setState((state, props) => {
+            return {
+                streak: this.state.streak - 1,
+                complete: 0
+            };
+        });
+    }
 
     componentDidMount() {
       const groupArray  = [];
       var usersArray = [];
       const groupID = this.state.groupID;
       this.setState({usernames: []})
+      const userId = firebase.auth().currentUser.uid;
+      this.setState({userID: userId})
 
       firebase.database().ref('/').on('value', (snapshot) => {
         const firebaseDB = snapshot.toJSON();
@@ -52,8 +71,16 @@ class GroupInfo extends Component {
                 usersArray.push(firebaseDB.users[user].first_name);
             }
         }
+        const moment = require('moment');
+        let today = moment().format('YYYY/MM/DD');
+        today = today.split('/').join('');
         this.setState({usernames: usersArray});
         this.setState({group: firebaseDB.groups[groupID]});
+
+        if(firebaseDB.groups[groupID].groupMemberIds[userId].hasOwnProperty(today)){
+            this.setState({complete: firebaseDB.groups[groupID].groupMemberIds[userId][today]})
+        }
+
       });
       
       
@@ -94,9 +121,16 @@ class GroupInfo extends Component {
             </View>
 
             <CommonCompHabitChart groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={this.props.route.params.groupColor}/>
-            <Button mode="contained" dark="true" onPress={this.completeDay} style={this.styles.button}>
-              Completed today{this.state.complete}
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button mode="contained" dark="true" disabled= {this.state.complete} onPress={this.completeDay} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
+              {this.state.complete ? 'Completed!' : 'Completed Today?'}
             </Button>
+            {!this.state.complete ? <View></View> :
+            <Button mode="contained" dark="true" disabled= {!this.state.complete} onPress={this.undoCompleteDay} style={this.styles.undoButton}>
+              {'UNDO'}
+            </Button>
+            }
+            </View>
           </ScrollView>
         </SafeAreaView>
       );
@@ -121,13 +155,32 @@ class GroupInfo extends Component {
             color: this.props.route.params.groupColor
         },
         button: {
+            alignSelf: 'center',
+            justifyContent: 'center',
+            backgroundColor: this.props.route.params.groupColor,
+            padding: 10,
+            width: 350,
+            marginTop: 35,
+          },
+        compButton: {
           alignSelf: 'center',
           justifyContent: 'center',
           backgroundColor: this.props.route.params.groupColor,
           padding: 10,
-          width: 350,
-          marginTop: 16,
+          width: 300,
+          height: 55,
+          marginTop: 35,
+          marginLeft: 10
         },
+        undoButton: {
+            alignSelf: 'center',
+            justifyContent: 'center',
+            padding: 0,
+            width: 75,
+            height: 55,
+            marginTop: 35,
+            marginLeft: 5,
+          },
         bigNum: {
           textAlign: "center",  
             height: 60,
