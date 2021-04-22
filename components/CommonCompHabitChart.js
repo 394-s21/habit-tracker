@@ -95,10 +95,13 @@ const CommonCompHabitChart = ({ groupMembersData, groupMembersNames, groupColor,
         for(var j in userDataList){
             everyone = everyone && userDataList[j][i];
         }
-        if(!everyone){
+
+        if(everyone){
+            streakLength += 1;
+        }
+        else if(i != userDataList[0].length-1){
             break
         }
-        streakLength += 1;
     }
     const db = firebase.database().ref('/groups/'+groupID);
     db.child('/streak').set(streakLength);
