@@ -41,6 +41,7 @@ class Dashboard extends Component {
     render() {
       const groups = this.state.groups;
       const loading = this.state.loading;
+      const usernames = this.state.usernames;
       // const RightContent = () => <Text style={styles.streak}>{streak}</Text>
       return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -73,7 +74,7 @@ class Dashboard extends Component {
                     <Card.Title 
                       title={group.goal} 
                       subtitle="Completed: 1/6" right={() => <Text>{group.streak}</Text>}/> 
-                    <CommonCompGroupUserList groupMembers={Object.keys(group.groupMemberIds)} />
+                    <CommonCompGroupUserList groupID={group.groupID} />
                   </Card>
                 </View>)}
             </ScrollView>

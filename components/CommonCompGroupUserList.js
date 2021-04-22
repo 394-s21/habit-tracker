@@ -1,34 +1,68 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import {firebase} from '../utils/firebase';
+import 'firebase/database';
 import CommonCompGroupUser from './CommonCompGroupUser';
 
-const CommonCompGroupUserList = ({ groupMembers }) => {
-    return (
+class CommonCompGroupUserList extends Component {
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+        usernames: ['loading']
+      };
+    }
+
+    componentDidMount() {
+      var usersArray = [];
+      const groupID = this.props.groupID;
+      this.setState({usernames: []})
+
+      firebase.database().ref('/').on('value', (snapshot) => {
+        const firebaseDB = snapshot.toJSON();
+        usersArray = []
+        for (var user in firebaseDB.groups[groupID].groupMemberIds){
+            if (firebaseDB.users.hasOwnProperty(user)) {   
+                usersArray.push(firebaseDB.users[user].first_name + ' ' + firebaseDB.users[user].last_name);
+            }
+        }
+        this.setState({usernames: usersArray});
+      });
+      
+      
+    }
+    render() {
+      const usernames = this.state.usernames;
+      return (
         <View>
             <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={200}
                 decelerationRate="normal">
-                <View style={styles.groupUserList}>
-                    {groupMembers.map(member => <CommonCompGroupUser key={member} memberUserName={member} />)}
+                <View style={this.styles.groupUserList}>
+                    {usernames.map(member => <CommonCompGroupUser key={member} memberUserName={member} />)}
                 </View>
             </ScrollView>
         </View>
     );
+    }
+    
+
+    styles = StyleSheet.create({
+        groupUserList: {
+            flex: 1,
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginTop: 0,
+            marginBottom: 10,
+            marginLeft: 10,
+        },
+    });
 };
 
-const styles = StyleSheet.create({
-    groupUserList: {
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 0,
-        marginBottom: 10,
-        marginLeft: 10,
-    },
-});
 
 export default CommonCompGroupUserList;
