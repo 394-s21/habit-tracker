@@ -41,22 +41,21 @@ class GroupInfo extends Component {
       this.setState({usernames: []})
 
       firebase.database().ref('/').on('value', (snapshot) => {
-        const jsonSnap = snapshot.toJSON();
+        const firebaseDB = snapshot.toJSON();
         usersArray = []
-        for (var user in jsonSnap.groups[groupID].groupMemberIds){
-            if (jsonSnap.users.hasOwnProperty(user)) {   
-                usersArray.push(jsonSnap.users[user].first_name);
+        for (var user in firebaseDB.groups[groupID].groupMemberIds){
+            if (firebaseDB.users.hasOwnProperty(user)) {   
+                usersArray.push(firebaseDB.users[user].first_name);
             }
         }
         this.setState({usernames: usersArray});
-        this.setState({group: jsonSnap.groups[groupID]});
+        this.setState({group: firebaseDB.groups[groupID]});
       });
       
       
     }
     render() {
       const stack = createStackNavigator()
-      //TODO get data from firebase
       const group = this.state.group;
       const recentHabits = group.groupMemberIds;
       const groupName = group.groupName;

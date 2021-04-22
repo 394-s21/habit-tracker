@@ -55,6 +55,7 @@ const CommonCompHabitChart = ({ groupMembersData, groupMembersNames, groupColor 
 
     //This starts the habit chart at the earliest date any of the users completed the habit
     let firstDay = ''+Math.min(...startingDates);
+    //attempt to get the earliest date in YYYYMMDD format
     firstDay = (new Date(firstDay.substring(0,4), parseInt(firstDay.substring(4,6))-1, firstDay.substring(6)));
     let day = moment(firstDay).format('YYYY/MM/DD')
     const today = moment().format('YYYY/MM/DD')
