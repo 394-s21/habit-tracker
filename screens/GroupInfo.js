@@ -94,6 +94,7 @@ class GroupInfo extends Component {
       const goal = group.goal;
       const freq = group.groupFreq;
       const usernames = this.state.usernames;
+      const groupID = this.state.groupID
       return (
         <SafeAreaView style={this.styles.container}>
           <ScrollView>
@@ -120,7 +121,7 @@ class GroupInfo extends Component {
             </Card>
             </View>
 
-            <CommonCompHabitChart groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={this.props.route.params.groupColor}/>
+            <CommonCompHabitChart groupID = {groupID} groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={this.props.route.params.groupColor}/>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <Button mode="contained" dark="true" disabled= {this.state.complete} onPress={this.completeDay} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
               {this.state.complete ? 'Completed!' : 'Completed Today?'}

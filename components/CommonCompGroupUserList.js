@@ -35,7 +35,7 @@ class CommonCompGroupUserList extends Component {
     render() {
       const usernames = this.state.usernames;
       return (
-        <View>
+        <View style={this.styles.container}>
             <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -51,6 +51,10 @@ class CommonCompGroupUserList extends Component {
     
 
     styles = StyleSheet.create({
+        container: {
+            marginLeft: 10,
+            marginRight: 10,
+        },
         groupUserList: {
             flex: 1,
             flexDirection: 'row',
