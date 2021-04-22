@@ -68,7 +68,7 @@ class GroupInfo extends Component {
         usersArray = []
         for (var user in firebaseDB.groups[groupID].groupMemberIds){
             if (firebaseDB.users.hasOwnProperty(user)) {   
-                usersArray.push(firebaseDB.users[user].first_name);
+                usersArray.push(firebaseDB.users[user].first_name + ' ' + firebaseDB.users[user].last_name);
             }
         }
         const moment = require('moment');
