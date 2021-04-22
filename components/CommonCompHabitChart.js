@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {ScrollView, Text, View, StyleSheet } from 'react-native';
 import GroupInfo from '../screens/GroupInfo';
 import moment from 'moment';
+import {firebase} from '../utils/firebase';
+import 'firebase/database';
 
 const createSquares = (arr, clr) => (arr.map(done => {
         const squareStyles = StyleSheet.create({
@@ -39,7 +41,7 @@ const mapUserNames = users => (users.map(user => (
     </View>
 )));
 
-const CommonCompHabitChart = ({ groupMembersData, groupMembersNames, groupColor }) => {
+const CommonCompHabitChart = ({ groupMembersData, groupMembersNames, groupColor, groupID }) => {
     const nameList = groupMembersNames;
     const dataList = [];
     const startingDates = [];
@@ -84,6 +86,26 @@ const CommonCompHabitChart = ({ groupMembersData, groupMembersNames, groupColor 
         userDataList.push(oneUsersData)
     }
     //console.log(userDataList)
+
+    //calculatestreak
+    var streakLength = 0;
+    if (userDataList.length > 0){
+    for(var i = userDataList[0].length-1; i >= 0; i --){
+        let everyone = true;
+        for(var j in userDataList){
+            everyone = everyone && userDataList[j][i];
+        }
+
+        if(everyone){
+            streakLength += 1;
+        }
+        else if(i != userDataList[0].length-1){
+            break
+        }
+    }
+    const db = firebase.database().ref('/groups/'+groupID);
+    db.child('/streak').set(streakLength);
+    }
 
   return (
     <View style={styles.header}>

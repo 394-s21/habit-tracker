@@ -90,7 +90,7 @@ class Dashboard extends Component {
                     key={group.groupID}>
                     <Card.Title 
                       title={group.goal} 
-                      subtitle={'Completed: ' + this.checkHowManyCompleted(group.groupMemberIds)} right={() => <Text>{group.streak}</Text>}/> 
+                      subtitle={'Completed: ' + this.checkHowManyCompleted(group.groupMemberIds)} right={() => <Text style={styles.streak}>{group.streak + " Days"}</Text>}/> 
                     <CommonCompGroupUserList groupID={group.groupID} />
                   </Card>
                 </View>)}
@@ -116,7 +116,11 @@ const styles = StyleSheet.create({
       marginLeft: 5,
       marginRight: 5
     },
-
+  streak: {
+    fontWeight: 'bold',
+    margin: 20,
+    fontSize: 24,
+  },
   row: {
     marginLeft: 8,
     marginRight: 8,
