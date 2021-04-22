@@ -5,6 +5,7 @@ import { Text, Subheading,Card, Button } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 import CommonCompHabitChart from '../components/CommonCompHabitChart';
+import moment from 'moment';
 
 class GroupInfo extends Component {
     constructor(props) {
@@ -27,8 +28,11 @@ class GroupInfo extends Component {
     returnHome = () => {this.props.navigation.navigate("Dashboard")}
     completeDay = () => {
       const groupID = this.state.group.groupID;
-      const db = firebase.database().ref('/groups/'+groupID);
-      db.child('/streak').set(this.state.group.streak+1);
+      const userId = firebase.auth().currentUser;
+      const db = firebase.database().ref('/groups/'+groupID+'/groupMemberIds/'+userId);
+      const moment = require('moment');
+      const today = moment().format('YYYY/MM/DD');
+      db.child('/'+ today).set(1);
       this.setState((state, props) => {
         return {streak: this.state.streak + 1,
                 complete: '!'};
