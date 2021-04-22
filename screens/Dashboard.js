@@ -73,7 +73,7 @@ class Dashboard extends Component {
                     <Card.Title 
                       title={group.goal} 
                       subtitle="Completed: 1/6" right={() => <Text>{group.streak}</Text>}/> 
-                    <CommonCompGroupUserList groupMembers={Object.keys(group.groupMemberIds)} />
+                    <CommonCompGroupUserList groupID={group.groupID} />
                   </Card>
                 </View>)}
             </ScrollView>
