@@ -67,6 +67,7 @@ class GroupInfo extends Component {
       firebase.database().ref('/').on('value', (snapshot) => {
         const firebaseDB = snapshot.toJSON();
         usersArray = []
+        if (firebaseDB.groups.hasOwnProperty(groupID)){
         for (var user in firebaseDB.groups[groupID].groupMemberIds){
             if (firebaseDB.users.hasOwnProperty(user)) {   
                 usersArray.push(firebaseDB.users[user].first_name + ' ' + firebaseDB.users[user].last_name);
@@ -81,7 +82,7 @@ class GroupInfo extends Component {
         if(firebaseDB.groups[groupID].groupMemberIds[userId].hasOwnProperty(today)){
             this.setState({complete: firebaseDB.groups[groupID].groupMemberIds[userId][today]})
         }
-
+    }
       });
     }
 
@@ -92,7 +93,15 @@ class GroupInfo extends Component {
     }
     
     leaveGroup = () => {
-
+        const groupID = this.state.groupID;
+        const userId = this.state.userId;
+        if (this.state.usernames.length == 1) {
+            const dbGroup = firebase.database().ref('/groups/' + groupID);
+            dbGroup.remove();
+        } else {
+            const dbGroupUser = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
+            dbGroupUser.remove();
+        }
         this.gotTodashboard()
     }
 

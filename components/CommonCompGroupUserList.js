@@ -22,12 +22,14 @@ class CommonCompGroupUserList extends Component {
       firebase.database().ref('/').on('value', (snapshot) => {
         const firebaseDB = snapshot.toJSON();
         usersArray = []
+        if(firebaseDB.groups.hasOwnProperty(groupID)){
         for (var user in firebaseDB.groups[groupID].groupMemberIds){
             if (firebaseDB.users.hasOwnProperty(user)) {   
                 usersArray.push(firebaseDB.users[user].first_name + ' ' + firebaseDB.users[user].last_name);
             }
         }
         this.setState({usernames: usersArray});
+    }
       });
       
       
