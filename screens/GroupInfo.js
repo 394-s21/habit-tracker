@@ -85,12 +85,14 @@ class GroupInfo extends Component {
       });
     }
 
+    gotTodashboard = () => {this.props.navigation.navigate('Dashboard')}
+
     setModalVisible = (isVis) => {
         this.setState({mvis: isVis})
     }
     
     deleteGroup = () => {
-
+        this.gotTodashboard()
     }
 
     render() {
@@ -118,7 +120,7 @@ class GroupInfo extends Component {
                           <Text style={this.styles.modalText}>Are you sure want to leave this group?</Text>
                           <TouchableOpacity
                               style={[this.styles.leaveButton]}
-                              onPress={() => {this.setModalVisible(!this.state.mvis); Alert.alert("You have left the group");}}
+                              onPress={() => {this.deleteGroup(); Alert.alert("You have left the group");}}
                           >
                               <Text style={this.styles.textStyle}>LEAVE GROUP</Text>
                           </TouchableOpacity>
