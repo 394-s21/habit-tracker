@@ -69,24 +69,22 @@ class GroupInfo extends Component {
         usersArray = []
 
         //makes sure group hasn't been deleted 
-        console.log('=============================')
-        if (firebaseDB.groups.hasOwnProperty(groupID) && firebaseDB.groups[groupID].groupMemberIds.hasOwnProperty(userId)){
-        for (var user in firebaseDB.groups[groupID].groupMemberIds){
-            if (firebaseDB.users.hasOwnProperty(user)) {   
-                usersArray.push(firebaseDB.users[user].first_name + ' ' + firebaseDB.users[user].last_name);
-            }
-        }
-        const moment = require('moment');
-        let today = moment().format('YYYY/MM/DD');
-        today = today.split('/').join('');
-        this.setState({usernames: usersArray});
-        this.setState({group: firebaseDB.groups[groupID]});
-        console.log('arrived')
-        if(firebaseDB.groups[groupID].groupMemberIds[userId].hasOwnProperty(today)){
-            this.setState({complete: firebaseDB.groups[groupID].groupMemberIds[userId][today]})
-        }
-    }
-    console.log('--------------------------------------')
+          if (firebaseDB.groups.hasOwnProperty(groupID) && firebaseDB.groups[groupID].groupMemberIds.hasOwnProperty(userId)) {
+              for (var user in firebaseDB.groups[groupID].groupMemberIds) {
+                  if (firebaseDB.users.hasOwnProperty(user)) {
+                      usersArray.push(firebaseDB.users[user].first_name + ' ' + firebaseDB.users[user].last_name);
+                  }
+              }
+              const moment = require('moment');
+              let today = moment().format('YYYY/MM/DD');
+              today = today.split('/').join('');
+              this.setState({ usernames: usersArray });
+              this.setState({ group: firebaseDB.groups[groupID] });
+             
+              if (firebaseDB.groups[groupID].groupMemberIds[userId].hasOwnProperty(today)) {
+                  this.setState({ complete: firebaseDB.groups[groupID].groupMemberIds[userId][today] })
+              }
+          }
       });
     }
 
@@ -103,11 +101,8 @@ class GroupInfo extends Component {
             dbGroup.remove();
         } else {
             const userId = firebase.auth().currentUser.uid;
-            console.log('leaving group');
-            console.log('/groups/' + groupID + '/groupMemberIds/' + userId);
             const dbGroupUser = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
             dbGroupUser.remove();
-            console.log('remed')
         }
         this.gotTodashboard()
     }
