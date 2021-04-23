@@ -91,7 +91,8 @@ class GroupInfo extends Component {
         this.setState({mvis: isVis})
     }
     
-    deleteGroup = () => {
+    leaveGroup = () => {
+
         this.gotTodashboard()
     }
 
@@ -120,7 +121,7 @@ class GroupInfo extends Component {
                           <Text style={this.styles.modalText}>Are you sure want to leave this group?</Text>
                           <TouchableOpacity
                               style={[this.styles.leaveButton]}
-                              onPress={() => {this.deleteGroup(); Alert.alert("You have left the group");}}
+                              onPress={() => {this.leaveGroup(); Alert.alert("You have left the group");}}
                           >
                               <Text style={this.styles.textStyle}>LEAVE GROUP</Text>
                           </TouchableOpacity>
@@ -164,11 +165,11 @@ class GroupInfo extends Component {
 
             <CommonCompHabitChart groupID = {groupID} groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={this.props.route.params.groupColor}/>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Button mode="contained" dark="true" disabled= {this.state.complete} onPress={this.completeDay} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
+            <Button mode="contained" dark="true" disabled= {this.state.complete} onPress={() => this.completeDay()} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
               {this.state.complete ? 'Completed!' : 'Completed Today?'}
             </Button>
             {!this.state.complete ? <View></View> :
-            <Button mode="contained" dark="true" disabled= {!this.state.complete} onPress={this.undoCompleteDay} style={this.styles.undoButton}>
+            <Button mode="contained" dark="true" disabled= {!this.state.complete} onPress={() => this.undoCompleteDay()} style={this.styles.undoButton}>
               {'UNDO'}
             </Button>
             }

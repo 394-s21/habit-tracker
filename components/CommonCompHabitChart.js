@@ -55,6 +55,8 @@ const CommonCompHabitChart = ({ groupMembersData, groupMembersNames, groupColor,
     }
     const moment = require('moment')
 
+    console.log('------------------------')
+
     //This starts the habit chart at the earliest date any of the users completed the habit
     let firstDay = ''+Math.min(...startingDates);
     //attempt to get the earliest date in YYYYMMDD format
