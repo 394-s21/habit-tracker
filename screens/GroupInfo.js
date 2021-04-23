@@ -61,7 +61,8 @@ class GroupInfo extends Component {
       var usersArray = [];
       const groupID = this.state.groupID;
       this.setState({usernames: []})
-      const userId = firebase.auth().currentUser.uid;
+      //TODO remove after dev
+      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
       this.setState({userID: userId})
 
       firebase.database().ref('/').on('value', (snapshot) => {
@@ -100,7 +101,8 @@ class GroupInfo extends Component {
             const dbGroup = firebase.database().ref('/groups/' + groupID);
             dbGroup.remove();
         } else {
-            const userId = firebase.auth().currentUser.uid;
+            //TODO remove after dev
+            const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
             const dbGroupUser = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
             dbGroupUser.remove();
         }
