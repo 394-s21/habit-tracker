@@ -89,6 +89,9 @@ class GroupInfo extends Component {
         this.setState({mvis: isVis})
     }
     
+    deleteGroup = () => {
+
+    }
 
     render() {
       const stack = createStackNavigator()
@@ -102,27 +105,32 @@ class GroupInfo extends Component {
       const groupID = this.state.groupID
       return (
         <SafeAreaView style={this.styles.container}>
-          <Modal
-        animationType="slide"
-        transparent={true}
-        visible={this.state.mvis}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          this.setModalVisible(!this.state.mvis);
-        }}
-      >
-        <View style={this.styles.centeredView}>
-          <View style={this.styles.modalView}>
-            <Text style={this.styles.modalText}>Hello World!</Text>
-            <TouchableOpacity
-              style={[this.styles.button, this.styles.buttonClose]}
-              onPress={() => this.setModalVisible(!this.state.mvis)}
-            >
-              <Text style={this.styles.textStyle}>Hide Modal</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+              <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={this.state.mvis}
+                  onRequestClose={() => {
+                      this.setModalVisible(!this.state.mvis);
+                  }}
+              >
+                  <View style={this.styles.centeredView}>
+                      <View style={this.styles.modalView}>
+                          <Text style={this.styles.modalText}>Are you sure want to leave this group?</Text>
+                          <TouchableOpacity
+                              style={[this.styles.leaveButton]}
+                              onPress={() => {this.setModalVisible(!this.state.mvis); Alert.alert("You have left the group");}}
+                          >
+                              <Text style={this.styles.textStyle}>LEAVE GROUP</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                              style={[this.styles.cancelButton]}
+                              onPress={() => this.setModalVisible(!this.state.mvis)}
+                          >
+                              <Text style={this.styles.textStyle}>CANCEL</Text>
+                          </TouchableOpacity>
+                      </View>
+                  </View>
+              </Modal>
           <ScrollView>
             <View style={this.styles.topContainer}>
             <TouchableOpacity style={this.styles.exitContainer} onPress={() => this.setModalVisible(true)}>
@@ -178,11 +186,14 @@ class GroupInfo extends Component {
           },
           modalView: {
             margin: 20,
-            backgroundColor: "white",
+            backgroundColor: "grey",
+            borderWidth: 3,
             borderRadius: 20,
-            padding: 35,
+            padding: 30,
+            paddingBottom: 10,
             alignItems: "center",
             shadowColor: "#000",
+            width: 300,
             shadowOffset: {
               width: 0,
               height: 2
@@ -191,16 +202,18 @@ class GroupInfo extends Component {
             shadowRadius: 4,
             elevation: 5
           },
-          button1: {
-            borderRadius: 20,
+          leaveButton: {
+            borderRadius: 10,
             padding: 10,
-            elevation: 2
+            elevation: 2,
+            backgroundColor: "#FF5555",
           },
-          buttonOpen: {
-            backgroundColor: "#F194FF",
-          },
-          buttonClose: {
-            backgroundColor: "#2196F3",
+          cancelButton:{
+            borderRadius: 10,
+            margin: 20,
+            padding: 5,
+            elevation: 2,
+            backgroundColor: "#56B7FF",
           },
           textStyle: {
             color: "white",
@@ -209,6 +222,8 @@ class GroupInfo extends Component {
           },
           modalText: {
             marginBottom: 15,
+            fontSize: 25,
+            fontWeight: 'bold',
             textAlign: "center"
           },
         container: {
