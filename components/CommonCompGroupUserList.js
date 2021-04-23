@@ -15,25 +15,25 @@ class CommonCompGroupUserList extends Component {
     }
 
     componentDidMount() {
-      var usersArray = [];
-      const groupID = this.props.groupID;
-      this.setState({usernames: []})
+        var usersArray = [];
+        const groupID = this.props.groupID;
+        this.setState({ usernames: [] })
 
-      firebase.database().ref('/').on('value', (snapshot) => {
-        const firebaseDB = snapshot.toJSON();
-        usersArray = []
-        if(firebaseDB.groups.hasOwnProperty(groupID)){
-        for (var user in firebaseDB.groups[groupID].groupMemberIds){
-            if (firebaseDB.users.hasOwnProperty(user)) {   
-                usersArray.push(firebaseDB.users[user].first_name + ' ' + firebaseDB.users[user].last_name);
+        firebase.database().ref('/').on('value', (snapshot) => {
+            const firebaseDB = snapshot.toJSON();
+            usersArray = []
+            //checks to make sure group hasnt been deleted
+            if (firebaseDB.groups.hasOwnProperty(groupID)) {
+                for (var user in firebaseDB.groups[groupID].groupMemberIds) {
+                    if (firebaseDB.users.hasOwnProperty(user)) {
+                        usersArray.push(firebaseDB.users[user].first_name + ' ' + firebaseDB.users[user].last_name);
+                    }
+                }
+                this.setState({ usernames: usersArray });
             }
-        }
-        this.setState({usernames: usersArray});
+        });
     }
-      });
-      
-      
-    }
+
     render() {
       const usernames = this.state.usernames;
       return (
