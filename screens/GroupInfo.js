@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, View, SafeAreaView, ScrollView, Image, TouchableOpacity, Modal, Alert } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text, Subheading,Card, Button } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
@@ -21,7 +21,8 @@ class GroupInfo extends Component {
         complete : 0,
         groupID: this.props.route.params.groupID,
         groupColor: this.props.route.params.groupColor,
-        usernames: ['loading']
+        usernames: ['loading'],
+        mvis: false
       };
     }
     
@@ -82,9 +83,13 @@ class GroupInfo extends Component {
         }
 
       });
-      
-      
     }
+
+    setModalVisible = (isVis) => {
+        this.setState({mvis: isVis})
+    }
+    
+
     render() {
       const stack = createStackNavigator()
       const group = this.state.group;
@@ -97,8 +102,34 @@ class GroupInfo extends Component {
       const groupID = this.state.groupID
       return (
         <SafeAreaView style={this.styles.container}>
+          <Modal
+        animationType="slide"
+        transparent={true}
+        visible={this.state.mvis}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          this.setModalVisible(!this.state.mvis);
+        }}
+      >
+        <View style={this.styles.centeredView}>
+          <View style={this.styles.modalView}>
+            <Text style={this.styles.modalText}>Hello World!</Text>
+            <TouchableOpacity
+              style={[this.styles.button, this.styles.buttonClose]}
+              onPress={() => this.setModalVisible(!this.state.mvis)}
+            >
+              <Text style={this.styles.textStyle}>Hide Modal</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
           <ScrollView>
+            <View style={this.styles.topContainer}>
+            <TouchableOpacity style={this.styles.exitContainer} onPress={() => this.setModalVisible(true)}>
+                <Image source={require('../assets/exit.png')} style={this.styles.exit} resizeMode='contain'/>
+            </TouchableOpacity>
             <Text style={this.styles.title}>{groupName}</Text>
+            </View>
             <Text style={this.styles.smolerText}>{goal}</Text>
             <View style={{flexDirection:"row"}}>
              <Card style={this.styles.card}>
@@ -139,6 +170,47 @@ class GroupInfo extends Component {
     
 
     styles = StyleSheet.create({
+        centeredView: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 22
+          },
+          modalView: {
+            margin: 20,
+            backgroundColor: "white",
+            borderRadius: 20,
+            padding: 35,
+            alignItems: "center",
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+            elevation: 5
+          },
+          button1: {
+            borderRadius: 20,
+            padding: 10,
+            elevation: 2
+          },
+          buttonOpen: {
+            backgroundColor: "#F194FF",
+          },
+          buttonClose: {
+            backgroundColor: "#2196F3",
+          },
+          textStyle: {
+            color: "white",
+            fontWeight: "bold",
+            textAlign: "center"
+          },
+          modalText: {
+            marginBottom: 15,
+            textAlign: "center"
+          },
         container: {
             flex: 1,
             alignItems: 'center',
@@ -150,10 +222,23 @@ class GroupInfo extends Component {
           marginTop: 15,
           marginBottom: 0,  
           justifyContent: 'center',  
-            height: 60,
-            fontSize: 30,
+            height: 70,
+            fontSize: 40,
             fontWeight: "bold",
             color: this.props.route.params.groupColor
+        },
+        topContainer : {
+            flex: 1,
+            zIndex: 1,
+        },
+        exitContainer: {
+            position: 'absolute',
+            top: 17,
+            right: 5
+        },
+        exit: {
+            height: 50,
+            width: 50,
         },
         button: {
             alignSelf: 'center',
@@ -198,6 +283,7 @@ class GroupInfo extends Component {
         smolerText: {
             textAlign: "center",
             fontWeight: "100",
+            fontSize: 25,
             marginBottom: 20
         },
         subheading: {
