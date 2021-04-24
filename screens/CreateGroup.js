@@ -21,7 +21,6 @@ class CreateGroup extends Component {
       groupColor: "red",
       groupID: null,
       groups: [],
-      idCount: null,
       visible: false, 
     }
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -80,13 +79,6 @@ class CreateGroup extends Component {
       });
     });
     this.setState({groups: groupArray});
-    // firebase.database().ref('/idCount').once('value')
-    //         .then(snapshot => {
-    //             this.setState({idCount: snapshot.val()})
-    //             console.log('state var idcount: ', this.state.idcount);
-    //             console.log('id from firebase: ', snapshot.val());
-    //         });
-
   }
 
   render() {
