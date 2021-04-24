@@ -77,8 +77,7 @@ class GroupInfo extends Component {
                   }
               }
               const moment = require('moment');
-              let today = moment().format('YYYY/MM/DD');
-              today = today.split('/').join('');
+              const today = moment().format('YYYY/MM/DD').split('/').join('');
               this.setState({ usernames: usersArray });
               this.setState({ group: firebaseDB.groups[groupID] });
              
