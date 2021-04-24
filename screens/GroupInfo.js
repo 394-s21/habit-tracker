@@ -10,6 +10,10 @@ import moment from 'moment';
 class GroupInfo extends Component {
     constructor(props) {
       super(props);
+      this.props.navigation.setOptions({
+        headerStyle: { backgroundColor: this.props.route.params.groupColor },
+        headerTintColor: '#fff',
+        headerTitleStyle: { fontWeight: 'bold' }})
   
       this.state = {
         group: [],
@@ -27,6 +31,8 @@ class GroupInfo extends Component {
     }
     
     returnHome = () => {this.props.navigation.navigate("Dashboard")}
+    
+    
     completeDay = () => {
       const groupID = this.state.group.groupID;
       const userId = this.state.userID
@@ -34,27 +40,32 @@ class GroupInfo extends Component {
       const moment = require('moment');
       let today = moment().format('YYYY/MM/DD');
       today = today.split('/').join('');
+      console.log("Streak ", this.state.streak, "Complete? ", this.state.complete)
       db.child('/'+ today).set(1);
       this.setState((state, props) => {
-        return {streak: this.state.streak + 1,
-                complete: 1};
-      });}
+          return {streak: this.state.streak + 1,
+                  complete: 1};
+        });
+
+      
+    }
 
     undoCompleteDay = () => {
-        const groupID = this.state.group.groupID;
-        const userId = this.state.userID
-        const db = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
-        const moment = require('moment');
-        let today = moment().format('YYYY/MM/DD');
-        today = today.split('/').join('');
-        db.child('/' + today).set(0);
-        this.setState((state, props) => {
-            return {
-                streak: this.state.streak - 1,
+      const groupID = this.state.group.groupID;
+      const userId = this.state.userID
+      const db = firebase.database().ref('/groups/'+groupID+'/groupMemberIds/'+userId);
+      const moment = require('moment');
+      let today = moment().format('YYYY/MM/DD');
+      today = today.split('/').join('');
+      db.child('/' + today).set(0);
+      console.log("Streak ", this.state.streak, "Complete? ", this.state.complete)
+      this.setState((state, props) => {
+          return {
+                streak: this.state.group.streak - 1,
                 complete: 0
             };
-        });
-    }
+        });}
+  
 
     componentDidMount() {
       const groupArray  = [];
@@ -88,7 +99,7 @@ class GroupInfo extends Component {
       });
     }
 
-    gotTodashboard = () => {this.props.navigation.navigate('Dashboard')}
+    gotTodashboard = () => {this.props.navigation.navigate('Dashboard') }
 
     setModalVisible = (isVis) => {
         this.setState({mvis: isVis})
@@ -99,11 +110,13 @@ class GroupInfo extends Component {
         if (this.state.usernames.length == 1) {
             const dbGroup = firebase.database().ref('/groups/' + groupID);
             dbGroup.remove();
+            console.log("wow")
         } else {
             //TODO remove after dev
             const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
             const dbGroupUser = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
             dbGroupUser.remove();
+            console.log("WEEEE")
         }
         this.gotTodashboard()
     }
@@ -126,8 +139,7 @@ class GroupInfo extends Component {
                   visible={this.state.mvis}
                   onRequestClose={() => {
                       this.setModalVisible(!this.state.mvis);
-                  }}
-              >
+                  }}>
                   <View style={this.styles.centeredView}>
                       <View style={this.styles.modalView}>
                           <Text style={this.styles.modalText}>Are you sure want to leave this group?</Text>
@@ -148,9 +160,6 @@ class GroupInfo extends Component {
               </Modal>
           <ScrollView>
             <View style={this.styles.topContainer}>
-            <TouchableOpacity style={this.styles.exitContainer} onPress={() => this.setModalVisible(true)}>
-                <Image source={require('../assets/exit.png')} style={this.styles.exit} resizeMode='contain'/>
-            </TouchableOpacity>
             <Text style={this.styles.title}>{groupName}</Text>
             </View>
             <Text style={this.styles.smolerText}>{goal}</Text>
@@ -177,14 +186,12 @@ class GroupInfo extends Component {
 
             <CommonCompHabitChart groupID = {groupID} groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={this.props.route.params.groupColor}/>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Button mode="contained" dark="true" disabled= {this.state.complete} onPress={() => this.completeDay()} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
-              {this.state.complete ? 'Completed!' : 'Completed Today?'}
-            </Button>
-            {!this.state.complete ? <View></View> :
-            <Button mode="contained" dark="true" disabled= {!this.state.complete} onPress={() => this.undoCompleteDay()} style={this.styles.undoButton}>
-              {'UNDO'}
-            </Button>
-            }
+            <Button mode="contained" dark="true" onPress={this.state.complete ? () => this.undoCompleteDay() : () => this.completeDay()} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
+              {this.state.complete ? `Completed! (Tap to Undo)` : 'Log Completion'}
+            </Button>    
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
+            <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setModalVisible(true)}>Leave Group</Button>
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -253,7 +260,7 @@ class GroupInfo extends Component {
           marginBottom: 0,  
           justifyContent: 'center',  
             height: 70,
-            fontSize: 40,
+            fontSize: 30,
             fontWeight: "bold",
             color: this.props.route.params.groupColor
         },

@@ -15,28 +15,33 @@ class Dashboard extends Component {
         groups: [],
         loading: false
       };
+      this.props.navigation.setOptions()
     }
   
     createGroup = () => {this.props.navigation.navigate('Create Group')};
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
-    viewGroup = (val, clr) => {this.props.navigation.navigate('View Group',{groupID: val, groupColor: clr})}
+    viewGroup = (val, clr) => {
+      this.props.navigation.navigate('View Group',{groupID: val, groupColor: clr})}
     
     componentDidMount() {
       this.setState({loading: true});
       this.setState({groups: []});
       const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
       firebase.database().ref('/groups').on('value', (snapshot) => {
-        const groupArray = []
-        snapshot.forEach(function (childSnapshot) {
-          // only display groups that the user is in
-          const groupMemberIdJson = childSnapshot.toJSON().groupMemberIds
-          if (groupMemberIdJson && groupMemberIdJson.hasOwnProperty(userId)){
-            groupArray.push(childSnapshot.toJSON());
-          }
-        });
-        this.setState({loading: false})
-        this.setState({groups: groupArray});
-      });
+        if (snapshot.exists()) {
+          console.log("goodbye")
+          const groupArray = []
+          snapshot.forEach(function (childSnapshot) {
+            // only display groups that the user is in
+            const groupMemberIdJson = childSnapshot.toJSON().groupMemberIds
+            if (groupMemberIdJson && groupMemberIdJson.hasOwnProperty(userId)){
+              groupArray.push(childSnapshot.toJSON());
+            }
+          });
+          this.setState({loading: false})
+          this.setState({groups: groupArray});
+        }});
+    
     }
 
     checkHowManyCompleted = (groupMemberIds) => {
@@ -46,6 +51,7 @@ class Dashboard extends Component {
         var count;
         compCount = 0;
         count = 0;
+        console.log()
         for (var member in groupMemberIds){
             if (groupMemberIds[member].hasOwnProperty(today) && groupMemberIds[member][today]){
                 compCount++;
