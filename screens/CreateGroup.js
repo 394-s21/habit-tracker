@@ -137,8 +137,8 @@ class CreateGroup extends Component {
                 <View style={styles.row}>
                   <RadioButton value="red"/>
                   <Text style={styles.options}>Red</Text>
-                  <RadioButton value="yellow"/>
-                  <Text style={styles.options}>Yellow</Text>
+                  <RadioButton value="orange"/>
+                  <Text style={styles.options}>Orange</Text>
                   <RadioButton value="green"/>
                   <Text style={styles.options}>Green</Text>
                   
