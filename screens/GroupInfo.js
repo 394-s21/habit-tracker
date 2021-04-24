@@ -54,6 +54,7 @@ class GroupInfo extends Component {
       let today = moment().format('YYYY/MM/DD');
       today = today.split('/').join('');
       db.child('/' + today).set(0);
+      console.log("Streak ", this.state.streak, "Complete? ", this.state.complete)
       this.setState((state, props) => {
           return {
                 streak: this.state.group.streak - 1,
@@ -184,7 +185,7 @@ class GroupInfo extends Component {
             <CommonCompHabitChart groupID = {groupID} groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={this.props.route.params.groupColor}/>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <Button mode="contained" dark="true" onPress={this.state.complete ? () => this.undoCompleteDay() : () => this.completeDay()} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
-              {this.state.complete ? 'Completed! (Tap to Undo)' : 'Completed Today?'}
+              {this.state.complete ? `Completed! (Tap to Undo)` : 'Log Completion'}
             </Button>
             {/* {!this.state.complete ? <View></View> :
             <Button mode="contained" dark="true" disabled= {!this.state.complete} onPress={() => this.undoCompleteDay()} style={this.styles.undoButton}>
