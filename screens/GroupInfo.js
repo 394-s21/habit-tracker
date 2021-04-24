@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, View, SafeAreaView, ScrollView, Image, TouchableOpacity, Modal, Alert } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text, Subheading,Card, Button } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
@@ -21,7 +21,8 @@ class GroupInfo extends Component {
         complete : 0,
         groupID: this.props.route.params.groupID,
         groupColor: this.props.route.params.groupColor,
-        usernames: ['loading']
+        usernames: ['loading'],
+        mvis: false
       };
     }
     
@@ -60,31 +61,53 @@ class GroupInfo extends Component {
       var usersArray = [];
       const groupID = this.state.groupID;
       this.setState({usernames: []})
-      const userId = firebase.auth().currentUser.uid;
+      //TODO remove after dev
+      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
       this.setState({userID: userId})
 
       firebase.database().ref('/').on('value', (snapshot) => {
         const firebaseDB = snapshot.toJSON();
         usersArray = []
-        for (var user in firebaseDB.groups[groupID].groupMemberIds){
-            if (firebaseDB.users.hasOwnProperty(user)) {   
-                usersArray.push(firebaseDB.users[user].first_name + ' ' + firebaseDB.users[user].last_name);
-            }
-        }
-        const moment = require('moment');
-        let today = moment().format('YYYY/MM/DD');
-        today = today.split('/').join('');
-        this.setState({usernames: usersArray});
-        this.setState({group: firebaseDB.groups[groupID]});
 
-        if(firebaseDB.groups[groupID].groupMemberIds[userId].hasOwnProperty(today)){
-            this.setState({complete: firebaseDB.groups[groupID].groupMemberIds[userId][today]})
-        }
-
+        //makes sure group hasn't been deleted 
+          if (firebaseDB.groups.hasOwnProperty(groupID) && firebaseDB.groups[groupID].groupMemberIds.hasOwnProperty(userId)) {
+              for (var user in firebaseDB.groups[groupID].groupMemberIds) {
+                  if (firebaseDB.users.hasOwnProperty(user)) {
+                      usersArray.push(firebaseDB.users[user].first_name + ' ' + firebaseDB.users[user].last_name);
+                  }
+              }
+              const moment = require('moment');
+              const today = moment().format('YYYY/MM/DD').split('/').join('');
+              this.setState({ usernames: usersArray });
+              this.setState({ group: firebaseDB.groups[groupID] });
+             
+              if (firebaseDB.groups[groupID].groupMemberIds[userId].hasOwnProperty(today)) {
+                  this.setState({ complete: firebaseDB.groups[groupID].groupMemberIds[userId][today] })
+              }
+          }
       });
-      
-      
     }
+
+    gotTodashboard = () => {this.props.navigation.navigate('Dashboard')}
+
+    setModalVisible = (isVis) => {
+        this.setState({mvis: isVis})
+    }
+    
+    leaveGroup = () => {
+        const groupID = this.state.groupID;
+        if (this.state.usernames.length == 1) {
+            const dbGroup = firebase.database().ref('/groups/' + groupID);
+            dbGroup.remove();
+        } else {
+            //TODO remove after dev
+            const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
+            const dbGroupUser = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
+            dbGroupUser.remove();
+        }
+        this.gotTodashboard()
+    }
+
     render() {
       const stack = createStackNavigator()
       const group = this.state.group;
@@ -97,8 +120,39 @@ class GroupInfo extends Component {
       const groupID = this.state.groupID
       return (
         <SafeAreaView style={this.styles.container}>
+              <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={this.state.mvis}
+                  onRequestClose={() => {
+                      this.setModalVisible(!this.state.mvis);
+                  }}
+              >
+                  <View style={this.styles.centeredView}>
+                      <View style={this.styles.modalView}>
+                          <Text style={this.styles.modalText}>Are you sure want to leave this group?</Text>
+                          <TouchableOpacity
+                              style={[this.styles.leaveButton]}
+                              onPress={() => {this.leaveGroup(); Alert.alert("You have left the group");}}
+                          >
+                              <Text style={this.styles.textStyle}>LEAVE GROUP</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                              style={[this.styles.cancelButton]}
+                              onPress={() => this.setModalVisible(!this.state.mvis)}
+                          >
+                              <Text style={this.styles.textStyle}>CANCEL</Text>
+                          </TouchableOpacity>
+                      </View>
+                  </View>
+              </Modal>
           <ScrollView>
+            <View style={this.styles.topContainer}>
+            <TouchableOpacity style={this.styles.exitContainer} onPress={() => this.setModalVisible(true)}>
+                <Image source={require('../assets/exit.png')} style={this.styles.exit} resizeMode='contain'/>
+            </TouchableOpacity>
             <Text style={this.styles.title}>{groupName}</Text>
+            </View>
             <Text style={this.styles.smolerText}>{goal}</Text>
             <View style={{flexDirection:"row"}}>
              <Card style={this.styles.card}>
@@ -123,11 +177,11 @@ class GroupInfo extends Component {
 
             <CommonCompHabitChart groupID = {groupID} groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={this.props.route.params.groupColor}/>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Button mode="contained" dark="true" disabled= {this.state.complete} onPress={this.completeDay} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
+            <Button mode="contained" dark="true" disabled= {this.state.complete} onPress={() => this.completeDay()} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
               {this.state.complete ? 'Completed!' : 'Completed Today?'}
             </Button>
             {!this.state.complete ? <View></View> :
-            <Button mode="contained" dark="true" disabled= {!this.state.complete} onPress={this.undoCompleteDay} style={this.styles.undoButton}>
+            <Button mode="contained" dark="true" disabled= {!this.state.complete} onPress={() => this.undoCompleteDay()} style={this.styles.undoButton}>
               {'UNDO'}
             </Button>
             }
@@ -139,6 +193,54 @@ class GroupInfo extends Component {
     
 
     styles = StyleSheet.create({
+        centeredView: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 22
+          },
+          modalView: {
+            margin: 20,
+            backgroundColor: "grey",
+            borderWidth: 3,
+            borderRadius: 20,
+            padding: 30,
+            paddingBottom: 10,
+            alignItems: "center",
+            shadowColor: "#000",
+            width: 300,
+            shadowOffset: {
+              width: 0,
+              height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+            elevation: 5
+          },
+          leaveButton: {
+            borderRadius: 10,
+            padding: 10,
+            elevation: 2,
+            backgroundColor: "#FF5555",
+          },
+          cancelButton:{
+            borderRadius: 10,
+            margin: 20,
+            padding: 5,
+            elevation: 2,
+            backgroundColor: "#56B7FF",
+          },
+          textStyle: {
+            color: "white",
+            fontWeight: "bold",
+            textAlign: "center"
+          },
+          modalText: {
+            marginBottom: 15,
+            fontSize: 25,
+            fontWeight: 'bold',
+            textAlign: "center"
+          },
         container: {
             flex: 1,
             alignItems: 'center',
@@ -150,10 +252,23 @@ class GroupInfo extends Component {
           marginTop: 15,
           marginBottom: 0,  
           justifyContent: 'center',  
-            height: 60,
-            fontSize: 30,
+            height: 70,
+            fontSize: 40,
             fontWeight: "bold",
             color: this.props.route.params.groupColor
+        },
+        topContainer : {
+            flex: 1,
+            zIndex: 1,
+        },
+        exitContainer: {
+            position: 'absolute',
+            top: 17,
+            right: 5
+        },
+        exit: {
+            height: 50,
+            width: 50,
         },
         button: {
             alignSelf: 'center',
@@ -198,6 +313,7 @@ class GroupInfo extends Component {
         smolerText: {
             textAlign: "center",
             fontWeight: "100",
+            fontSize: 25,
             marginBottom: 20
         },
         subheading: {
