@@ -4,9 +4,12 @@ import { SafeAreaView, StyleSheet, Alert, View, ScrollView} from 'react-native';
 import moment from 'moment';
 import { Provider, TextInput, RadioButton,Text, Subheading,Card, Button,Paragraph, Dialog, Portal } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
+import {genRandom} from '../utils/genRandom';
 import 'firebase/database';
 
 const db = firebase.database().ref()
+
+
 
 class CreateGroup extends Component {
   constructor(props) {
@@ -18,7 +21,6 @@ class CreateGroup extends Component {
       groupColor: "red",
       groupID: null,
       groups: [],
-      idCount: null,
       visible: false, 
     }
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,7 +44,7 @@ class CreateGroup extends Component {
     console.log('group freq: ',this.state.groupFreq);
     console.log('group color', this.state.groupColor);
 
-    const groupID = this.state.idCount;
+    const groupID = genRandom();
     // backdoor token if userId is not authenticated (only during development)
     const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
     const db = firebase.database().ref();
@@ -52,7 +54,6 @@ class CreateGroup extends Component {
     const dateDict = {}
     dateDict[today] = 0
     console.log(`today's date is ${today}`)
-    db.child('/idCount').set(this.state.idCount+1) //TODO: replace this with 6 random letter/digits
     db.child('/groups/'+groupID).once("value")
       .then(snapshot => {
         if(!snapshot.val()) {
@@ -78,12 +79,6 @@ class CreateGroup extends Component {
       });
     });
     this.setState({groups: groupArray});
-    firebase.database().ref('/idCount').once('value')
-            .then(snapshot => {
-                this.setState({idCount: snapshot.val()})
-                console.log('state var idcount: ', this.state.idcount);
-                console.log('id from firebase: ', snapshot.val());
-            });
   }
 
   render() {
