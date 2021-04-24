@@ -41,8 +41,7 @@ class Dashboard extends Component {
 
     checkHowManyCompleted = (groupMemberIds) => {
         const moment = require('moment');
-        let today = moment().format('YYYY/MM/DD');
-        today = today.split('/').join('');
+        const today = moment().format('YYYY/MM/DD').split('/').join('');
         var compCount;
         var count;
         compCount = 0;
