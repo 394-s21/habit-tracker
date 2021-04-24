@@ -27,6 +27,8 @@ class GroupInfo extends Component {
     }
     
     returnHome = () => {this.props.navigation.navigate("Dashboard")}
+    
+    
     completeDay = () => {
       const groupID = this.state.group.groupID;
       const userId = this.state.userID
@@ -34,27 +36,31 @@ class GroupInfo extends Component {
       const moment = require('moment');
       let today = moment().format('YYYY/MM/DD');
       today = today.split('/').join('');
+      console.log("Streak ", this.state.streak, "Complete? ", this.state.complete)
       db.child('/'+ today).set(1);
       this.setState((state, props) => {
-        return {streak: this.state.streak + 1,
-                complete: 1};
-      });}
+          return {streak: this.state.streak + 1,
+                  complete: 1};
+        });
+
+      
+    }
 
     undoCompleteDay = () => {
-        const groupID = this.state.group.groupID;
-        const userId = this.state.userID
-        const db = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
-        const moment = require('moment');
-        let today = moment().format('YYYY/MM/DD');
-        today = today.split('/').join('');
-        db.child('/' + today).set(0);
-        this.setState((state, props) => {
-            return {
-                streak: this.state.streak - 1,
+      const groupID = this.state.group.groupID;
+      const userId = this.state.userID
+      const db = firebase.database().ref('/groups/'+groupID+'/groupMemberIds/'+userId);
+      const moment = require('moment');
+      let today = moment().format('YYYY/MM/DD');
+      today = today.split('/').join('');
+      db.child('/' + today).set(0);
+      this.setState((state, props) => {
+          return {
+                streak: this.state.group.streak - 1,
                 complete: 0
             };
-        });
-    }
+        });}
+  
 
     componentDidMount() {
       const groupArray  = [];
@@ -177,14 +183,14 @@ class GroupInfo extends Component {
 
             <CommonCompHabitChart groupID = {groupID} groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={this.props.route.params.groupColor}/>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Button mode="contained" dark="true" disabled= {this.state.complete} onPress={() => this.completeDay()} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
-              {this.state.complete ? 'Completed!' : 'Completed Today?'}
+            <Button mode="contained" dark="true" onPress={this.state.complete ? () => this.undoCompleteDay() : () => this.completeDay()} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
+              {this.state.complete ? 'Completed! (Tap to Undo)' : 'Completed Today?'}
             </Button>
-            {!this.state.complete ? <View></View> :
+            {/* {!this.state.complete ? <View></View> :
             <Button mode="contained" dark="true" disabled= {!this.state.complete} onPress={() => this.undoCompleteDay()} style={this.styles.undoButton}>
               {'UNDO'}
             </Button>
-            }
+            } */}
             </View>
           </ScrollView>
         </SafeAreaView>
