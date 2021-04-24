@@ -5,6 +5,7 @@ import CommonCompGroupUserList from '../components/CommonCompGroupUserList';
 import colorMap from '../utils/color';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
+import moment from 'moment';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -13,7 +14,6 @@ class Dashboard extends Component {
       this.state = {
         groups: [],
         loading: false
-
       };
     }
   
@@ -37,6 +37,22 @@ class Dashboard extends Component {
         this.setState({loading: false})
         this.setState({groups: groupArray});
       });
+    }
+
+    checkHowManyCompleted = (groupMemberIds) => {
+        const moment = require('moment');
+        const today = moment().format('YYYY/MM/DD').split('/').join('');
+        var compCount;
+        var count;
+        compCount = 0;
+        count = 0;
+        for (var member in groupMemberIds){
+            if (groupMemberIds[member].hasOwnProperty(today) && groupMemberIds[member][today]){
+                compCount++;
+            }
+            count++
+        }
+        return compCount + "/" + count
     }
 
     render() {
@@ -66,15 +82,15 @@ class Dashboard extends Component {
               </View>
 
               {groups.map(group => 
-                <View style={styles.container}>
+                <View style={styles.container} key={group.groupID}>
                   <Card 
                     style={{backgroundColor: colorMap[group.groupColor]}} 
                     onPress={() => {this.viewGroup(group.groupID, group.groupColor)}}
                     key={group.groupID}>
                     <Card.Title 
                       title={group.goal} 
-                      subtitle="Completed: 1/6" right={() => <Text>{group.streak}</Text>}/> 
-                    <CommonCompGroupUserList groupMembers={Object.keys(group.groupMemberIds)} />
+                      subtitle={'Completed: ' + this.checkHowManyCompleted(group.groupMemberIds)} right={() => <Text style={styles.streak}>{group.streak + " Days"}</Text>}/> 
+                    <CommonCompGroupUserList groupID={group.groupID} />
                   </Card>
                 </View>)}
             </ScrollView>
@@ -99,7 +115,11 @@ const styles = StyleSheet.create({
       marginLeft: 5,
       marginRight: 5
     },
-
+  streak: {
+    fontWeight: 'bold',
+    margin: 20,
+    fontSize: 24,
+  },
   row: {
     marginLeft: 8,
     marginRight: 8,

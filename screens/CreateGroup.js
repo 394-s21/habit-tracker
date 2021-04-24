@@ -50,7 +50,7 @@ class CreateGroup extends Component {
     const db = firebase.database().ref();
     // create a string of DD/MM/YYYY
     const moment = require('moment')
-    const today = moment().format('YYYY/MM/DD').replaceAll("/",",")
+    const today = moment().format('YYYY/MM/DD').split('/').join('')
     const dateDict = {}
     dateDict[today] = 0
     console.log(`today's date is ${today}`)
