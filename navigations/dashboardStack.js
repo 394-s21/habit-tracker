@@ -10,10 +10,9 @@ import Dashboard from '../screens/Dashboard';
 import CreateGroup from '../screens/CreateGroup';
 import JoinGroup from '../screens/JoinGroup';
 import GroupInfo from "../screens/GroupInfo";
-import color from "../utils/color";
 const Stack = createStackNavigator();
 
-export default function DashboardStack({groupColor}) {
+export default function DashboardStack() {
   return (
     <Stack.Navigator
       initialRouteName="Dashboard"
