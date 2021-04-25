@@ -118,12 +118,11 @@ class CreateGroup extends Component {
               <RadioButton.Group onValueChange={newValue => this.setState({groupFreq:newValue})}
                                   value={this.state.groupFreq}>
                 <View style={styles.row}>
-                  <RadioButton value="daily"/>
+                  
+                  <RadioButton.Android value="daily" />
                   <Text style={styles.options}>Daily</Text>
-                  <RadioButton value="weekly"/>
+                  <RadioButton.Android value="weekly" />
                   <Text style={styles.options}>Weekly</Text>
-                  <RadioButton value="monthly"/>
-                  <Text style={styles.options}>Monthly</Text>
                   
                 </View>
                 </RadioButton.Group>     
@@ -135,20 +134,20 @@ class CreateGroup extends Component {
               <RadioButton.Group onValueChange={newValue => this.setState({groupColor:newValue})}
                                   value={this.state.groupColor}>
                 <View style={styles.row}>
-                  <RadioButton value="red"/>
+                  <RadioButton.Android value="red"/>
                   <Text style={styles.options}>Red</Text>
-                  <RadioButton value="orange"/>
+                  <RadioButton.Android value="orange"/>
                   <Text style={styles.options}>Orange</Text>
-                  <RadioButton value="green"/>
+                  <RadioButton.Android value="green"/>
                   <Text style={styles.options}>Green</Text>
                   
                 </View>
                 <View style={styles.row}>
-                  <RadioButton value="blue"/>
+                  <RadioButton.Android value="blue"/>
                   <Text style={styles.options}>Blue</Text>
-                  <RadioButton value="purple"/>
+                  <RadioButton.Android value="purple"/>
                   <Text style={styles.options}>Purple</Text>
-                  <RadioButton value="pink"/>
+                  <RadioButton.Android value="pink"/>
                   <Text style={styles.options}>Pink</Text>
                   
                 </View>
