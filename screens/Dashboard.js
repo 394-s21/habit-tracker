@@ -22,7 +22,9 @@ class Dashboard extends Component {
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
     viewGroup = (val, clr) => {
       this.props.navigation.navigate('View Group',{groupID: val, groupColor: clr})}
-    
+    logoutUser = () => {this.props.navigation.replace('Login')}
+
+
     componentDidMount() {
       this.setState({loading: true});
       this.setState({groups: []});
@@ -87,18 +89,23 @@ class Dashboard extends Component {
                 </Button>
               </View>
 
-              {groups.map(group => 
-                <View style={styles.container} key={group.groupID}>
-                  <Card 
-                    style={{backgroundColor: colorMap[group.groupColor]}} 
-                    onPress={() => {this.viewGroup(group.groupID, group.groupColor)}}
-                    key={group.groupID}>
-                    <Card.Title 
-                      title={group.goal} 
-                      subtitle={'Completed: ' + this.checkHowManyCompleted(group.groupMemberIds)} right={() => <Text style={styles.streak}>{group.streak + " Days"}</Text>}/> 
-                    <CommonCompGroupUserList groupID={group.groupID} />
-                  </Card>
-                </View>)}
+                {groups.map(group => 
+                  <View style={styles.container} key={group.groupID}>
+                    <Card 
+                      style={{backgroundColor: colorMap[group.groupColor]}} 
+                      onPress={() => {this.viewGroup(group.groupID, group.groupColor)}}
+                      key={group.groupID}>
+                      <Card.Title 
+                        title={group.goal} 
+                        subtitle={'Completed: ' + this.checkHowManyCompleted(group.groupMemberIds)} right={() => <Text style={styles.streak}>{group.streak + " Days"}</Text>}/> 
+                      <CommonCompGroupUserList groupID={group.groupID} />
+                    </Card>
+                  </View>)}
+
+
+                <View style={styles.row}>
+                  <Button mode="contained" dark="true" style={styles.logoutButton} onPress={this.logoutUser}>logout</Button>
+                </View>
             </ScrollView>
             </View>
           </View>
@@ -113,7 +120,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-
+  logoutButton: {
+    backgroundColor: '#000000',
+    marginTop: 26,
+    width: "30%",
+    marginLeft: 5,
+    marginRight: 5
+  },
   button: {
       backgroundColor: '#3DD5F4',
       marginTop: 16,

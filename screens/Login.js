@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Image, styles, StyleSheet, SafeAreaView } from 'react-native';
 import firebase from 'firebase';
 import SocialButton from "../components/CommonCompGoogleSignIn"
 import {firebaseConfig} from '../config';
@@ -77,14 +77,17 @@ class Login extends Component {
 
   render() {
     return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: "#3DD5F4", flex: 1 }}>
+      <View style={{justifyContent: "center", alignItems: "center",}}>
+      <Image style={{height: "50%", width: "65%", resizeMode: "center"}} source={require("../assets/Cosava.png")}></Image>
+      </View>
       <SocialButton
         buttonTitle='Sign In With Google'
         btnType='google'
         color='#de4d41'
         backgroundColor='#f5e7ea' 
         onPress = {() => this.signInWithGoogleAsync()}
-        />
+        ></SocialButton>
     </SafeAreaView>);
   }
 }
