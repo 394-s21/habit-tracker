@@ -26,7 +26,8 @@ class GroupInfo extends Component {
         groupID: this.props.route.params.groupID,
         groupColor: this.props.route.params.groupColor,
         usernames: ['loading'],
-        mvis: false
+        mvis: false,
+        invite: false
       };
     }
     
@@ -104,6 +105,11 @@ class GroupInfo extends Component {
     setModalVisible = (isVis) => {
         this.setState({mvis: isVis})
     }
+
+    setIdVisible = (inv) => {
+        this.setState({invite: !inv})
+    }
+
     
     leaveGroup = () => {
         const groupID = this.state.groupID;
@@ -192,6 +198,9 @@ class GroupInfo extends Component {
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
             <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setModalVisible(true)}>Leave Group</Button>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
+            <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setIdVisible(this.state.invite)}>{this.state.invite ? 'Group ID: '+ groupID : 'Invite Member'}</Button>
             </View>
           </ScrollView>
         </SafeAreaView>
