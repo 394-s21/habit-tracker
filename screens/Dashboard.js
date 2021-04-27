@@ -61,9 +61,28 @@ class Dashboard extends Component {
         return compCount + "/" + count
     }
 
+    emojiMap = (streak) => {
+        const emoji = require("emoji-dictionary");
+        if (streak == 0){
+            return streak + " Days"
+        }
+        else if (streak < 7) {
+            return emoji.getUnicode('turtle') + ' '+ streak + " Days"
+        } else if (streak < 10){
+            return emoji.getUnicode('rabbit') + ' '+ streak + " Days"
+        } else if (streak < 20) {
+            return emoji.getUnicode('deer') + ' '+ streak + " Days"
+        } else if (streak < 100) {
+            return emoji.getUnicode('gorilla') + ' '+ streak + " Days"
+        } else {
+            return emoji.getUnicode('fist_right') + emoji.getUnicode('fist_left') + ' '+ streak + " Days"
+        }
+    }
+
     render() {
       const groups = this.state.groups;
       const loading = this.state.loading;
+      const emoji = require("emoji-dictionary");
       // const RightContent = () => <Text style={styles.streak}>{streak}</Text>
       return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -95,14 +114,14 @@ class Dashboard extends Component {
                       key={group.groupID}>
                       <Card.Title 
                         title={group.goal} 
-                        subtitle={'Completed: ' + this.checkHowManyCompleted(group.groupMemberIds)} right={() => <Text style={styles.streak}>{group.streak + " Days"}</Text>}/> 
+                        subtitle={'Completed: ' + this.checkHowManyCompleted(group.groupMemberIds)} right={() => <Text style={styles.streak}>{this.emojiMap(group.streak)}</Text>}/> 
                       <CommonCompGroupUserList groupID={group.groupID} />
                     </Card>
                   </View>)}
 
 
                 <View style={styles.row}>
-                  <Button mode="contained" dark="true" style={styles.logoutButton} onPress={this.logoutUser}>logout</Button>
+                  <Button mode="contained" dark="true" style={styles.logoutButton} onPress={this.logoutUser}>logout </Button>
                 </View>
             </ScrollView>
             </View>

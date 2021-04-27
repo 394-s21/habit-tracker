@@ -17,9 +17,9 @@ class GroupInfo extends Component {
       this.state = {
         group: [],
         streak : 1,
-        personalGoals : "1 Lesson ",
+        personalGoals : "1 Completion ",
         frequency : "Day",
-        verifyNumber : "1",
+        verifyNumber : "All",
         groupMemberIds : {},
         complete : 0,
         groupID: this.props.route.params.groupID,
@@ -196,7 +196,7 @@ class GroupInfo extends Component {
                  <Text style={this.styles.colorText}>{this.state.personalGoals}{freq}</Text>
               
                 <Subheading style={this.styles.subheading}>Needs:</Subheading>
-                <Text style={this.styles.colorText}>{this.state.verifyNumber} person to verify</Text>
+                <Text style={this.styles.colorText}>{this.state.verifyNumber} members to do</Text>
               </Card.Content>
             </Card>
             </View>
