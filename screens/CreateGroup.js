@@ -1,16 +1,12 @@
 import { Component } from 'react';
 import React from "react";
-import { SafeAreaView, StyleSheet, Alert, View, ScrollView} from 'react-native';
+import { SafeAreaView, StyleSheet, View, ScrollView} from 'react-native';
 import moment from 'moment';
 import { Provider, TextInput, RadioButton,Text, Subheading,Card, Button,Paragraph, Dialog, Portal } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
 import {genRandom} from '../utils/genRandom';
 import 'firebase/database';
-
-const db = firebase.database().ref()
-
-
-
+import alert from '../components/CommonCompAlert';
 class CreateGroup extends Component {
   constructor(props) {
     super(props);
@@ -37,38 +33,62 @@ class CreateGroup extends Component {
     this.props.navigation.navigate('Dashboard');
   }
 
+  groupNameNotFound = () =>
+    alert(
+      "Group name not found.",
+      "Please enter your group name.",
+      [
+        { text: "Cancel"},
+        { text: "Ok"}
+      ]
+  );
+  habitNotFound = () =>
+    alert(
+      "Habit not found.",
+      "Please enter a brief summary of your habit.",
+      [
+        { text: "Cancel"},
+        { text: "Ok"}
+      ]
+  );
+
   handleSubmit = () => {
     console.log('will validate input, upload to firebase, generate group ID here');
     console.log('group Name: ',this.state.groupName);
     console.log('group habit: ',this.state.groupHabit);
     console.log('group freq: ',this.state.groupFreq);
     console.log('group color', this.state.groupColor);
-
-    const groupID = genRandom();
-    // backdoor token if userId is not authenticated (only during development)
-    const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
-    const db = firebase.database().ref();
-    // create a string of DD/MM/YYYY
-    const moment = require('moment')
-    const today = moment().format('YYYY/MM/DD').split('/').join('')
-    const dateDict = {}
-    dateDict[today] = 0
-    console.log(`today's date is ${today}`)
-    db.child('/groups/'+groupID).once("value")
-      .then(snapshot => {
-        if(!snapshot.val()) {
-          db.child('/groups/'+groupID+'/groupName').set(this.state.groupName);
-          db.child('/groups/'+groupID+'/goal').set(this.state.groupHabit);
-          db.child('/groups/'+groupID+'/groupColor').set(this.state.groupColor);
-          db.child('/groups/'+groupID+'/groupFreq').set(this.state.groupFreq);
-          db.child('/groups/'+groupID+'/groupID').set(groupID);
-          db.child('/groups/'+groupID+'/streak').set(0);
-          // create a userId reference to a list of dates
-          db.child('/groups/'+groupID+'/groupMemberIds/'+ userId).set(dateDict);
-        }
-      }).then(
-        this.props.navigation.navigate('Dashboard')
-      )
+    if(this.state.groupName === ""){ // if user does not enter group name
+      this.groupNameNotFound()
+    } else if(this.state.groupHabit === ""){ // if user does not enter habit summary
+      this.habitNotFound()
+    } else{ // user enters both information correctly
+      const groupID = genRandom();
+      // backdoor token if userId is not authenticated (only during development)
+      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
+      const db = firebase.database().ref();
+      // create a string of DD/MM/YYYY
+      const moment = require('moment')
+      const today = moment().format('YYYY/MM/DD').split('/').join('')
+      const dateDict = {}
+      dateDict[today] = 0
+      console.log(`today's date is ${today}`)
+      db.child('/groups/'+groupID).once("value")
+        .then(snapshot => {
+          if(!snapshot.val()) {
+            db.child('/groups/'+groupID+'/groupName').set(this.state.groupName);
+            db.child('/groups/'+groupID+'/goal').set(this.state.groupHabit);
+            db.child('/groups/'+groupID+'/groupColor').set(this.state.groupColor);
+            db.child('/groups/'+groupID+'/groupFreq').set(this.state.groupFreq);
+            db.child('/groups/'+groupID+'/groupID').set(groupID);
+            db.child('/groups/'+groupID+'/streak').set(0);
+            // create a userId reference to a list of dates
+            db.child('/groups/'+groupID+'/groupMemberIds/'+ userId).set(dateDict);
+          }
+        }).then(
+          this.props.navigation.navigate('Dashboard')
+        )
+    }
   }
 
   componentDidMount() {

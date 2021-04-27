@@ -47,8 +47,6 @@ class GroupInfo extends Component {
           return {streak: this.state.streak + 1,
                   complete: 1};
         });
-
-      
     }
 
     undoCompleteDay = () => {
