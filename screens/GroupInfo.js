@@ -183,7 +183,7 @@ class GroupInfo extends Component {
                  <Text style={this.styles.colorText}>{this.state.personalGoals}{freq}</Text>
               
                 <Subheading style={this.styles.subheading}>Needs:</Subheading>
-                <Text style={this.styles.colorText}>{this.state.verifyNumber} members to complete</Text>
+                <Text style={this.styles.colorText}>{this.state.verifyNumber} members to do</Text>
               </Card.Content>
             </Card>
             </View>
