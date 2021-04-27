@@ -100,7 +100,18 @@ class GroupInfo extends Component {
 
     goToChat = () => {
       console.log(`transition to ${this.state.groupID}`)
-      this.props.navigation.navigate('Chat', {groupID: this.state.groupID}) 
+      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
+      var userFirstName;
+      firebase.database().ref('/users/' + userId).on('value', (snapshot) => {
+        if (snapshot.exists()) {
+          userFirstName = snapshot.val().first_name
+        }
+      })
+      console.log(`data is ${userFirstName}`)
+      this.props.navigation.navigate('Chat', {
+        groupID: this.state.groupID,
+        userID: userId,
+        userFirstName: userFirstName}) 
     }
 
     setModalVisible = (isVis) => {
@@ -123,7 +134,6 @@ class GroupInfo extends Component {
             const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
             const dbGroupUser = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
             dbGroupUser.remove();
-            console.log("WEEEE")
         }
         this.gotTodashboard()
     }
