@@ -32,32 +32,40 @@ class JoinGroup extends Component {
         { text: "Ok"}
       ]
   );
+  groupIdAleadyExists = () =>
+    alert(
+      "Cannot join group.",
+      "You have already joined this group",
+      [
+        { text: "Cancel"},
+        { text: "Ok"}
+      ]
+  );
   handleSubmit = () => {
-    // validate group ID
-    console.log("running handleSubmit")
     const groupItems = firebase.database().ref('/groups') // initialize firebase to read groups data
+    const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
+    const groupID = this.state.newGroupID
+    const db = firebase.database().ref() // initialize firebase reference
     var groupIds = []
     groupItems.on("value", datasnap => {
       groupIds = Object.keys(datasnap.val())
     })
-    if(groupIds.includes(this.state.newGroupID)){
-      console.log('group ID: ',groupIds)
-      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
-      const groupID = this.state.newGroupID;
-      const db = firebase.database().ref();
+    if(groupIds.includes(groupID)){
       const moment = require('moment')
       const today = moment().format('YYYY/MM/DD').split('/').join('')
       const dateDict = {}
       dateDict[today] = 0
       db.child('/groups/'+groupID +'/groupMemberIds/'+userId).once("value")
-      .then(snapshot => {
-        if(!snapshot.val()) {
+      .then(userIdSnapShot => {
+        // user is NOT in the group member ID list
+        if(!userIdSnapShot.exists()) {
           // create a userId reference to a list of dates
-          db.child('/groups/'+groupID+'/groupMemberIds/'+ userId).set(dateDict);
+          db.child('/groups/'+groupID+'/groupMemberIds/'+ userId).set(dateDict)
+          this.joinGroupSuccessfulAlert()
+        } else{ // user is in the group member ID list
+          this.groupIdAleadyExists()
         }
       })
-      // this.props.navigation.replace('Dashboard')
-      this.joinGroupSuccessfulAlert()
     } 
     else{
       this.groupIdNotFoundAlert()
