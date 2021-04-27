@@ -24,44 +24,52 @@ class JoinGroup extends Component {
       ]
   );
   joinGroupSuccessfulAlert = () =>
-  alert(
-    "Join Group Successful.",
-    "View your group in your dashboard",
-    [
-      { text: "Cancel"},
-      { text: "Ok"}
-    ]
+    alert(
+      "Join Group Successful.",
+      "View your group in your dashboard",
+      [
+        { text: "Cancel"},
+        { text: "Ok"}
+      ]
+  );
+  groupIdAleadyExists = () =>
+    alert(
+      "Cannot join group.",
+      "You have already joined this group",
+      [
+        { text: "Cancel"},
+        { text: "Ok"}
+      ]
   );
   handleSubmit = () => {
-    // validate group ID
     const groupItems = firebase.database().ref('/groups') // initialize firebase to read groups data
-
+    const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
+    const groupID = this.state.newGroupID
+    const db = firebase.database().ref() // initialize firebase reference
+    var groupIds = []
     groupItems.on("value", datasnap => {
-      var groupIds = Object.keys(datasnap.val())
-      console.log(groupIds)
-      if(groupIds.includes(this.state.newGroupID)){
-        console.log('group ID: ',this.state.newGroupID)
-        const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
-        const groupID = this.state.newGroupID;
-        const db = firebase.database().ref();
-        const moment = require('moment')
-        const today = moment().format('YYYY/MM/DD').split('/').join('')
-        const dateDict = {}
-        dateDict[today] = 0
-        db.child('/groups/'+groupID +'/groupMemberIds/'+userId).once("value")
-        .then(snapshot => {
-          if(!snapshot.val()) {
-            // create a userId reference to a list of dates
-            db.child('/groups/'+groupID+'/groupMemberIds/'+ userId).set(dateDict);
-          }
-        }).then(
-          this.props.navigation.navigate('Dashboard')
-        )
-        this.joinGroupSuccessfulAlert()
-      } else{
-        this.groupIdNotFoundAlert()
-      }
+      groupIds = Object.keys(datasnap.val())
     })
+    if(groupIds.includes(groupID)){
+      const moment = require('moment')
+      const today = moment().format('YYYY/MM/DD').split('/').join('')
+      const dateDict = {}
+      dateDict[today] = 0
+      db.child('/groups/'+groupID +'/groupMemberIds/'+userId).once("value")
+      .then(userIdSnapShot => {
+        // user is NOT in the group member ID list
+        if(!userIdSnapShot.exists()) {
+          // create a userId reference to a list of dates
+          db.child('/groups/'+groupID+'/groupMemberIds/'+ userId).set(dateDict)
+          this.joinGroupSuccessfulAlert()
+        } else{ // user is in the group member ID list
+          this.groupIdAleadyExists()
+        }
+      })
+    } 
+    else{
+      this.groupIdNotFoundAlert()
+    }
   }
 
   render() {

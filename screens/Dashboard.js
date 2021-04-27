@@ -31,7 +31,6 @@ class Dashboard extends Component {
       const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
       firebase.database().ref('/groups').on('value', (snapshot) => {
         if (snapshot.exists()) {
-          console.log("goodbye")
           const groupArray = []
           snapshot.forEach(function (childSnapshot) {
             // only display groups that the user is in
@@ -53,7 +52,6 @@ class Dashboard extends Component {
         var count;
         compCount = 0;
         count = 0;
-        console.log()
         for (var member in groupMemberIds){
             if (groupMemberIds[member].hasOwnProperty(today) && groupMemberIds[member][today]){
                 compCount++;
