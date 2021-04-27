@@ -112,43 +112,27 @@ class CreateGroup extends Component {
                       
                       style={styles.field}
                       onChangeText={text => this.setState({groupHabit:text})} /> 
-          <Card style={styles.card}>
-            <Card.Content>
-              <Subheading style={styles.subheading}>I want to complete this habit...</Subheading>
-              <RadioButton.Group onValueChange={newValue => this.setState({groupFreq:newValue})}
-                                  value={this.state.groupFreq}>
-                <View style={styles.row}>
-                  <RadioButton value="daily"/>
-                  <Text style={styles.options}>Daily</Text>
-                  <RadioButton value="weekly"/>
-                  <Text style={styles.options}>Weekly</Text>
-                  <RadioButton value="monthly"/>
-                  <Text style={styles.options}>Monthly</Text>
-                  
-                </View>
-                </RadioButton.Group>     
-            </Card.Content>
-          </Card>  
+          
           <Card style={styles.card}>
             <Card.Content>
               <Subheading style={styles.subheading}>My group color will be...</Subheading>
               <RadioButton.Group onValueChange={newValue => this.setState({groupColor:newValue})}
                                   value={this.state.groupColor}>
                 <View style={styles.row}>
-                  <RadioButton value="red"/>
+                  <RadioButton.Android value="red"/>
                   <Text style={styles.options}>Red</Text>
-                  <RadioButton value="orange"/>
+                  <RadioButton.Android value="orange"/>
                   <Text style={styles.options}>Orange</Text>
-                  <RadioButton value="green"/>
+                  <RadioButton.Android value="green"/>
                   <Text style={styles.options}>Green</Text>
                   
                 </View>
                 <View style={styles.row}>
-                  <RadioButton value="blue"/>
+                  <RadioButton.Android value="blue"/>
                   <Text style={styles.options}>Blue</Text>
-                  <RadioButton value="purple"/>
+                  <RadioButton.Android value="purple"/>
                   <Text style={styles.options}>Purple</Text>
-                  <RadioButton value="pink"/>
+                  <RadioButton.Android value="pink"/>
                   <Text style={styles.options}>Pink</Text>
                   
                 </View>
@@ -225,47 +209,5 @@ const styles = StyleSheet.create({
 });
 
 
-/*
 
-<RadioButton.Item label="Daily" value="daily" style={styles.options}/>
-              <RadioButton.Item label="Weekly" value="weekly" style={styles.options}/>
-              <RadioButton.Item label="Monthly" value="monthly" style={styles.options}/>
-
-
-
-
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
-  button : {
-    margin: 2,
-    fontSize: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    height: 50,
-    margin: 12,
-    fontSize: 18,
-    // TODO: ADD a fontFamily later
-    color: "#FF9893",
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  dateDropdown: {
-    height: 50,
-    margin: 12,
-    fontSize: 18,
-    // TODO: ADD a fontFamily later
-    color: "#FFFFFF",
-    fontWeight: 'bold',
-    textAlign: 'center',
-  }
-});*/
 export default CreateGroup;
