@@ -66,6 +66,9 @@ class Dashboard extends Component {
         if (streak == 0){
             return streak + " Days"
         }
+        else if (streak == 1){
+          return emoji.getUnicode('turtle') + ' '+ streak + " Day"
+        }
         else if (streak < 7) {
             return emoji.getUnicode('turtle') + ' '+ streak + " Days"
         } else if (streak < 10){
