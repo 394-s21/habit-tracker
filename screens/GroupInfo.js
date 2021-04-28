@@ -162,7 +162,7 @@ class GroupInfo extends Component {
                       </View>
                   </View>
               </Modal>
-          <ScrollView>
+          <View>
             <View style={this.styles.topContainer}>
             <Text style={this.styles.title}>{groupName}</Text>
             </View>
@@ -200,7 +200,7 @@ class GroupInfo extends Component {
             <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
             <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setIdVisible(this.state.invite)}>{this.state.invite ? 'Group ID: '+ groupID : 'Invite Member'}</Button>
             </View>
-          </ScrollView>
+          </View>
         </SafeAreaView>
       );
     }
@@ -272,7 +272,7 @@ class GroupInfo extends Component {
             color: this.props.route.params.groupColor
         },
         topContainer : {
-            flex: 1,
+            flex: 0.65, //changed this from 1
             zIndex: 1,
         },
         exitContainer: {
@@ -328,7 +328,7 @@ class GroupInfo extends Component {
             textAlign: "center",
             fontWeight: "100",
             fontSize: 25,
-            marginBottom: 20
+            marginBottom: 20,
         },
         subheading: {
             textAlign: "center",
