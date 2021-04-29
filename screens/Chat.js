@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import AsyncStorage from '@react-native-community/async-storage'
-import { StyleSheet, TextInput, View, YellowBox, Button } from 'react-native'
+import { StyleSheet, TextInput, View, YellowBox, Button, Text } from 'react-native'
 import * as firebase from 'firebase'
 import 'firebase/firestore'
 
@@ -24,16 +24,17 @@ YellowBox.ignoreWarnings(['Setting a timer for a long period of time'])
 
 
 const Chat = ({route, navigation}) => {
-    const [user, setUser] = useState(null)
-    const [name, setName] = useState('')
+    // read groupID, userID and userFirstName from the navigation parameters
+    const {groupID, _id, name} = route.params
+    console.log(`groupID, userID, userFirstName ${groupID}, ${_id}, ${name}`)
+    const user = { _id, name }
+    AsyncStorage.setItem('user', JSON.stringify(user))
     const [messages, setMessages] = useState([])
     const db = firebase.firestore()
-    const {groupID, userID, userFirstName} = route.params
-    console.log(`the new page ${groupID}`)
+    
     const chatsRef = db.collection(groupID.toString()) 
 
     useEffect(() => {
-        removeUser()
         readUser()
         const unsubscribe = chatsRef.onSnapshot((querySnapshot) => {
             const messagesFirestore = querySnapshot
@@ -48,6 +49,7 @@ const Chat = ({route, navigation}) => {
                 .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
             appendMessages(messagesFirestore)
         })
+        console.log(`In useEffect, user is ${JSON.stringify(user)}`)
         return () => unsubscribe()
     }, [])
 
@@ -59,10 +61,10 @@ const Chat = ({route, navigation}) => {
     )
 
     async function readUser() {
-        const user = await AsyncStorage.getItem('user')
-        console.log(`user is ${user}`)
-        if (user) {
-            setUser(JSON.parse(user))
+        const myUser = await AsyncStorage.getItem('user')
+        console.log(`In readUser, user is ${myUser}`)
+        if (myUser === JSON.stringify(user)){
+            console.log(`they are same ${myUser}, ${JSON.stringify(user)}`)
         }
     }
 
@@ -70,24 +72,10 @@ const Chat = ({route, navigation}) => {
         const user = await AsyncStorage.removeItem('user')
         console.log(`user ${user} removed`)
     }
-    async function handlePress() {
-        const _id = Math.random().toString(36).substring(7) 
-        const user = { _id, name }
-        await AsyncStorage.setItem('user', JSON.stringify(user))
-        setUser(user)
-    }
+
     async function handleSend(messages) {
         const writes = messages.map((m) => chatsRef.add(m))
         await Promise.all(writes)
-    }
-
-    if (!user) { // TODO: remove this and read name and userID automatically
-        return (
-            <View style={styles.container}>
-                <TextInput style={styles.input} placeholder="Enter your name" value={name} onChangeText={setName} />
-                <Button onPress={handlePress} title="Enter the chat" />
-            </View>
-        )
     }
     return <GiftedChat messages={messages} user={user} onSend={handleSend} />
 }

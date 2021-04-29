@@ -5,6 +5,7 @@ import { Text, Subheading,Card, Button } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 import CommonCompHabitChart from '../components/CommonCompHabitChart';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class GroupInfo extends Component {
     constructor(props) {
@@ -108,10 +109,12 @@ class GroupInfo extends Component {
         }
       })
       console.log(`data is ${userFirstName}`)
+      // const user = AsyncStorage.removeItem('user')
+      // console.log(`user ${user} removed`)
       this.props.navigation.navigate('Chat', {
         groupID: this.state.groupID,
-        userID: userId,
-        userFirstName: userFirstName}) 
+        _id: userId,
+        name: userFirstName}) 
     }
 
     setModalVisible = (isVis) => {
@@ -207,14 +210,14 @@ class GroupInfo extends Component {
               {this.state.complete ? `Completed! (Tap to Undo)` : 'Log Completion'}
             </Button>    
             </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button style={this.styles['button']} mode="contained" onPress={() => this.setIdVisible(this.state.invite)}>{this.state.invite ? 'Group ID: '+ groupID : 'Invite Member'}</Button>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button style={this.styles['button']} mode="contained" onPress={() => this.goToChat()}>{"Go to group chat"}</Button>
+            </View>
             <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
             <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setModalVisible(true)}>Leave Group</Button>
-            </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
-            <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setIdVisible(this.state.invite)}>{this.state.invite ? 'Group ID: '+ groupID : 'Invite Member'}</Button>
-            </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
-            <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.goToChat()}>{"Chat"}</Button>
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -306,7 +309,7 @@ class GroupInfo extends Component {
             backgroundColor: this.props.route.params.groupColor,
             padding: 10,
             width: 350,
-            marginTop: 35,
+            marginTop: 15,
           },
         compButton: {
           alignSelf: 'center',
@@ -315,7 +318,7 @@ class GroupInfo extends Component {
           padding: 10,
           width: 300,
           height: 55,
-          marginTop: 35,
+          marginTop: 15,
           marginLeft: 10
         },
         undoButton: {
