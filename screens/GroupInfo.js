@@ -5,7 +5,6 @@ import { Text, Subheading,Card, Button } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 import CommonCompHabitChart from '../components/CommonCompHabitChart';
-import moment from 'moment';
 
 class GroupInfo extends Component {
     constructor(props) {
@@ -90,7 +89,6 @@ class GroupInfo extends Component {
               const today = moment().format('YYYY/MM/DD').split('/').join('');
               this.setState({ usernames: usersArray });
               this.setState({ group: firebaseDB.groups[groupID] });
-             
               if (firebaseDB.groups[groupID].groupMemberIds[userId].hasOwnProperty(today)) {
                   this.setState({ complete: firebaseDB.groups[groupID].groupMemberIds[userId][today] })
               }
@@ -99,6 +97,22 @@ class GroupInfo extends Component {
     }
 
     gotTodashboard = () => {this.props.navigation.navigate('Dashboard') }
+
+    goToChat = () => {
+      console.log(`transition to ${this.state.groupID}`)
+      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
+      var userFirstName;
+      firebase.database().ref('/users/' + userId).on('value', (snapshot) => {
+        if (snapshot.exists()) {
+          userFirstName = snapshot.val().first_name
+        }
+      })
+      console.log(`data is ${userFirstName}`)
+      this.props.navigation.navigate('Chat', {
+        groupID: this.state.groupID,
+        userID: userId,
+        userFirstName: userFirstName}) 
+    }
 
     setModalVisible = (isVis) => {
         this.setState({mvis: isVis})
@@ -120,7 +134,6 @@ class GroupInfo extends Component {
             const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
             const dbGroupUser = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
             dbGroupUser.remove();
-            console.log("WEEEE")
         }
         this.gotTodashboard()
     }
@@ -199,6 +212,9 @@ class GroupInfo extends Component {
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
             <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setIdVisible(this.state.invite)}>{this.state.invite ? 'Group ID: '+ groupID : 'Invite Member'}</Button>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
+            <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.goToChat()}>{"Chat"}</Button>
             </View>
           </ScrollView>
         </SafeAreaView>

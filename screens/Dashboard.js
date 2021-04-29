@@ -22,7 +22,7 @@ class Dashboard extends Component {
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
     viewGroup = (val, clr) => {
       this.props.navigation.navigate('View Group',{groupID: val, groupColor: clr})}
-    logoutUser = () => {this.props.navigation.replace('Login')}
+    logoutUser = () => {this.props.navigation.replace('Login')} // TODO: clear our the state.
 
 
     componentDidMount() {
