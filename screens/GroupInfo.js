@@ -207,14 +207,14 @@ class GroupInfo extends Component {
               {this.state.complete ? `Completed! (Tap to Undo)` : 'Log Completion'}
             </Button>    
             </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button style={this.styles['button']} mode="contained" onPress={() => this.setIdVisible(this.state.invite)}>{this.state.invite ? 'Group ID: '+ groupID : 'Invite Member'}</Button>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button style={this.styles['button']} mode="contained" onPress={() => this.goToChat()}>{"Go to group chat"}</Button>
+            </View>
             <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
             <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setModalVisible(true)}>Leave Group</Button>
-            </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
-            <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setIdVisible(this.state.invite)}>{this.state.invite ? 'Group ID: '+ groupID : 'Invite Member'}</Button>
-            </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
-            <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.goToChat()}>{"Chat"}</Button>
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -306,7 +306,7 @@ class GroupInfo extends Component {
             backgroundColor: this.props.route.params.groupColor,
             padding: 10,
             width: 350,
-            marginTop: 35,
+            marginTop: 15,
           },
         compButton: {
           alignSelf: 'center',
@@ -315,7 +315,7 @@ class GroupInfo extends Component {
           padding: 10,
           width: 300,
           height: 55,
-          marginTop: 35,
+          marginTop: 15,
           marginLeft: 10
         },
         undoButton: {
