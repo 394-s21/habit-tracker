@@ -5,6 +5,7 @@ import { Text, Subheading,Card, Button } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 import CommonCompHabitChart from '../components/CommonCompHabitChart';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class GroupInfo extends Component {
     constructor(props) {
@@ -108,10 +109,12 @@ class GroupInfo extends Component {
         }
       })
       console.log(`data is ${userFirstName}`)
+      // const user = AsyncStorage.removeItem('user')
+      // console.log(`user ${user} removed`)
       this.props.navigation.navigate('Chat', {
         groupID: this.state.groupID,
-        userID: userId,
-        userFirstName: userFirstName}) 
+        _id: userId,
+        name: userFirstName}) 
     }
 
     setModalVisible = (isVis) => {
