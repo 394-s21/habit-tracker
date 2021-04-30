@@ -6,12 +6,13 @@ import {firebase} from '../utils/firebase';
 import 'firebase/database';
 import CommonCompHabitChart from '../components/CommonCompHabitChart';
 import AsyncStorage from '@react-native-community/async-storage';
+import colorMap from '../utils/color';
 
 class GroupInfo extends Component {
     constructor(props) {
       super(props);
       this.props.navigation.setOptions({
-        headerStyle: { backgroundColor: this.props.route.params.groupColor },
+        headerStyle: { backgroundColor: colorMap[this.props.route.params.groupColor] },
         headerTintColor: '#fff',
         headerTitleStyle: { fontWeight: 'bold' }})
   
@@ -204,7 +205,7 @@ class GroupInfo extends Component {
             </Card>
             </View>
 
-            <CommonCompHabitChart groupID = {groupID} groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={this.props.route.params.groupColor}/>
+            <CommonCompHabitChart groupID = {groupID} groupMembersData = {recentHabits} groupMembersNames = {usernames} groupColor={colorMap[this.state.groupColor]}/>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <Button mode="contained" dark="true" onPress={this.state.complete ? () => this.undoCompleteDay() : () => this.completeDay()} style={this.styles[!this.state.complete ? 'button' :'compButton']}>
               {this.state.complete ? `Completed! (Tap to Undo)` : 'Log Completion'}
@@ -288,7 +289,7 @@ class GroupInfo extends Component {
             height: 70,
             fontSize: 30,
             fontWeight: "bold",
-            color: this.props.route.params.groupColor
+            color: colorMap[this.props.route.params.groupColor]
         },
         topContainer : {
             flex: 1,
@@ -306,7 +307,7 @@ class GroupInfo extends Component {
         button: {
             alignSelf: 'center',
             justifyContent: 'center',
-            backgroundColor: this.props.route.params.groupColor,
+            backgroundColor: colorMap[this.props.route.params.groupColor],
             padding: 10,
             width: 350,
             marginTop: 15,
@@ -314,7 +315,7 @@ class GroupInfo extends Component {
         compButton: {
           alignSelf: 'center',
           justifyContent: 'center',
-          backgroundColor: this.props.route.params.groupColor,
+          backgroundColor: colorMap[this.props.route.params.groupColor],
           padding: 10,
           width: 300,
           height: 55,
@@ -335,7 +336,7 @@ class GroupInfo extends Component {
             height: 60,
             fontSize: 50,
             fontWeight: "bold",
-            color: this.props.route.params.groupColor
+            color: colorMap[this.props.route.params.groupColor]
         },
         card: {
             marginTop: 0,
@@ -361,7 +362,7 @@ class GroupInfo extends Component {
             alignSelf: 'center',
             justifyContent: 'center',  
             fontStyle: "italic",
-            color: this.props.route.params.groupColor
+            color: colorMap[this.props.route.params.groupColor]
         }
     });
 };
