@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 const CommonCompGroupUser = ({memberUserName}) => (
-    <View style={styles.userButton}>
+    <TouchableOpacity style={styles.userButton}>
       <Text style={styles.userText}>
         {memberUserName}
       </Text>
-    </View>
+    </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
