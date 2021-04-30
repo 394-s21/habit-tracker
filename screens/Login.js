@@ -10,7 +10,7 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig)
 }
 class Login extends Component {
-  onSignIn = googleUser => {
+  onSignIn = async (googleUser) => {
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     var unsubscribe = firebase.auth().onAuthStateChanged(
       function() {
@@ -37,6 +37,7 @@ class Login extends Component {
                 last_name: result.additionalUserInfo.profile.family_name,
                 created_at: Date.now()
               })
+            console.log(`in login page, userId is ${firebase.auth().currentUser.uid}`)
           }).catch((error) => {
             // Handle Errors here.
             var errorCode = error.code;
@@ -61,9 +62,10 @@ class Login extends Component {
       });
       if (result.type === 'success') {
         this.onSignIn(result);
-        console.log("successful sign in")
-        this.props.navigation.replace('Dashboard'); // We use replace to disable user to go back
-        return result.accessToken;
+        // userAuth = await result.user.refreshAuth();
+        console.log(`successful sign in with userId ${firebase.auth().currentUser.uid}`)
+        setTimeout(() => { this.props.navigation.replace('Dashboard'); }, 500); // We use replace to disable user to go back
+        return new Promise(result.accessToken);
       } else {
         console.log("cancelled sign in")
         this.props.navigation.navigate('Login');
