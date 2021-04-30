@@ -5,7 +5,7 @@ import { Text, Subheading,Card, Button } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 import CommonCompHabitChart from '../components/CommonCompHabitChart';
-import moment from 'moment';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class GroupInfo extends Component {
     constructor(props) {
@@ -90,7 +90,6 @@ class GroupInfo extends Component {
               const today = moment().format('YYYY/MM/DD').split('/').join('');
               this.setState({ usernames: usersArray });
               this.setState({ group: firebaseDB.groups[groupID] });
-             
               if (firebaseDB.groups[groupID].groupMemberIds[userId].hasOwnProperty(today)) {
                   this.setState({ complete: firebaseDB.groups[groupID].groupMemberIds[userId][today] })
               }
@@ -99,6 +98,24 @@ class GroupInfo extends Component {
     }
 
     gotTodashboard = () => {this.props.navigation.navigate('Dashboard') }
+
+    goToChat = () => {
+      console.log(`transition to ${this.state.groupID}`)
+      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
+      var userFirstName;
+      firebase.database().ref('/users/' + userId).on('value', (snapshot) => {
+        if (snapshot.exists()) {
+          userFirstName = snapshot.val().first_name
+        }
+      })
+      console.log(`data is ${userFirstName}`)
+      // const user = AsyncStorage.removeItem('user')
+      // console.log(`user ${user} removed`)
+      this.props.navigation.navigate('Chat', {
+        groupID: this.state.groupID,
+        _id: userId,
+        name: userFirstName}) 
+    }
 
     setModalVisible = (isVis) => {
         this.setState({mvis: isVis})
@@ -120,7 +137,6 @@ class GroupInfo extends Component {
             const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
             const dbGroupUser = firebase.database().ref('/groups/' + groupID + '/groupMemberIds/' + userId);
             dbGroupUser.remove();
-            console.log("WEEEE")
         }
         this.gotTodashboard()
     }
@@ -194,11 +210,14 @@ class GroupInfo extends Component {
               {this.state.complete ? `Completed! (Tap to Undo)` : 'Log Completion'}
             </Button>    
             </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
-            <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setModalVisible(true)}>Leave Group</Button>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button style={this.styles['button']} mode="contained" onPress={() => this.setIdVisible(this.state.invite)}>{this.state.invite ? 'Group ID: '+ groupID : 'Invite Member'}</Button>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button style={this.styles['button']} mode="contained" onPress={() => this.goToChat()}>{"Go to group chat"}</Button>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 25}}>
-            <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setIdVisible(this.state.invite)}>{this.state.invite ? 'Group ID: '+ groupID : 'Invite Member'}</Button>
+            <Button style={{backgroundColor: "black"}} mode="contained" onPress={() => this.setModalVisible(true)}>Leave Group</Button>
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -290,7 +309,7 @@ class GroupInfo extends Component {
             backgroundColor: this.props.route.params.groupColor,
             padding: 10,
             width: 350,
-            marginTop: 35,
+            marginTop: 15,
           },
         compButton: {
           alignSelf: 'center',
@@ -299,7 +318,7 @@ class GroupInfo extends Component {
           padding: 10,
           width: 300,
           height: 55,
-          marginTop: 35,
+          marginTop: 15,
           marginLeft: 10
         },
         undoButton: {

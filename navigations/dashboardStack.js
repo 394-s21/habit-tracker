@@ -1,15 +1,12 @@
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {Image} from 'react-native-elements';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from '../screens/Dashboard';
 import CreateGroup from '../screens/CreateGroup';
 import JoinGroup from '../screens/JoinGroup';
 import GroupInfo from "../screens/GroupInfo";
+import Chat from "../screens/Chat";
+
 const Stack = createStackNavigator();
 
 export default function DashboardStack() {
@@ -37,6 +34,10 @@ export default function DashboardStack() {
       <Stack.Screen 
       name="View Group"
       component={GroupInfo}/>
+
+      <Stack.Screen 
+      name="Chat"
+      component={Chat}/>
 
     </Stack.Navigator>
   );
