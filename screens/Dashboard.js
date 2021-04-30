@@ -6,6 +6,10 @@ import colorMap from '../utils/color';
 import {firebase} from '../utils/firebase';
 import 'firebase/database';
 import moment from 'moment';
+import * as Google from 'expo-google-app-auth';
+import SocialButton from "../components/CommonCompGoogleSignIn"
+import {firebaseConfig} from '../config';
+import googleSignout from '../screens/Login';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -13,7 +17,8 @@ class Dashboard extends Component {
 
       this.state = {
         groups: [],
-        loading: false
+        loading: false,
+        userId: firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
       };
       this.props.navigation.setOptions()
     }
@@ -22,13 +27,17 @@ class Dashboard extends Component {
     joinGroup = () => {this.props.navigation.navigate('Join Group')};
     viewGroup = (val, clr) => {
       this.props.navigation.navigate('View Group',{groupID: val, groupColor: clr})}
-    logoutUser = () => {this.props.navigation.replace('Login')} // TODO: clear our the state.
+    logoutUser = () => {
+      this.props.navigation.replace('Login');
+      
+      
+      } // TODO: clear our the state.
 
 
     componentDidMount() {
       this.setState({loading: true});
       this.setState({groups: []});
-      const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : "testAdminId"
+      const userId = this.state.userId
       firebase.database().ref('/groups').on('value', (snapshot) => {
         if (snapshot.exists()) {
           const groupArray = []

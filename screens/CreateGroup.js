@@ -140,7 +140,7 @@ class CreateGroup extends Component {
                                   value={this.state.groupColor}>
                 <View style={styles.row}>
                   <RadioButton.Android value="red"/>
-                  <Text style={styles.options}>Red</Text>
+                  <Text style={styles.options}>  Red</Text>
                   <RadioButton.Android value="orange"/>
                   <Text style={styles.options}>Orange</Text>
                   <RadioButton.Android value="green"/>
@@ -149,11 +149,11 @@ class CreateGroup extends Component {
                 </View>
                 <View style={styles.row}>
                   <RadioButton.Android value="blue"/>
-                  <Text style={styles.options}>Blue</Text>
+                  <Text style={styles.options}>  Blue</Text>
                   <RadioButton.Android value="purple"/>
                   <Text style={styles.options}>Purple</Text>
                   <RadioButton.Android value="pink"/>
-                  <Text style={styles.options}>Pink</Text>
+                  <Text style={styles.options}> Pink</Text>
                   
                 </View>
                 </RadioButton.Group>     
@@ -181,7 +181,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#3DD5F4'
   },
   options: {
-    paddingTop: 10
+    paddingTop: 10,
+    width: 51
   },
   card: {
     marginTop: 15,
