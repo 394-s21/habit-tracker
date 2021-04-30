@@ -339,7 +339,7 @@ class GroupInfo extends Component {
             fontSize: 50,
             fontWeight: "bold",
             color: colorMap[this.props.route.params.groupColor]
-        },
+        }, 
         card: {
             marginTop: 0,
             backgroundColor:'white',
