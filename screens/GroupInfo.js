@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, SafeAreaView, ScrollView, Image, TouchableOpacity, Modal, Alert } from 'react-native';
+import { StyleSheet, View, SafeAreaView, ScrollView, Image, TouchableOpacity, Modal, Alert, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text, Subheading,Card, Button } from 'react-native-paper';
 import {firebase} from '../utils/firebase';
@@ -7,6 +7,8 @@ import 'firebase/database';
 import CommonCompHabitChart from '../components/CommonCompHabitChart';
 import AsyncStorage from '@react-native-community/async-storage';
 import colorMap from '../utils/color';
+
+const winWidth = Dimensions.get('window').width;
 
 class GroupInfo extends Component {
     constructor(props) {
@@ -179,7 +181,7 @@ class GroupInfo extends Component {
                       </View>
                   </View>
               </Modal>
-          <ScrollView>
+          <ScrollView style={{width: winWidth}}>
             <View style={this.styles.topContainer}>
             <Text style={this.styles.title}>{groupName}</Text>
             </View>
@@ -341,8 +343,8 @@ class GroupInfo extends Component {
         card: {
             marginTop: 0,
             backgroundColor:'white',
-            marginHorizontal: 10,
-            width: 180
+            marginHorizontal: '2.5%',
+            width: '45%',
           },
         smolerText: {
             textAlign: "center",
