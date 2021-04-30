@@ -64,7 +64,7 @@ class Login extends Component {
         this.onSignIn(result);
         // userAuth = await result.user.refreshAuth();
         console.log(`successful sign in with userId ${firebase.auth().currentUser.uid}`)
-        setTimeout(() => { this.props.navigation.replace('Dashboard'); }, 500); // We use replace to disable user to go back
+        setTimeout(() => { this.props.navigation.replace('Dashboard'); }, 750); // We use replace to disable user to go back
         return new Promise(result.accessToken);
       } else {
         console.log("cancelled sign in")
