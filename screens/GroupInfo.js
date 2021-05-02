@@ -44,12 +44,16 @@ class GroupInfo extends Component {
       const moment = require('moment');
       let today = moment().format('YYYY/MM/DD');
       today = today.split('/').join('');
-      console.log("Streak ", this.state.streak, "Complete? ", this.state.complete)
-      db.child('/'+ today).set(1);
-      this.setState((state, props) => {
-          return {streak: this.state.streak + 1,
+      
+      db.child('/'+ today).set(1)
+      .then(() => {
+        this.setState((state) => {
+          return {streak: state.streak + 1,
                   complete: 1};
         });
+      })
+      
+      console.log("Streak ", this.state.streak, "Complete? ", this.state.complete)
     }
 
     undoCompleteDay = () => {
@@ -59,14 +63,20 @@ class GroupInfo extends Component {
       const moment = require('moment');
       let today = moment().format('YYYY/MM/DD');
       today = today.split('/').join('');
-      db.child('/' + today).set(0);
-      console.log("Streak ", this.state.streak, "Complete? ", this.state.complete)
-      this.setState((state, props) => {
+      db.child('/' + today).set(0)
+      .then(() => {
+        this.setState((state) => {
           return {
-                streak: this.state.group.streak - 1,
+                streak: state.group.streak - 1,
                 complete: 0
             };
-        });}
+        });
+      });
+      
+      
+        console.log("Streak ", this.state.streak, "Complete? ", this.state.complete)
+      
+      }
   
 
     componentDidMount() {
