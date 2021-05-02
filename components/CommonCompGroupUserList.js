@@ -7,11 +7,11 @@ import CommonCompGroupUser from './CommonCompGroupUser';
 
 class CommonCompGroupUserList extends Component {
     constructor(props) {
-      super(props);
-  
-      this.state = {
-        usernames: ['loading']
-      };
+        super(props);
+    
+        this.state = {
+            usernames: ['loading']
+        };
     }
 
     componentDidMount() {
@@ -35,20 +35,20 @@ class CommonCompGroupUserList extends Component {
     }
 
     render() {
-      const usernames = this.state.usernames;
-      return (
-        <View style={this.styles.container}>
-            <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={200}
-                decelerationRate="normal">
-                <View style={this.styles.groupUserList}>
-                    {usernames.map(member => <CommonCompGroupUser key={member} memberUserName={member} />)}
-                </View>
-            </ScrollView>
-        </View>
-    );
+        const usernames = this.state.usernames;
+        return (
+            <View style={this.styles.container}>
+                <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    scrollEventThrottle={200}
+                    decelerationRate="normal">
+                    <View style={this.styles.groupUserList}>
+                        {usernames.map(member => <CommonCompGroupUser key={member} memberUserName={member} />)}
+                    </View>
+                </ScrollView>
+            </View>
+        );
     }
     
 
