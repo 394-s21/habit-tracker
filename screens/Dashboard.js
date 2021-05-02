@@ -28,10 +28,9 @@ class Dashboard extends Component {
     viewGroup = (val, clr) => {
       this.props.navigation.navigate('View Group',{groupID: val, groupColor: clr})}
     logoutUser = () => {
+      firebase.auth().signOut()
       this.props.navigation.replace('Login');
-      
-      
-      } // TODO: clear our the state.
+    } 
 
 
     componentDidMount() {
