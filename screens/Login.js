@@ -122,7 +122,7 @@ class Login extends Component {
         if (user) {
           this.props.navigation.replace('Dashboard');
         } else {
-          this.props.navigation.replace('Login');
+          this.props.navigation.navigate('Login');
         }
       }.bind(this)
     );
