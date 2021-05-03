@@ -70,12 +70,12 @@ You should be good to go.
 
 ## Installation Issues
 
-**![#f03c15](https://placehold.it/15/f03c15/000000?text=+) If any issue occurs, always try to remove node_modules and package-lock.json and npm install first.**
+**If any issue occurs, always try to remove node_modules and package-lock.json and npm install first.**
 **If the issue does not resolve, try the following steps. The following steps would be the last you want to try.**
 
-**![#f03c15](https://placehold.it/15/f03c15/000000?text=+) DO NOT use npm install or npm remove individual components unless you are adding dependency to the project. Otherwise, it will break the package.json and leaves issues for others when they pulled.**
+**DO NOT use npm install or npm remove individual components unless you are adding dependency to the project. Otherwise, it will break the package.json and leaves issues for others when they pulled.**
 
-**![#f03c15](https://placehold.it/15/f03c15/000000?text=+) The following steps should resolve installation issues 99% of the time.**
+The following steps should resolve installation issues 99% of the time.**
 
 ```bash
 rm -r node_modules
