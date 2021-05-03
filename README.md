@@ -61,7 +61,7 @@ This React Native app uses Expo managed workflow with Google Firebase as backend
 git pull everything in this repository. Then... 
 ```bash
 npm install --global expo-cli
-npm install
+npm install --legacy-peer-deps
 ```
 
 You should be good to go. 
@@ -81,7 +81,7 @@ You should be good to go.
 rm -r node_modules
 rm package-lock.json
 git pull
-npm install
+npm install --legacy-peer-deps
 ```
 
 **Remove only node_modules is not enough, remove package-lock.json as well because package-lock.json is customized for individual devices.**
@@ -125,7 +125,7 @@ Otherwise, the following error will appear. This issue should not appear if you 
 rm -r node_modules
 rm package-lock.json
 git pull
-npm install
+npm install --legacy-peer-deps
 ```
 
 If the issue persist, 
