@@ -16,8 +16,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 5,
-    height: 27,
-    padding: 7,
+    height: 30,
+    paddingLeft: 7,
+    paddingRight: 7,
     backgroundColor: '#E9E9E9',
   },
   userText:{
