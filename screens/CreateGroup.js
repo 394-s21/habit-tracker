@@ -129,7 +129,7 @@ class CreateGroup extends Component {
           <TextInput label='What habit are you working toward?' 
                       value={this.state.groupHabit} 
                       type="outlined"
-                      
+                      placeholder="Search"
                       style={styles.field}
                       onChangeText={text => this.setState({groupHabit:text})} /> 
           
